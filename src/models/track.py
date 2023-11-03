@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Date, Binary
+from sqlalchemy import Column, Integer, String, Float, Date
 from sqlalchemy.orm import relationship
 from . import Base  # Import the Base object from __init__.py
 
@@ -12,9 +12,9 @@ class Track(Base):
     date_created = Column(Date)
     date_added = Column(Date)
     notes = Column(String)
-    path_to_file = Column(String)
+    file_path = Column(String)
     path_to_ableton_project = Column(String)
-    original_artist = Column(String)
+    artist = Column(String)
     # TODO: waveform
     # waveform = Column(Binary)  # You may want to change this based on how you handle waveforms
 

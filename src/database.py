@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.models import Base
+from sqlalchemy.ext.declarative import declarative_base
+from models import Base
 
 # Create an engine
 engine = create_engine('sqlite:///music_db.sqlite3')
