@@ -7,11 +7,10 @@ from PyQt5.QtWidgets import (
 )
 from database import SessionLocal, init_db
 from models import Track, Version
+from edit_track_window import EditTrackWindow
 import mutagen  # Install mutagen with pip install mutagen
 import os
 import time
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
 
 #TODO: 
 
@@ -37,6 +36,10 @@ class MainWindow(QMainWindow):
         # Create a button to delete a song
         self.delete_button = QPushButton('Delete Song', self)
         self.delete_button.clicked.connect(self.delete_song)
+        
+        # Create a button to edit a song
+        self.edit_button = QPushButton('Edit Song', self)
+        self.edit_button.clicked.connect(self.edit_song)
 
         # Create a table to display the songs
         self.table = QTableWidget(self)
@@ -46,6 +49,7 @@ class MainWindow(QMainWindow):
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.add_button)
         self.layout.addWidget(self.delete_button)
+        self.layout.addWidget(self.edit_button)
         self.layout.addWidget(self.table)
 
         # Create a container widget to hold the layout
@@ -67,17 +71,16 @@ class MainWindow(QMainWindow):
             self.table.setItem(i, 3, QTableWidgetItem(track.file_path))
             self.table.setItem(i, 4, QTableWidgetItem(str(track.BPM)))
 
-    def add_song(self, file_path=None):
-        if file_path is None:
-            options = QFileDialog.Options()
-            file_path, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)", options=options)
-        if file_path:
-            audio = mutagen.File(file_path, easy=True)  # Extract metadata
+    def add_song(self):
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)", options=options)
+        if file_name:
+            audio = mutagen.File(file_name, easy=True)  # Extract metadata
             new_track = Track(
-                title=audio.get('title', [os.path.basename(file_path)])[0],
+                title=audio.get('title', [os.path.basename(file_name)])[0],
                 artist=audio.get('artist', ['Unknown'])[0],
                 length=str(int(audio.info.length // 60)) + ':' + str(int(audio.info.length % 60)),
-                file_path=file_path,
+                file_path=file_name,
                 BPM=0  # Assuming BPM is not available in metadata
             )
             session.add(new_track)
@@ -91,45 +94,15 @@ class MainWindow(QMainWindow):
             session.delete(track)
         session.commit()
         self.populate_table()
-
-    def dragEnterEvent(self, event):
-        if event.mimeData().hasUrls():
-            event.acceptProposedAction()
-
-    def dropEvent(self, event):
-        for url in event.mimeData().urls():
-            file_path = url.toLocalFile()
-            self.add_song(file_path=file_path)
     
-    def watch_for_songs(self, directory):
-        self.event_handler = SongHandler(self)
-        self.observer = Observer()
-        self.observer.schedule(self.event_handler, directory, recursive=False)
-        self.observer.start()
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            self.observer.stop()
-        self.observer.join()
-
-class SongHandler(FileSystemEventHandler):
-    def __init__(self, window):
-        super().__init__()
-        self.window = window
-
-    def on_created(self, event):
-        if not event.is_directory:
-            self.window.add_song(file_path=event.src_path)
-
-    def on_moved(self, event):
-        if not event.is_directory:
-            self.window.add_song(file_path=event.dest_path)
+    def edit_song(self):
+        selected_rows = self.table.selectionModel().selectedRows()
+        for index in selected_rows:
+            track = session.query(Track).all()[index.row()]
+            edit_window = EditTrackWindow(track)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_window = MainWindow()
-    watcher_thread = threading.Thread(target=main_window.watch_for_songs, args=('./path/to/directory',))
-    watcher_thread.start()
     main_window.show()
     sys.exit(app.exec_())
