@@ -9,6 +9,7 @@ class EditTrackWindow(QWidget):
         self.initUI()
         
     def initUI(self):
+        print("Initializing UI for edit window...")
         # Create widgets for label and text entry
         # Track Title
         self.track_title_label = QLabel("Title: ", self)
@@ -57,7 +58,6 @@ class EditTrackWindow(QWidget):
         self.submitButton.clicked.connect(self.submit_data)
 
         self.setWindowTitle('Edit Track')
-        self.show()
         
     # Submit data - called when someone clicks the submit button.
     def submit_data(self):
@@ -68,14 +68,14 @@ class EditTrackWindow(QWidget):
     def setTrackInfo(self, track):
         # Update label texts with track info
         # T)T)T0d0 todo todo todo
-        self.track_title_label.setText(track.title)
-        self.track_artist_label.setText(track.artist)
-        self.track_bpm_line_edit.setText(track.BPM)
-        self.track_bpm_line_edit.setText(track.key)
-        self.track_bpm_line_edit.setText(track.notes})
+        self.track_title_line_edit.setText(track.title)
+        self.track_artist_line_edit.setText(track.artist)
+        self.track_bpm_line_edit.setText(str(track.BPM))
+        self.track_key_line_edit.setText(track.key)
+        self.track_notes_text_edit.setText(track.notes)
         
-        self.filePathLabel.setText(f"File Path: {track.file_path}")
-        self.bpmLabel.setText(f"BPM: {track.BPM}")
+        #self.filePathLabel.setText(f"File Path: {track.file_path}")
+        #self.bpmLabel.setText(f"BPM: {track.BPM}")
         
 
 # app = QtWidgets.QApplication(sys.argv)

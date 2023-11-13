@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (
 )
 from database import SessionLocal, init_db
 from models import Track, Version
-from edit_track_window import EditTrackWindow
+from gui.edit_track_window import EditTrackWindow
 import mutagen  # Install mutagen with pip install mutagen
 import os
 import time
@@ -26,22 +26,23 @@ class MainWindow(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
+        print("Initializing UI for main window...")
         self.setWindowTitle('Main Window')
         self.setGeometry(100, 100, 800, 600)
 
-        # Create a button to add a song
-        self.add_button = QPushButton('Add Song', self)
-        self.add_button.clicked.connect(self.add_song)
+        # Create a button to add a track
+        self.add_button = QPushButton('Add track', self)
+        self.add_button.clicked.connect(self.add_track)
 
-        # Create a button to delete a song
-        self.delete_button = QPushButton('Delete Song', self)
-        self.delete_button.clicked.connect(self.delete_song)
+        # Create a button to delete a track
+        self.delete_button = QPushButton('Delete track', self)
+        self.delete_button.clicked.connect(self.delete_track)
         
-        # Create a button to edit a song
-        self.edit_button = QPushButton('Edit Song', self)
-        self.edit_button.clicked.connect(self.edit_song)
+        # Create a button to edit a track
+        self.edit_button = QPushButton('Edit track', self)
+        self.edit_button.clicked.connect(self.edit_track)
 
-        # Create a table to display the songs
+        # Create a table to display the tracks
         self.table = QTableWidget(self)
         self.populate_table()
 
@@ -71,7 +72,7 @@ class MainWindow(QMainWindow):
             self.table.setItem(i, 3, QTableWidgetItem(track.file_path))
             self.table.setItem(i, 4, QTableWidgetItem(str(track.BPM)))
 
-    def add_song(self):
+    def add_track(self):
         options = QFileDialog.Options()
         file_name, _ = QFileDialog.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)", options=options)
         if file_name:
@@ -87,7 +88,7 @@ class MainWindow(QMainWindow):
             session.commit()
             self.populate_table()
 
-    def delete_song(self):
+    def delete_track(self):
         selected_rows = self.table.selectionModel().selectedRows()
         for index in selected_rows:
             track = session.query(Track).all()[index.row()]  # Get the corresponding Track object
@@ -95,11 +96,12 @@ class MainWindow(QMainWindow):
         session.commit()
         self.populate_table()
     
-    def edit_song(self):
-        selected_rows = self.table.selectionModel().selectedRows()
-        for index in selected_rows:
-            track = session.query(Track).all()[index.row()]
-            edit_window = EditTrackWindow(track)
+    def edit_track(self):
+        print("Editing track...")
+        self.edit_window = EditTrackWindow()
+        track = session.query(Track).all()[self.table.selectionModel().selectedRows()[0].row()]
+        self.edit_window.setTrackInfo(track)
+        self.edit_window.show()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

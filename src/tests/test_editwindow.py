@@ -5,8 +5,9 @@ from PyQt5.QtWidgets import QApplication
 
 
 
-track = Track(title='Test Track', artist='Test Artist', length='3:00', file_path='test_path', BPM=120)
+track = Track(title='Test Track', artist='Test Artist', length='3:00', BPM='120')
 app = QApplication(sys.argv)
 edit_window = EditTrackWindow()
 edit_window.setTrackInfo(track)
+edit_window.show()
 sys.exit(app.exec_())
