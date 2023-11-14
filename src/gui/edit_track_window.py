@@ -1,12 +1,15 @@
 import sys
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
+from database import SessionLocal
 
 
 class EditTrackWindow(QWidget):
-    def __init__(self):
+    def __init__(self, track=None, session=None):
         super().__init__()
         self.initUI()
+        self.track = track
+        self.session = session
         
     def initUI(self):
         print("Initializing UI for edit window...")
@@ -54,36 +57,36 @@ class EditTrackWindow(QWidget):
         # Set the layout on the application's window
         self.setLayout(layout)
 
-        # Connect the button's click signal to the submit_data method
-        self.submitButton.clicked.connect(self.submit_data)
+        # Connect the button's click signal to the submit_edit method
+        self.submitButton.clicked.connect(self.submit_edit)
 
         self.setWindowTitle('Edit Track')
         
-    # Submit data - called when someone clicks the submit button.
-    def submit_data(self):
-        data = self.lineEdit.text()
-        print(f"Data entered: {data}")
-        # Now you can use 'data' anywhere in your code
-    
+    # Submits the entered data and commits to the database.
+    def submit_edit(self, rowindex):
+        print("Submitting data...")
+        # Update the track's info
+        self.track.title = self.track_title_line_edit.text()
+        self.track.artist = self.track_artist_line_edit.text()
+        self.track.BPM = float(self.track_bpm_line_edit.text())
+        self.track.key = self.track_key_line_edit.text()
+        self.track.notes = self.track_notes_text_edit.toPlainText()
+        
+        try:
+            self.session.add(self.track)
+            self.session.flush()
+            self.session.commit()
+            print("Track updated successfully in the database.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            self.session.rollback()  # Rollback in case of error
+        finally:
+            self.session.close()
+        
+        
     def setTrackInfo(self, track):
-        # Update label texts with track info
-        # T)T)T0d0 todo todo todo
         self.track_title_line_edit.setText(track.title)
         self.track_artist_line_edit.setText(track.artist)
         self.track_bpm_line_edit.setText(str(track.BPM))
         self.track_key_line_edit.setText(track.key)
         self.track_notes_text_edit.setText(track.notes)
-        
-        #self.filePathLabel.setText(f"File Path: {track.file_path}")
-        #self.bpmLabel.setText(f"BPM: {track.BPM}")
-        
-
-# app = QtWidgets.QApplication(sys.argv)
-# windows = QtWidgets.QWidget()
-# windows.resize(500,500)
-# windows.move(100,100)
-
-# windows.setWindowTitle('Edit Track')
-# windows.setWindowIcon(QtGui.QIcon('icon.png'))
-# windows.show()
-# sys.exit(app.exec_())
