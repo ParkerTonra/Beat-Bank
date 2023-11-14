@@ -158,6 +158,7 @@ class MainWindow(QMainWindow):
         self.table.setRowCount(len(tracks))
         self.table.setColumnCount(5)  # Adjust column count based on data
         self.table.setHorizontalHeaderLabels(['Artist', 'Title', 'BPM', 'Length', 'File Path', ])  # Set column headers
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)  # Stretch columns to fill space
         for i, track in enumerate(tracks):
             self.table.setItem(i, 0, QTableWidgetItem(track.artist))
             self.table.setItem(i, 1, QTableWidgetItem(track.title))
