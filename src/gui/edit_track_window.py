@@ -1,10 +1,11 @@
 import sys
 from PyQt6 import QtWidgets, QtGui
+from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
 from database import SessionLocal
 
-
 class EditTrackWindow(QWidget):
+    track_updated = pyqtSignal()
     def __init__(self, track=None, session=None):
         super().__init__()
         self.initUI()
@@ -77,11 +78,15 @@ class EditTrackWindow(QWidget):
             self.session.flush()
             self.session.commit()
             print("Track updated successfully in the database.")
+            self.track_updated.emit()
         except Exception as e:
             print(f"An error occurred: {e}")
             self.session.rollback()  # Rollback in case of error
         finally:
+            #TODO: signal to refresh the database
             self.session.close()
+            # Close the window
+            self.close()
         
         
     def setTrackInfo(self, track):
