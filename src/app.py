@@ -3,6 +3,7 @@ import os
 from PyQt5.QtWidgets import QApplication
 from database import init_db
 from gui.main_window import MainWindow
+import qdarktheme
 
 def main():
     # Initialize the database
@@ -10,7 +11,10 @@ def main():
 
     # Create the application object
     app = QApplication(sys.argv)
-
+    
+    #dark mode theme
+    qdarktheme.setup_theme()
+    
     # Create the main window
     main_window = MainWindow()
 

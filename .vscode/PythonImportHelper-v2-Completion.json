@@ -462,6 +462,15 @@
         "documentation": {}
     },
     {
+        "label": "qdarktheme",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "qdarktheme",
+        "description": "qdarktheme",
+        "detail": "qdarktheme",
+        "documentation": {}
+    },
+    {
         "label": "annotations",
         "importPath": "__future__",
         "description": "__future__",
@@ -500,7 +509,7 @@
         "kind": 6,
         "importPath": "src.gui.main_window",
         "description": "src.gui.main_window",
-        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Main Window')\n        self.setGeometry(100, 100, 800, 600)\n        # Create a button to add a track\n        self.add_button = QPushButton('Add track', self)",
+        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Beat Bank')\n        self.setGeometry(100, 100, 800, 600)\n        # Create a button to add a track\n        self.add_button = QPushButton('Add track', self)",
         "detail": "src.gui.main_window",
         "documentation": {}
     },
@@ -563,7 +572,7 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def main():\n    # Initialize the database\n    init_db()\n    # Create the application object\n    app = QApplication(sys.argv)\n    # Create the main window\n    main_window = MainWindow()\n    # Show the main window\n    main_window.show()\n    # Enter the application's main event loop",
+        "peekOfCode": "def main():\n    # Initialize the database\n    init_db()\n    # Create the application object\n    app = QApplication(sys.argv)\n    #dark mode theme\n    qdarktheme.setup_theme()\n    # Create the main window\n    main_window = MainWindow()\n    # Show the main window",
         "detail": "src.app",
         "documentation": {}
     },

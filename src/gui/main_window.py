@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
 
     def init_ui(self):
         print("Initializing UI for main window...")
-        self.setWindowTitle('Main Window')
+        self.setWindowTitle('Beat Bank')
         self.setGeometry(100, 100, 800, 600)
 
         # Create a button to add a track
