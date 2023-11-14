@@ -1,6 +1,6 @@
 import sys
 import os
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication
 from database import init_db
 from gui.main_window import MainWindow
 import qdarktheme
@@ -12,7 +12,7 @@ def main():
     # Create the application object
     app = QApplication(sys.argv)
     
-    #dark mode theme
+    # Dark mode theme
     qdarktheme.setup_theme()
     
     # Create the main window
@@ -22,7 +22,7 @@ def main():
     main_window.show()
 
     # Enter the application's main event loop
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 if __name__ == '__main__':
     main()

@@ -1,6 +1,6 @@
 import sys
-from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
+from PyQt6 import QtWidgets, QtGui
+from PyQt6.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
 from database import SessionLocal
 
 

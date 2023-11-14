@@ -1,12 +1,14 @@
-import PyQt5
+import PyQt6
 import sys
 import os
 import threading
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QTableWidget, QTableWidgetItem,
-    QPushButton, QVBoxLayout, QWidget, QLabel, QFileDialog, QHeaderView, QMessageBox
+    QPushButton, QVBoxLayout, QWidget, QLabel, QFileDialog, QHeaderView, QMessageBox,
+    QHBoxLayout, QFrame
 )
-from PyQt5 import QtGui
+from PyQt6 import QtGui
+from PyQt6.QtCore import Qt
 from database import SessionLocal, init_db
 from models import Track, Version
 from gui.edit_track_window import EditTrackWindow
@@ -32,44 +34,75 @@ class MainWindow(QMainWindow):
         print("Initializing UI for main window...")
         self.setWindowTitle('Beat Bank')
         self.setGeometry(100, 100, 800, 600)
-
-        # Create a button to add a track
-        self.add_button = QPushButton('Add track', self)
-        self.add_button.clicked.connect(self.add_track)
-
-        # Create a button to delete a track
-        self.delete_button = QPushButton('Delete track', self)
-        self.delete_button.clicked.connect(self.delete_track)
         
-        # Create a button to edit a track
-        self.edit_button = QPushButton('Edit track', self)
-        self.edit_button.clicked.connect(self.edit_track)
-
-        # Create a table to display the tracks
-        self.table = QTableWidget(self)
-        self.populate_table()
         
-        # Create a refresh button
+        # #### Create buttons for the form
+        # # 'Add Track' button
+        # self.add_button = QPushButton('Add track', self)
+        # self.add_button.clicked.connect(self.add_track)
+
+        # # Delete Track button
+        # self.delete_button = QPushButton('Delete track', self)
+        # self.delete_button.clicked.connect(self.delete_track)
+        
+        # # Edit Track button
+        # self.edit_button = QPushButton('Edit track', self)
+        # self.edit_button.clicked.connect(self.edit_track)
+        
+        # # Refresh button
+        # self.refresh_button = QPushButton('Refresh', self)
+        # self.refresh_button.clicked.connect(self.full_update_table)
+        # self.refresh_button.setIcon(QtGui.QIcon('src/assets/pictures/refresh.png'))
+        
+        # Left column layout
+        left_layout = QVBoxLayout()
         self.refresh_button = QPushButton('Refresh', self)
         self.refresh_button.clicked.connect(self.full_update_table)
-        # set the icon to src/assets/pictures/refresh.png
         self.refresh_button.setIcon(QtGui.QIcon('src/assets/pictures/refresh.png'))
+        left_layout.addWidget(self.refresh_button)
+        
+        # Placeholder for drag and drop area
+        self.drag_drop_area = QLabel("Drag and Drop Area", self)
+        self.drag_drop_area.setFrameStyle(QFrame.Shape.Panel | QFrame.Shadow.Sunken)
+        self.drag_drop_area.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.drag_drop_area.setMinimumSize(200, 400)  # Adjust size as needed
+        self.drag_drop_area.setMaximumHeight(400)
+        self.drag_drop_area.setAcceptDrops(True)
+        left_layout.addWidget(self.drag_drop_area)
+        
+        # Right column layout
+        right_layout = QVBoxLayout()
+        self.add_button = QPushButton('Add track', self)
+        self.add_button.clicked.connect(self.add_track)
+        self.delete_button = QPushButton('Delete track', self)
+        self.delete_button.clicked.connect(self.delete_track)
+        self.edit_button = QPushButton('Edit track', self)
+        self.edit_button.clicked.connect(self.edit_track)
+        right_layout.addWidget(self.add_button)
+        right_layout.addWidget(self.delete_button)
+        right_layout.addWidget(self.edit_button)
+        
+        # Table for displaying tracks
+        self.table = QTableWidget(self)
+        self.populate_table()
+        right_layout.addWidget(self.table)
+        
+        # Main layout
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(left_layout)
+        main_layout.addLayout(right_layout)
 
-        # Arrange the widgets in a layout
-        self.layout = QVBoxLayout()
-        self.layout.addWidget(self.refresh_button)
-        self.layout.addWidget(self.add_button)
-        self.layout.addWidget(self.delete_button)
-        self.layout.addWidget(self.edit_button)
-        self.layout.addWidget(self.table)
+    
+        
 
         # Create a container widget to hold the layout
         self.container = QWidget(self)
-        self.container.setLayout(self.layout)
+        self.container.setLayout(main_layout)
 
         self.setCentralWidget(self.container)
 
-    # unused, but could be used to refresh the entire table    
+    # Functions
+    # Refresh the entire table    
     def full_update_table(self):
         session = SessionLocal()
         tracks = session.query(Track).all()
@@ -154,17 +187,15 @@ class MainWindow(QMainWindow):
             if selected_items:
                 print("No Row Selected. Selected items: ", selected_items)
                 row_index = selected_items[0].indexes()[0].row()
-                
         if row_index is not None:
             with SessionLocal() as session:
                  track = session.query(Track).all()[row_index]
                  self.edit_window = EditTrackWindow(track, session)
                  self.edit_window.setTrackInfo(track)
                  self.edit_window.show()
-        
         else:
             self.show_warning_message("No Track Selected", "Please select a track to edit.")
-    
+
     # Function to show a warning message
     def show_warning_message(self, title, message):
         msg = QMessageBox()
@@ -172,12 +203,10 @@ class MainWindow(QMainWindow):
         msg.setWindowTitle(title)
         msg.setText(message)
         msg.setStandardButtons(QMessageBox.Ok)
-        msg.exec_()
-        
-        
+        msg.exec()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_window = MainWindow()
     main_window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

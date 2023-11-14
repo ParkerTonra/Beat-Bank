@@ -1,7 +1,7 @@
 import sys
 from src.models.track import Track
 from src.gui.edit_track_window import EditTrackWindow
-from PyQt5.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication
 
 
 
@@ -10,4 +10,4 @@ app = QApplication(sys.argv)
 edit_window = EditTrackWindow()
 edit_window.setTrackInfo(track)
 edit_window.show()
-sys.exit(app.exec_())
+sys.exit(app.exec())
