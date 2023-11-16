@@ -1,3 +1,4 @@
+import re
 import PyQt6
 import sys
 import os
@@ -8,7 +9,7 @@ from PyQt6.QtWidgets import (
     QHBoxLayout, QFrame
 )
 from PyQt6 import QtGui
-from PyQt6.QtCore import Qt, QUrl, QMimeData
+from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime
 from database import SessionLocal, init_db
 from models import Track, Version
 from gui.edit_track_window import EditTrackWindow
@@ -17,6 +18,7 @@ import os
 import time
 from PyQt6.QtWidgets import QAbstractItemView
 from PyQt6.QtGui import QDrag
+from PyQt6 import QtWidgets
 
 # Initialize the database
 init_db()
@@ -34,6 +36,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Beat Bank')
         self.setGeometry(100, 100, 1400, 200)
         
+        self.lastClickTime = QTime()
+        self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()
+        
         # -----------------------------------------------------------------------------
         # LEFT COLUMN LAYOUT
         # ----------------------------------------------------------------------------- 
@@ -48,13 +53,14 @@ class MainWindow(QMainWindow):
         left_layout.addWidget(self.refresh_button)
         
         # Drag and drop TODO: Implement drag and drop
-        self.drag_drop_area = QLabel("Drag and Drop Area", self, alignment=Qt.AlignmentFlag.AlignCenter)
-        self.drag_drop_area.setFrameStyle(QFrame.Shape.Panel | QFrame.Shadow.Sunken)
-        # self.drag_drop_area.setAlignment(Qt.AlignmentFlag.AlignTop)
-        self.drag_drop_area.setMinimumSize(100, 120)  # Adjust size as needed
-        self.drag_drop_area.setMaximumHeight(150)
-        self.drag_drop_area.setAcceptDrops(True)
-        left_layout.addWidget(self.drag_drop_area)
+        self.version_table = QTableWidget()
+        self.version_table.setFrameStyle(QFrame.Shape.Panel | QFrame.Shadow.Sunken)
+        # Give the table two columns: version name and file path
+        self.version_table.setColumnCount(2)
+        self.version_table.setHorizontalHeaderLabels(['Version Name', 'File Path'])
+        self.version_table.setMinimumSize(100, 120)  # Adjust size as needed
+        self.version_table.setMaximumHeight(150)
+        left_layout.addWidget(self.version_table)
         
         # -----------------------------------------------------------------------------
         # RIGHT COLUMN LAYOUT
@@ -101,6 +107,7 @@ class MainWindow(QMainWindow):
         # Create the table object
         self.table = QTableWidget(self)
         self.table.setMinimumHeight(500)
+        self.table.itemChanged.connect(self.update_cell)
         
         # Drag and drop
         self.table.setAcceptDrops(True)
@@ -176,7 +183,13 @@ class MainWindow(QMainWindow):
             self.table.setItem(i, 3, QTableWidgetItem(track.length))
             self.table.setItem(i, 4, QTableWidgetItem(track.file_path))
         session.close()
-
+    
+    def populate_version_table(self, track):
+        with SessionLocal as session:
+            versions = session.query(Version).filter(Version.track_id == track.id).all()
+            self.version_table.setRowCount(len(versions))
+            self.version_table.setColumnCount(2)
+    
     # Add a new track as a Track object to the database
     def add_track(self, path=None):
         if path:
@@ -244,33 +257,96 @@ class MainWindow(QMainWindow):
                 self.edit_window.track_updated.connect(self.full_update_table)
                 self.edit_window.setTrackInfo(track)
                 self.edit_window.show()
+    
+    def update_cell(self, item):
+        row = item.row()
+        column = item.column()
+        new_value = item.text()
+        self.update_database(row, column, new_value)
+    
+    def update_database(self, row, column, new_value):
+        session = SessionLocal()
+        try:
+            track = session.query(Track).all()[row]
+            
+            if column == 0:
+                track.artist = new_value
+            elif column == 1:
+                track.title = new_value
+            elif column == 2:
+                try:
+                    track.BPM = float(new_value)
+                except ValueError:
+                    raise ValueError("BPM must be a number.")
+            elif column == 3:
+                if not re.match(r'^\d+:\d+$', new_value):
+                    raise ValueError("Length must be in format 'xx:xx'.")
+                track.length = new_value
+            elif column == 4:
+                track.file_path = new_value
 
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            print(f"An error occurred: {e}")
+            # Here you can handle the error, like showing a message box to the user
+        finally:
+            session.close()
+    
     # TODO: Implement settings function
     def open_settings(self):
         print("Settings")
+        #rearrange mode
+        # local library or path mode
+        # dark mode off (WHY WOULD YOU DO THIS)
 
     # Show a warning message
     def show_warning_message(self, title, message):
         msg = QMessageBox()
-        msg.setIcon(QMessageBox.Warning)
+        msg.setIcon(QMessageBox.Icon.Warning)
         msg.setWindowTitle(title)
         msg.setText(message)
-        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
         msg.exec()
 
     # drag and drop
+    #TODO:
     def tableMousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
-            self.dragStartPosition = event.pos()
+            current_time = QTime.currentTime()
 
+            if not self.lastClickTime.isNull() and \
+               self.lastClickTime.msecsTo(current_time) < self.doubleClickInterval:
+                self.handleDoubleClick(event)
+            else:
+                self.handleSingleClick(event)
+            
+            self.lastClickTime = current_time
+         
+    def handleSingleClick(self, event):
+        print("Single click event")
+        #on the table, select the cell at that position
+        item = self.table.itemAt(event.pos())
+        self.table.setCurrentItem(item)
+        self.dragStartPosition = event.pos()
+        
+    def handleDoubleClick(self, event):
+        print("Double click event")
+        item = self.table.itemAt(event.pos())
+        self.table.setCurrentItem(item)
+        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
+        self.table.editItem(item)
+    
     def tableMouseMoveEvent(self, event):
         if not (event.buttons() & Qt.MouseButton.LeftButton):
             return
         if ((event.pos() - self.dragStartPosition).manhattanLength() < QApplication.startDragDistance()):
+            print("Mouse move event")
             return
 
         item = self.table.itemAt(self.dragStartPosition)
         if item and self.isDraggableCell(item):
+            print("Draggable cell")
             self.startDragOperation(item)
 
     def startDragOperation(self, item):
@@ -282,8 +358,8 @@ class MainWindow(QMainWindow):
         drag.exec(Qt.DropAction.CopyAction | Qt.DropAction.MoveAction)
 
     def isDraggableCell(self, item):
-        # Your logic to determine if the cell should be draggable
-        return # item.row() == your_draggable_row and item.column() == your_draggable_column
+        # if the column is the file path column
+        return item.column() == 4
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
@@ -299,6 +375,14 @@ class MainWindow(QMainWindow):
             print("Adding track " + event.mimeData().urls()[0].toLocalFile() + " to database...")
             try:
                 path = event.mimeData().urls()[0].toLocalFile()
+                # query the database to see if this file is already in the database
+                session = SessionLocal()
+                track = session.query(Track).filter(Track.file_path == path).first()
+                session.close()
+                if track:
+                    print("Track already in database.")
+                    self.show_warning_message("Track Already in Database", "This track is already in the database.")
+                    return
                 self.add_track(path)
             except Exception as e:
                 print(f"An error occurred: {e} .. unable to add track to database.")

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from . import Base
+from models import Base
 
 class Version(Base):
     __tablename__ = 'versions'
@@ -18,4 +18,4 @@ class Version(Base):
     #TODO: waveform = Column(Binary)  # You may want to change this based on how you handle waveforms
 
     # Relationship to the Tracks table
-    track = relationship('Track', back_populates='versions')
+    track = relationship('Track', foreign_keys=[track_id], back_populates='versions')

@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float, Date
+from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from . import Base  # Import the Base object from __init__.py
+from models import Base  # Import the Base object from __init__.py
 
 class Track(Base):
     __tablename__ = 'tracks'
@@ -15,8 +15,11 @@ class Track(Base):
     file_path = Column(String)
     path_to_ableton_project = Column(String)
     artist = Column(String)
+    current_version_id = Column(Integer, ForeignKey('versions.id'))
+    current_version = relationship('Version', foreign_keys=[current_version_id], back_populates='track', uselist=False)
+    versions = relationship('Version', back_populates='track', foreign_keys='Version.track_id')
     # TODO: waveform
     # waveform = Column(Binary)  # You may want to change this based on how you handle waveforms
 
-    # Relationship to the Versions table
-    versions = relationship('Version', back_populates='track')
+
+
