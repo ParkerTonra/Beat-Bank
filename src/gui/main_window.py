@@ -10,8 +10,12 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6 import QtGui
 from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime
+from controllers import track_controller
 from database import SessionLocal, init_db
-from models import Track, Version
+from models.track_business_model import TrackBusinessModel
+from models.track import Track
+from models.version import Version
+from controllers.track_controller import TrackController
 from gui.edit_track_window import EditTrackWindow
 import mutagen  # Install mutagen with pip install mutagen
 import os
@@ -19,7 +23,8 @@ import time
 from PyQt6.QtWidgets import QAbstractItemView
 from PyQt6.QtGui import QDrag
 from PyQt6 import QtWidgets
-
+from models.user_settings import UserSettings
+#TODO: remember settings for window size / other user settings and position from cache or something
 # Initialize the database
 init_db()
 
@@ -30,6 +35,8 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.init_ui()
+        self.track_controller = TrackController(self)
+        self.user_settings = UserSettings()
 
     def init_ui(self):
         print("Initializing UI for main window...")
@@ -140,18 +147,36 @@ class MainWindow(QMainWindow):
     # MAIN WINDOW FUNCTIONS
     # =============================================================================
     
+    # Add a new track as a Track object to the database
+    def add_track(self, path=None):
+        if self.ask_if_new_track(path) is False:
+            print("TODO. Track not added.")
+            # add_new_version(path)
+            return
+        if path:
+            file_name = path
+        else:
+            file_name, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
+        if file_name:
+            self.track_controller.add_track(file_name)
+            self.populate_table()
+            self.table.selectRow(self.table.rowCount() - 1)
+            self.edit_track()
+
+    
     # Refresh the entire table    
     def full_update_table(self):
-        session = SessionLocal()
-        tracks = session.query(Track).all()
+        tracks = self.track_controller.get_tracks()
         self.table.setRowCount(len(tracks))
+        # developer mode #TODO: every column shows up
+
+        # user mode
         for i, track in enumerate(tracks):
             self.table.setItem(i, 0, QTableWidgetItem(track.artist))
             self.table.setItem(i, 1, QTableWidgetItem(track.title))
-            self.table.setItem(i, 2, QTableWidgetItem(str(track.BPM)))
+            self.table.setItem(i, 2, QTableWidgetItem(str(track.bpm)))
             self.table.setItem(i, 3, QTableWidgetItem(track.length))
             self.table.setItem(i, 4, QTableWidgetItem(track.file_path))
-        session.close()
         
     # Takes a track as parameter and updates that row in the table
     def update_table(self, track, row_index):
@@ -179,7 +204,7 @@ class MainWindow(QMainWindow):
         for i, track in enumerate(tracks):
             self.table.setItem(i, 0, QTableWidgetItem(track.artist))
             self.table.setItem(i, 1, QTableWidgetItem(track.title))
-            self.table.setItem(i, 2, QTableWidgetItem(str(track.BPM)))
+            self.table.setItem(i, 2, QTableWidgetItem(str(track.bpm)))
             self.table.setItem(i, 3, QTableWidgetItem(track.length))
             self.table.setItem(i, 4, QTableWidgetItem(track.file_path))
         session.close()
@@ -189,31 +214,6 @@ class MainWindow(QMainWindow):
             versions = session.query(Version).filter(Version.track_id == track.id).all()
             self.version_table.setRowCount(len(versions))
             self.version_table.setColumnCount(2)
-    
-    # Add a new track as a Track object to the database
-    def add_track(self, path=None):
-        if path:
-            file_name = path
-        else:
-            file_name, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
-        session = SessionLocal()
-        if file_name:
-            audio = mutagen.File(file_name, easy=True)  # Extract metadata
-            new_track = Track(
-                title=audio.get('title', [os.path.basename(file_name)])[0],
-                artist=audio.get('artist', ['Unknown'])[0],
-                length=str(int(audio.info.length // 60)) + ':' + str(int(audio.info.length % 60)),
-                file_path=file_name,
-                BPM=0  # Assuming BPM is not available in metadata
-            )
-            session.add(new_track)
-            session.commit()
-            self.populate_table()
-            # select the row of the newly added track
-            self.table.selectRow(self.table.rowCount() - 1)
-            #edit_track on the new track
-            self.edit_track()
-        session.close()
 
     # Delete a track from the database
     def delete_track(self):
@@ -275,7 +275,7 @@ class MainWindow(QMainWindow):
                 track.title = new_value
             elif column == 2:
                 try:
-                    track.BPM = float(new_value)
+                    track.bpm = float(new_value)
                 except ValueError:
                     raise ValueError("BPM must be a number.")
             elif column == 3:
@@ -300,17 +300,8 @@ class MainWindow(QMainWindow):
         # local library or path mode
         # dark mode off (WHY WOULD YOU DO THIS)
 
-    # Show a warning message
-    def show_warning_message(self, title, message):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setWindowTitle(title)
-        msg.setText(message)
-        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
-        msg.exec()
 
     # drag and drop
-    #TODO:
     def tableMousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             current_time = QTime.currentTime()
@@ -377,10 +368,8 @@ class MainWindow(QMainWindow):
                 path = event.mimeData().urls()[0].toLocalFile()
                 # query the database to see if this file is already in the database
                 session = SessionLocal()
-                track = session.query(Track).filter(Track.file_path == path).first()
-                session.close()
-                if track:
-                    print("Track already in database.")
+                if self.track_controller.already_in_database(path):
+                    session.close()
                     self.show_warning_message("Track Already in Database", "This track is already in the database.")
                     return
                 self.add_track(path)
@@ -390,6 +379,35 @@ class MainWindow(QMainWindow):
         else:
             print("Error. Unable to add track to database. Is the file an audio file?")
             event.ignore()
+
+    # Ask user if the new track is a new version of an existing track
+    def ask_if_new_track(self, path):
+        # query the database to see if this file is already in the database
+        if self.track_controller.already_in_database(path):
+            self.show_warning_message("Track Already in Database", "This file is already in the database.")
+            return
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Question)
+            msg.setWindowTitle("New Track? or new version?")
+            msg.setText("Is this a new track? Select no if another version is already in the database.")
+            msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            msg.setDefaultButton(QMessageBox.StandardButton.Yes)
+            response = msg.exec()
+            if response == QMessageBox.StandardButton.Yes:
+                return True
+            else:
+                return False
+
+    # Show a warning message
+    def show_warning_message(self, title, message):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Icon.Warning)
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
+
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)

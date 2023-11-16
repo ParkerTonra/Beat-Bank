@@ -69,7 +69,7 @@ class EditTrackWindow(QWidget):
         # Update the track's info
         self.track.title = self.track_title_line_edit.text()
         self.track.artist = self.track_artist_line_edit.text()
-        self.track.BPM = float(self.track_bpm_line_edit.text())
+        self.track.bpm = float(self.track_bpm_line_edit.text())
         self.track.key = self.track_key_line_edit.text()
         self.track.notes = self.track_notes_text_edit.toPlainText()
         
@@ -92,6 +92,6 @@ class EditTrackWindow(QWidget):
     def setTrackInfo(self, track):
         self.track_title_line_edit.setText(track.title)
         self.track_artist_line_edit.setText(track.artist)
-        self.track_bpm_line_edit.setText(str(track.BPM))
+        self.track_bpm_line_edit.setText(str(track.bpm))
         self.track_key_line_edit.setText(track.key)
         self.track_notes_text_edit.setText(track.notes)

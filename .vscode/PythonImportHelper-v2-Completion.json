@@ -16,6 +16,30 @@
         "documentation": {}
     },
     {
+        "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "op",
+        "importPath": "alembic",
+        "description": "alembic",
+        "isExtraImport": true,
+        "detail": "alembic",
+        "documentation": {}
+    },
+    {
         "label": "op",
         "importPath": "alembic",
         "description": "alembic",
@@ -153,6 +177,62 @@
         "documentation": {}
     },
     {
+        "label": "Boolean",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Date",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Float",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "create_engine",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
@@ -206,6 +286,153 @@
         "description": "src.models",
         "isExtraImport": true,
         "detail": "src.models",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "mutagen",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mutagen",
+        "description": "mutagen",
+        "detail": "mutagen",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "init_db",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "init_db",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models.version",
+        "description": "models.version",
+        "isExtraImport": true,
+        "detail": "models.version",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models.version",
+        "description": "models.version",
+        "isExtraImport": true,
+        "detail": "models.version",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "importPath": "models.track_business_model",
+        "description": "models.track_business_model",
+        "isExtraImport": true,
+        "detail": "models.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "importPath": "models.track_business_model",
+        "description": "models.track_business_model",
+        "isExtraImport": true,
+        "detail": "models.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsBusinessModel",
+        "importPath": "models.user_settings_business_model",
+        "description": "models.user_settings_business_model",
+        "isExtraImport": true,
+        "detail": "models.user_settings_business_model",
         "documentation": {}
     },
     {
@@ -275,6 +502,14 @@
         "documentation": {}
     },
     {
+        "label": "QtGui",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
+        "isExtraImport": true,
+        "detail": "PyQt6",
+        "documentation": {}
+    },
+    {
         "label": "pyqtSignal",
         "importPath": "PyQt6.QtCore",
         "description": "PyQt6.QtCore",
@@ -336,6 +571,15 @@
         "description": "PyQt6.QtCore",
         "isExtraImport": true,
         "detail": "PyQt6.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "PyQt6.QtWidgets",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
@@ -515,6 +759,54 @@
         "documentation": {}
     },
     {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLineEdit",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QMessageBox",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
         "label": "QApplication",
         "importPath": "PyQt6.QtWidgets",
         "description": "PyQt6.QtWidgets",
@@ -547,35 +839,11 @@
         "documentation": {}
     },
     {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
+        "label": "QIcon",
+        "importPath": "PyQt6.QtGui",
+        "description": "PyQt6.QtGui",
         "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "init_db",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "init_db",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
+        "detail": "PyQt6.QtGui",
         "documentation": {}
     },
     {
@@ -588,21 +856,133 @@
         "documentation": {}
     },
     {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
         "label": "threading",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "threading",
         "description": "threading",
         "detail": "threading",
+        "documentation": {}
+    },
+    {
+        "label": "track_controller",
+        "importPath": "controllers",
+        "description": "controllers",
+        "isExtraImport": true,
+        "detail": "controllers",
+        "documentation": {}
+    },
+    {
+        "label": "user_settings_controller",
+        "importPath": "controllers",
+        "description": "controllers",
+        "isExtraImport": true,
+        "detail": "controllers",
+        "documentation": {}
+    },
+    {
+        "label": "TrackController",
+        "importPath": "controllers.track_controller",
+        "description": "controllers.track_controller",
+        "isExtraImport": true,
+        "detail": "controllers.track_controller",
+        "documentation": {}
+    },
+    {
+        "label": "EditTrackWindow",
+        "importPath": "gui.edit_track_window",
+        "description": "gui.edit_track_window",
+        "isExtraImport": true,
+        "detail": "gui.edit_track_window",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettings",
+        "importPath": "models.user_settings",
+        "description": "models.user_settings",
+        "isExtraImport": true,
+        "detail": "models.user_settings",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettings",
+        "importPath": "models.user_settings",
+        "description": "models.user_settings",
+        "isExtraImport": true,
+        "detail": "models.user_settings",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsController",
+        "importPath": "controllers.user_settings_controller",
+        "description": "controllers.user_settings_controller",
+        "isExtraImport": true,
+        "detail": "controllers.user_settings_controller",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
         "documentation": {}
     },
     {
@@ -643,72 +1023,6 @@
         "description": "models",
         "isExtraImport": true,
         "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "EditTrackWindow",
-        "importPath": "gui.edit_track_window",
-        "description": "gui.edit_track_window",
-        "isExtraImport": true,
-        "detail": "gui.edit_track_window",
-        "documentation": {}
-    },
-    {
-        "label": "mutagen",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "mutagen",
-        "description": "mutagen",
-        "detail": "mutagen",
-        "documentation": {}
-    },
-    {
-        "label": "time",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "declarative_base",
-        "importPath": "sqlalchemy.ext.declarative",
-        "description": "sqlalchemy.ext.declarative",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.ext.declarative",
-        "documentation": {}
-    },
-    {
-        "label": "declarative_base",
-        "importPath": "sqlalchemy.ext.declarative",
-        "description": "sqlalchemy.ext.declarative",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.ext.declarative",
-        "documentation": {}
-    },
-    {
-        "label": "relationship",
-        "importPath": "sqlalchemy.orm",
-        "description": "sqlalchemy.orm",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.orm",
-        "documentation": {}
-    },
-    {
-        "label": "relationship",
-        "importPath": "sqlalchemy.orm",
-        "description": "sqlalchemy.orm",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.orm",
-        "documentation": {}
-    },
-    {
-        "label": "sessionmaker",
-        "importPath": "sqlalchemy.orm",
-        "description": "sqlalchemy.orm",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.orm",
         "documentation": {}
     },
     {
@@ -788,6 +1102,24 @@
         "documentation": {}
     },
     {
+        "label": "upgrade",
+        "kind": 2,
+        "importPath": "alembic.versions.9d76c798b32f_add_artist_column_to_versions_table",
+        "description": "alembic.versions.9d76c798b32f_add_artist_column_to_versions_table",
+        "peekOfCode": "def upgrade() -> None:\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.drop_column('tracks', 'BPM')\n    op.drop_column('versions', 'original_artist')\n    op.drop_column('versions', 'path_to_file')\n    op.add_column('versions', sa.Column('bpm', sa.Float(), nullable=True))\n    op.add_column('tracks', sa.Column('bpm', sa.Float(), nullable=True))\n    op.add_column('versions', sa.Column('artist', sa.String(), nullable=True))\n    op.add_column('versions', sa.Column('file_path', sa.String(), nullable=True))\n    # ### end Alembic commands ###",
+        "detail": "alembic.versions.9d76c798b32f_add_artist_column_to_versions_table",
+        "documentation": {}
+    },
+    {
+        "label": "downgrade",
+        "kind": 2,
+        "importPath": "alembic.versions.9d76c798b32f_add_artist_column_to_versions_table",
+        "description": "alembic.versions.9d76c798b32f_add_artist_column_to_versions_table",
+        "peekOfCode": "def downgrade() -> None:\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.add_column('versions', sa.Column('path_to_file', sa.VARCHAR(), nullable=True))\n    op.add_column('versions', sa.Column('original_artist', sa.VARCHAR(), nullable=True))\n    op.drop_column('versions', 'bpm')\n    op.drop_column('versions', 'file_path')\n    op.drop_column('versions', 'artist')\n    op.add_column('tracks', sa.Column('BPM', sa.FLOAT(), nullable=True))\n    op.drop_column('tracks', 'bpm')\n    # ### end Alembic commands ###",
+        "detail": "alembic.versions.9d76c798b32f_add_artist_column_to_versions_table",
+        "documentation": {}
+    },
+    {
         "label": "run_migrations_offline",
         "kind": 2,
         "importPath": "alembic.env",
@@ -824,6 +1156,24 @@
         "documentation": {}
     },
     {
+        "label": "TrackController",
+        "kind": 6,
+        "importPath": "src.controllers.track_controller",
+        "description": "src.controllers.track_controller",
+        "peekOfCode": "class TrackController:\n    def __init__(self, view):\n        super().__init__()\n        self.model = TrackBusinessModel()\n        self.view = view\n    def add_track(self, path, new_track=True):\n        if new_track == False:\n            print('Adding version to database and updating \"current_version\"')\n            self.add_new_version(path)\n        else:",
+        "detail": "src.controllers.track_controller",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsController",
+        "kind": 6,
+        "importPath": "src.controllers.user_settings_controller",
+        "description": "src.controllers.user_settings_controller",
+        "peekOfCode": "class UserSettingsController:\n    def __init__(self, view):\n        super().__init__()\n        self.model = UserSettingsBusinessModel()\n        self.view = view\n    def get_developer_mode(self):\n        return self.model.get_developer_mode()\n    def toggle_developer_mode(self):\n        self.model.toggle_developer_mode()\n        return",
+        "detail": "src.controllers.user_settings_controller",
+        "documentation": {}
+    },
+    {
         "label": "DraggableTable",
         "kind": 6,
         "importPath": "src.gui.draggable_table",
@@ -846,8 +1196,17 @@
         "kind": 6,
         "importPath": "src.gui.main_window",
         "description": "src.gui.main_window",
-        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Beat Bank')\n        self.setGeometry(100, 100, 1400, 200)\n        self.lastClickTime = QTime()\n        self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()",
+        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n        self.track_controller = TrackController(self)\n        self.user_settings = UserSettings()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Beat Bank')\n        self.setGeometry(100, 100, 1400, 200)",
         "detail": "src.gui.main_window",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsWindow",
+        "kind": 6,
+        "importPath": "src.gui.user_settings_window",
+        "description": "src.gui.user_settings_window",
+        "peekOfCode": "class UserSettingsWindow(QWidget):\n    def __init__(self):\n        super().__init__()\n        self.user_settings_controller = UserSettingsController(self)\n        self.initUI()\n    def initUI(self):\n        print(\"Initializing UI for user settings window...\")\n        # Create widgets for label and text entry\n        # Default Artist Name (if none found)\n        self.default_artist_label = QLabel(\"Default Artist: \", self)",
+        "detail": "src.gui.user_settings_window",
         "documentation": {}
     },
     {
@@ -864,8 +1223,35 @@
         "kind": 6,
         "importPath": "src.models.track",
         "description": "src.models.track",
-        "peekOfCode": "class Track(Base):\n    __tablename__ = 'tracks'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    title = Column(String)\n    BPM = Column(Float)\n    length = Column(String)\n    key = Column(String)\n    date_created = Column(Date)\n    date_added = Column(Date)\n    notes = Column(String)",
+        "peekOfCode": "class Track(Base):\n    __tablename__ = 'tracks'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    title = Column(String)\n    artist = Column(String)\n    bpm = Column(Float)\n    length = Column(String)\n    key = Column(String)\n    date_created = Column(Date)\n    date_added = Column(Date)",
         "detail": "src.models.track",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "kind": 6,
+        "importPath": "src.models.track_business_model",
+        "description": "src.models.track_business_model",
+        "peekOfCode": "class TrackBusinessModel:\n    def add_track(self, track_obj, version_obj):\n        try:\n            with SessionLocal() as session:\n                session.add(track_obj)\n                session.add(version_obj)\n                session.commit()\n        finally:\n            session.close()\n    def get_tracks(self):",
+        "detail": "src.models.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettings",
+        "kind": 6,
+        "importPath": "src.models.user_settings",
+        "description": "src.models.user_settings",
+        "peekOfCode": "class UserSettings(Base):\n    __tablename__ = 'user_settings'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    developer_mode = Column(Boolean, default=False)\n    dark_mode = Column(Boolean, default=True)\n    # local library mode (big)",
+        "detail": "src.models.user_settings",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsBusinessModel",
+        "kind": 6,
+        "importPath": "src.models.user_settings_business_model",
+        "description": "src.models.user_settings_business_model",
+        "peekOfCode": "class UserSettingsBusinessModel:\n    def get_developer_mode(self):\n        with SessionLocal() as session:\n            settings = session.query(UserSettings).first()\n            if settings is not None:\n                return settings.developer_mode\n            else:\n                # If no settings are found, return a default value (e.g., False)\n                return False\n    def toggle_developer_mode(self):",
+        "detail": "src.models.user_settings_business_model",
         "documentation": {}
     },
     {
@@ -873,7 +1259,7 @@
         "kind": 6,
         "importPath": "src.models.version",
         "description": "src.models.version",
-        "peekOfCode": "class Version(Base):\n    __tablename__ = 'versions'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    track_id = Column(Integer, ForeignKey('tracks.id'))\n    title = Column(String)\n    length = Column(String)\n    key = Column(String)\n    date_created = Column(Date)\n    date_added = Column(Date)\n    notes = Column(String)",
+        "peekOfCode": "class Version(Base):\n    __tablename__ = 'versions'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    track_id = Column(Integer, ForeignKey('tracks.id'))\n    title = Column(String)\n    artist = Column(String)\n    length = Column(String)\n    key = Column(String)\n    date_added = Column(Date)\n    date_created = Column(Date)",
         "detail": "src.models.version",
         "documentation": {}
     },
@@ -882,7 +1268,7 @@
         "kind": 5,
         "importPath": "src.tests.test_editwindow",
         "description": "src.tests.test_editwindow",
-        "peekOfCode": "track = Track(title='Test Track', artist='Test Artist', length='3:00', BPM='120')\napp = QApplication(sys.argv)\nedit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec())",
+        "peekOfCode": "track = Track(title='Test Track', artist='Test Artist', length='3:00', bpm='120')\napp = QApplication(sys.argv)\nedit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec())",
         "detail": "src.tests.test_editwindow",
         "documentation": {}
     },
