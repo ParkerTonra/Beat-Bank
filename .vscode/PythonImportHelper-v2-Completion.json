@@ -9,196 +9,316 @@
         "documentation": {}
     },
     {
-        "label": "PyQt5",
+        "label": "PyQt6",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "PyQt5",
-        "description": "PyQt5",
-        "detail": "PyQt5",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
+        "detail": "PyQt6",
         "documentation": {}
     },
     {
         "label": "QtWidgets",
-        "importPath": "PyQt5",
-        "description": "PyQt5",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
         "isExtraImport": true,
-        "detail": "PyQt5",
+        "detail": "PyQt6",
         "documentation": {}
     },
     {
         "label": "QtGui",
-        "importPath": "PyQt5",
-        "description": "PyQt5",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
         "isExtraImport": true,
-        "detail": "PyQt5",
+        "detail": "PyQt6",
+        "documentation": {}
+    },
+    {
+        "label": "QtWidgets",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
+        "isExtraImport": true,
+        "detail": "PyQt6",
         "documentation": {}
     },
     {
         "label": "QtGui",
-        "importPath": "PyQt5",
-        "description": "PyQt5",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
         "isExtraImport": true,
-        "detail": "PyQt5",
+        "detail": "PyQt6",
         "documentation": {}
     },
     {
-        "label": "QLabel",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "QtGui",
+        "importPath": "PyQt6",
+        "description": "PyQt6",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6",
         "documentation": {}
     },
     {
-        "label": "QLineEdit",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "pyqtSignal",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
-        "label": "QPushButton",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "QMimeData",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
-        "label": "QVBoxLayout",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "QUrl",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
-        "label": "QWidget",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "pyqtSignal",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
-        "label": "QApplication",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "Qt",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
-        "label": "QTextEdit",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "QUrl",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
-        "label": "QApplication",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "label": "QMimeData",
+        "importPath": "PyQt6.QtCore",
+        "description": "PyQt6.QtCore",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
-        "documentation": {}
-    },
-    {
-        "label": "QMainWindow",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtCore",
         "documentation": {}
     },
     {
         "label": "QTableWidget",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
-        "documentation": {}
-    },
-    {
-        "label": "QTableWidgetItem",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
-        "documentation": {}
-    },
-    {
-        "label": "QPushButton",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
-        "documentation": {}
-    },
-    {
-        "label": "QVBoxLayout",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
-        "documentation": {}
-    },
-    {
-        "label": "QWidget",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
-        "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
         "label": "QLabel",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLineEdit",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QApplication",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QTextEdit",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QApplication",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QMainWindow",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QTableWidget",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QTableWidgetItem",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
         "label": "QFileDialog",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
         "label": "QHeaderView",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
         "label": "QMessageBox",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QHBoxLayout",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QFrame",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QAbstractItemView",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
         "label": "QApplication",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
         "documentation": {}
     },
     {
         "label": "QApplication",
-        "importPath": "PyQt5.QtWidgets",
-        "description": "PyQt5.QtWidgets",
+        "importPath": "PyQt6.QtWidgets",
+        "description": "PyQt6.QtWidgets",
         "isExtraImport": true,
-        "detail": "PyQt5.QtWidgets",
+        "detail": "PyQt6.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QDrag",
+        "importPath": "PyQt6.QtGui",
+        "description": "PyQt6.QtGui",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtGui",
+        "documentation": {}
+    },
+    {
+        "label": "QDrag",
+        "importPath": "PyQt6.QtGui",
+        "description": "PyQt6.QtGui",
+        "isExtraImport": true,
+        "detail": "PyQt6.QtGui",
         "documentation": {}
     },
     {
@@ -496,11 +616,20 @@
         "documentation": {}
     },
     {
+        "label": "DraggableTable",
+        "kind": 6,
+        "importPath": "src.gui.draggable_table",
+        "description": "src.gui.draggable_table",
+        "peekOfCode": "class DraggableTable(QTableWidget):\n    def __init__(self, *args, **kwargs):\n        super(DraggableTable, self).__init__(*args, **kwargs)\n        self.setDragEnabled(True)\n    def startDrag(self, supportedActions):\n        index = self.currentIndex()\n        if not index.isValid():\n            return\n        # Assuming the file path is in the 5th column (change as per your table structure)\n        file_path = self.item(index.row(), 4).text()",
+        "detail": "src.gui.draggable_table",
+        "documentation": {}
+    },
+    {
         "label": "EditTrackWindow",
         "kind": 6,
         "importPath": "src.gui.edit_track_window",
         "description": "src.gui.edit_track_window",
-        "peekOfCode": "class EditTrackWindow(QWidget):\n    def __init__(self, track=None, session=None):\n        super().__init__()\n        self.initUI()\n        self.track = track\n        self.session = session\n    def initUI(self):\n        print(\"Initializing UI for edit window...\")\n        # Create widgets for label and text entry\n        # Track Title",
+        "peekOfCode": "class EditTrackWindow(QWidget):\n    track_updated = pyqtSignal()\n    def __init__(self, track=None, session=None):\n        super().__init__()\n        self.initUI()\n        self.track = track\n        self.session = session\n    def initUI(self):\n        print(\"Initializing UI for edit window...\")\n        # Create widgets for label and text entry",
         "detail": "src.gui.edit_track_window",
         "documentation": {}
     },
@@ -509,7 +638,7 @@
         "kind": 6,
         "importPath": "src.gui.main_window",
         "description": "src.gui.main_window",
-        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Beat Bank')\n        self.setGeometry(100, 100, 800, 600)\n        # Create a button to add a track\n        self.add_button = QPushButton('Add track', self)",
+        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Beat Bank')\n        self.setGeometry(100, 100, 1400, 200)\n        # -----------------------------------------------------------------------------\n        # LEFT COLUMN LAYOUT",
         "detail": "src.gui.main_window",
         "documentation": {}
     },
@@ -545,7 +674,7 @@
         "kind": 5,
         "importPath": "src.tests.test_editwindow",
         "description": "src.tests.test_editwindow",
-        "peekOfCode": "track = Track(title='Test Track', artist='Test Artist', length='3:00', BPM='120')\napp = QApplication(sys.argv)\nedit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec_())",
+        "peekOfCode": "track = Track(title='Test Track', artist='Test Artist', length='3:00', BPM='120')\napp = QApplication(sys.argv)\nedit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec())",
         "detail": "src.tests.test_editwindow",
         "documentation": {}
     },
@@ -554,7 +683,7 @@
         "kind": 5,
         "importPath": "src.tests.test_editwindow",
         "description": "src.tests.test_editwindow",
-        "peekOfCode": "app = QApplication(sys.argv)\nedit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec_())",
+        "peekOfCode": "app = QApplication(sys.argv)\nedit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec())",
         "detail": "src.tests.test_editwindow",
         "documentation": {}
     },
@@ -563,7 +692,7 @@
         "kind": 5,
         "importPath": "src.tests.test_editwindow",
         "description": "src.tests.test_editwindow",
-        "peekOfCode": "edit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec_())",
+        "peekOfCode": "edit_window = EditTrackWindow()\nedit_window.setTrackInfo(track)\nedit_window.show()\nsys.exit(app.exec())",
         "detail": "src.tests.test_editwindow",
         "documentation": {}
     },
@@ -572,7 +701,7 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def main():\n    # Initialize the database\n    init_db()\n    # Create the application object\n    app = QApplication(sys.argv)\n    #dark mode theme\n    qdarktheme.setup_theme()\n    # Create the main window\n    main_window = MainWindow()\n    # Show the main window",
+        "peekOfCode": "def main():\n    # Initialize the database\n    init_db()\n    # Create the application object\n    app = QApplication(sys.argv)\n    # Dark mode theme\n    qdarktheme.setup_theme()\n    # Create the main window\n    main_window = MainWindow()\n    # Show the main window",
         "detail": "src.app",
         "documentation": {}
     },

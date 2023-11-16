@@ -8,13 +8,15 @@ from PyQt6.QtWidgets import (
     QHBoxLayout, QFrame
 )
 from PyQt6 import QtGui
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QUrl, QMimeData
 from database import SessionLocal, init_db
 from models import Track, Version
 from gui.edit_track_window import EditTrackWindow
 import mutagen  # Install mutagen with pip install mutagen
 import os
 import time
+from PyQt6.QtWidgets import QAbstractItemView
+from PyQt6.QtGui import QDrag
 
 # Initialize the database
 init_db()
@@ -100,6 +102,14 @@ class MainWindow(QMainWindow):
         self.table = QTableWidget(self)
         self.table.setMinimumHeight(500)
         
+        # Drag and drop
+        self.table.setAcceptDrops(True)
+        self.table.setDragEnabled(True)
+        
+        # Connect mouse events
+        self.table.mousePressEvent = self.tableMousePressEvent
+        self.table.mouseMoveEvent = self.tableMouseMoveEvent
+        
         #populate the table
         self.populate_table()
         table_layout.addWidget(self.table)
@@ -168,9 +178,12 @@ class MainWindow(QMainWindow):
         session.close()
 
     # Add a new track as a Track object to the database
-    def add_track(self):
+    def add_track(self, path=None):
+        if path:
+            file_name = path
+        else:
+            file_name, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
         session = SessionLocal()
-        file_name, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
         if file_name:
             audio = mutagen.File(file_name, easy=True)  # Extract metadata
             new_track = Track(
@@ -183,8 +196,11 @@ class MainWindow(QMainWindow):
             session.add(new_track)
             session.commit()
             self.populate_table()
+            # select the row of the newly added track
+            self.table.selectRow(self.table.rowCount() - 1)
+            #edit_track on the new track
+            self.edit_track()
         session.close()
-
 
     # Delete a track from the database
     def delete_track(self):
@@ -218,7 +234,7 @@ class MainWindow(QMainWindow):
     def edit_track(self):
         print("Editing track...")
         session = SessionLocal()
-        
+
         # Get the selected row
         row_index = self.select_row()
         if row_index is not None:
@@ -242,6 +258,55 @@ class MainWindow(QMainWindow):
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec()
 
+    # drag and drop
+    def tableMousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.dragStartPosition = event.pos()
+
+    def tableMouseMoveEvent(self, event):
+        if not (event.buttons() & Qt.MouseButton.LeftButton):
+            return
+        if ((event.pos() - self.dragStartPosition).manhattanLength() < QApplication.startDragDistance()):
+            return
+
+        item = self.table.itemAt(self.dragStartPosition)
+        if item and self.isDraggableCell(item):
+            self.startDragOperation(item)
+
+    def startDragOperation(self, item):
+        mime_data = QMimeData()
+        mime_data.setUrls([QUrl.fromLocalFile(item.text())])
+
+        drag = QDrag(self.table)
+        drag.setMimeData(mime_data)
+        drag.exec(Qt.DropAction.CopyAction | Qt.DropAction.MoveAction)
+
+    def isDraggableCell(self, item):
+        # Your logic to determine if the cell should be draggable
+        return # item.row() == your_draggable_row and item.column() == your_draggable_column
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+
+    def dragMoveEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+
+    def dropEvent(self, event):
+        # if file or link is dropped and it's an audio file
+        if event.mimeData().hasUrls() and event.mimeData().urls()[0].toLocalFile().endswith(('.mp3', '.wav', '.flac')):
+            print("Adding track " + event.mimeData().urls()[0].toLocalFile() + " to database...")
+            try:
+                path = event.mimeData().urls()[0].toLocalFile()
+                self.add_track(path)
+            except Exception as e:
+                print(f"An error occurred: {e} .. unable to add track to database.")
+            event.accept() # Allow the drop
+        else:
+            print("Error. Unable to add track to database. Is the file an audio file?")
+            event.ignore()
+    
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     main_window = MainWindow()
