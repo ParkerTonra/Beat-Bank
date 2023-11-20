@@ -32,6 +32,30 @@
         "documentation": {}
     },
     {
+        "label": "Sequence",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "op",
+        "importPath": "alembic",
+        "description": "alembic",
+        "isExtraImport": true,
+        "detail": "alembic",
+        "documentation": {}
+    },
+    {
         "label": "op",
         "importPath": "alembic",
         "description": "alembic",
@@ -249,190 +273,12 @@
         "documentation": {}
     },
     {
-        "label": "fileConfig",
-        "importPath": "logging.config",
-        "description": "logging.config",
-        "isExtraImport": true,
-        "detail": "logging.config",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "src.models",
-        "description": "src.models",
-        "isExtraImport": true,
-        "detail": "src.models",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "src.models",
-        "description": "src.models",
-        "isExtraImport": true,
-        "detail": "src.models",
-        "documentation": {}
-    },
-    {
-        "label": "Track",
-        "importPath": "src.models",
-        "description": "src.models",
-        "isExtraImport": true,
-        "detail": "src.models",
-        "documentation": {}
-    },
-    {
-        "label": "Version",
-        "importPath": "src.models",
-        "description": "src.models",
-        "isExtraImport": true,
-        "detail": "src.models",
-        "documentation": {}
-    },
-    {
-        "label": "datetime",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "datetime",
-        "description": "datetime",
-        "detail": "datetime",
-        "documentation": {}
-    },
-    {
-        "label": "mutagen",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "mutagen",
-        "description": "mutagen",
-        "detail": "mutagen",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "init_db",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "SessionLocal",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "init_db",
-        "importPath": "database",
-        "description": "database",
-        "isExtraImport": true,
-        "detail": "database",
-        "documentation": {}
-    },
-    {
-        "label": "Track",
-        "importPath": "models.track",
-        "description": "models.track",
-        "isExtraImport": true,
-        "detail": "models.track",
-        "documentation": {}
-    },
-    {
-        "label": "Track",
-        "importPath": "models.track",
-        "description": "models.track",
-        "isExtraImport": true,
-        "detail": "models.track",
-        "documentation": {}
-    },
-    {
-        "label": "Track",
-        "importPath": "models.track",
-        "description": "models.track",
-        "isExtraImport": true,
-        "detail": "models.track",
-        "documentation": {}
-    },
-    {
-        "label": "Version",
-        "importPath": "models.version",
-        "description": "models.version",
-        "isExtraImport": true,
-        "detail": "models.version",
-        "documentation": {}
-    },
-    {
-        "label": "Version",
-        "importPath": "models.version",
-        "description": "models.version",
-        "isExtraImport": true,
-        "detail": "models.version",
-        "documentation": {}
-    },
-    {
-        "label": "TrackBusinessModel",
-        "importPath": "models.track_business_model",
-        "description": "models.track_business_model",
-        "isExtraImport": true,
-        "detail": "models.track_business_model",
-        "documentation": {}
-    },
-    {
-        "label": "TrackBusinessModel",
-        "importPath": "models.track_business_model",
-        "description": "models.track_business_model",
-        "isExtraImport": true,
-        "detail": "models.track_business_model",
-        "documentation": {}
-    },
-    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "os",
         "description": "os",
         "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "UserSettingsBusinessModel",
-        "importPath": "models.user_settings_business_model",
-        "description": "models.user_settings_business_model",
-        "isExtraImport": true,
-        "detail": "models.user_settings_business_model",
         "documentation": {}
     },
     {
@@ -445,12 +291,317 @@
         "documentation": {}
     },
     {
-        "label": "PyQt6",
+        "label": "Base",
+        "importPath": "src.models",
+        "description": "src.models",
+        "isExtraImport": true,
+        "detail": "src.models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.models",
+        "description": "src.models",
+        "isExtraImport": true,
+        "detail": "src.models",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "src.models",
+        "description": "src.models",
+        "isExtraImport": true,
+        "detail": "src.models",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "src.models",
+        "description": "src.models",
+        "isExtraImport": true,
+        "detail": "src.models",
+        "documentation": {}
+    },
+    {
+        "label": "fileConfig",
+        "importPath": "logging.config",
+        "description": "logging.config",
+        "isExtraImport": true,
+        "detail": "logging.config",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "PyQt6",
-        "description": "PyQt6",
-        "detail": "PyQt6",
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "session_scope",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "SessionLocal",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "init_db",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "init_db",
+        "importPath": "database",
+        "description": "database",
+        "isExtraImport": true,
+        "detail": "database",
+        "documentation": {}
+    },
+    {
+        "label": "mutagen",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mutagen",
+        "description": "mutagen",
+        "detail": "mutagen",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettings",
+        "importPath": "models.user_settings",
+        "description": "models.user_settings",
+        "isExtraImport": true,
+        "detail": "models.user_settings",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettings",
+        "importPath": "models.user_settings",
+        "description": "models.user_settings",
+        "isExtraImport": true,
+        "detail": "models.user_settings",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models.version",
+        "description": "models.version",
+        "isExtraImport": true,
+        "detail": "models.version",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models.version",
+        "description": "models.version",
+        "isExtraImport": true,
+        "detail": "models.version",
+        "documentation": {}
+    },
+    {
+        "label": "Version",
+        "importPath": "models.version",
+        "description": "models.version",
+        "isExtraImport": true,
+        "detail": "models.version",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "importPath": "business.track_business_model",
+        "description": "business.track_business_model",
+        "isExtraImport": true,
+        "detail": "business.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "importPath": "business.track_business_model",
+        "description": "business.track_business_model",
+        "isExtraImport": true,
+        "detail": "business.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "importPath": "business.track_business_model",
+        "description": "business.track_business_model",
+        "isExtraImport": true,
+        "detail": "business.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsBusinessModel",
+        "importPath": "business.user_settings_business_model",
+        "description": "business.user_settings_business_model",
+        "isExtraImport": true,
+        "detail": "business.user_settings_business_model",
         "documentation": {}
     },
     {
@@ -847,21 +998,20 @@
         "documentation": {}
     },
     {
+        "label": "EditTrackController",
+        "importPath": "controllers.edit_track_controller",
+        "description": "controllers.edit_track_controller",
+        "isExtraImport": true,
+        "detail": "controllers.edit_track_controller",
+        "documentation": {}
+    },
+    {
         "label": "re",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "re",
         "description": "re",
         "detail": "re",
-        "documentation": {}
-    },
-    {
-        "label": "threading",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "threading",
-        "description": "threading",
-        "detail": "threading",
         "documentation": {}
     },
     {
@@ -903,22 +1053,6 @@
         "importPath": "time",
         "description": "time",
         "detail": "time",
-        "documentation": {}
-    },
-    {
-        "label": "UserSettings",
-        "importPath": "models.user_settings",
-        "description": "models.user_settings",
-        "isExtraImport": true,
-        "detail": "models.user_settings",
-        "documentation": {}
-    },
-    {
-        "label": "UserSettings",
-        "importPath": "models.user_settings",
-        "description": "models.user_settings",
-        "isExtraImport": true,
-        "detail": "models.user_settings",
         "documentation": {}
     },
     {
@@ -978,54 +1112,6 @@
         "documentation": {}
     },
     {
-        "label": "Base",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Track",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Version",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "importPath": "models",
-        "description": "models",
-        "isExtraImport": true,
-        "detail": "models",
-        "documentation": {}
-    },
-    {
         "label": "Track",
         "importPath": "src.models.track",
         "description": "src.models.track",
@@ -1056,6 +1142,14 @@
         "importPath": "qdarktheme",
         "description": "qdarktheme",
         "detail": "qdarktheme",
+        "documentation": {}
+    },
+    {
+        "label": "contextmanager",
+        "importPath": "contextlib",
+        "description": "contextlib",
+        "isExtraImport": true,
+        "detail": "contextlib",
         "documentation": {}
     },
     {
@@ -1120,6 +1214,24 @@
         "documentation": {}
     },
     {
+        "label": "upgrade",
+        "kind": 2,
+        "importPath": "alembic.versions.beb069fcbd63_update_cascade_rules",
+        "description": "alembic.versions.beb069fcbd63_update_cascade_rules",
+        "peekOfCode": "def upgrade() -> None:\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.drop_constraint('fk_tracks_current_version_id_versions', 'tracks', type_='foreignkey')\n    op.create_foreign_key('fk_tracks_current_version_id_versions', 'tracks', 'versions', ['current_version_id'], ['id'], ondelete='CASCADE')\n    # ### end Alembic commands ###\ndef downgrade() -> None:\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('tracks',\n    sa.Column('id', sa.INTEGER(), nullable=False),\n    sa.Column('title', sa.VARCHAR(), nullable=True),",
+        "detail": "alembic.versions.beb069fcbd63_update_cascade_rules",
+        "documentation": {}
+    },
+    {
+        "label": "downgrade",
+        "kind": 2,
+        "importPath": "alembic.versions.beb069fcbd63_update_cascade_rules",
+        "description": "alembic.versions.beb069fcbd63_update_cascade_rules",
+        "peekOfCode": "def downgrade() -> None:\n    # ### commands auto generated by Alembic - please adjust! ###\n    op.create_table('tracks',\n    sa.Column('id', sa.INTEGER(), nullable=False),\n    sa.Column('title', sa.VARCHAR(), nullable=True),\n    sa.Column('length', sa.VARCHAR(), nullable=True),\n    sa.Column('key', sa.VARCHAR(), nullable=True),\n    sa.Column('date_created', sa.DATE(), nullable=True),\n    sa.Column('date_added', sa.DATE(), nullable=True),\n    sa.Column('notes', sa.VARCHAR(), nullable=True),",
+        "detail": "alembic.versions.beb069fcbd63_update_cascade_rules",
+        "documentation": {}
+    },
+    {
         "label": "run_migrations_offline",
         "kind": 2,
         "importPath": "alembic.env",
@@ -1138,11 +1250,38 @@
         "documentation": {}
     },
     {
+        "label": "current_dir",
+        "kind": 5,
+        "importPath": "alembic.env",
+        "description": "alembic.env",
+        "peekOfCode": "current_dir = os.path.dirname(__file__)\n# Calculate the path to the 'Beat-Bank' directory\nbeat_bank_path = os.path.abspath(os.path.join(current_dir, '..'))\nsrc_path = os.path.join(beat_bank_path, 'src')\n# Add 'Beat-Bank' to the Python path\nsys.path.append(src_path)\nfrom src.models import Base\nfrom logging.config import fileConfig\nfrom sqlalchemy import engine_from_config\nfrom sqlalchemy import pool",
+        "detail": "alembic.env",
+        "documentation": {}
+    },
+    {
+        "label": "beat_bank_path",
+        "kind": 5,
+        "importPath": "alembic.env",
+        "description": "alembic.env",
+        "peekOfCode": "beat_bank_path = os.path.abspath(os.path.join(current_dir, '..'))\nsrc_path = os.path.join(beat_bank_path, 'src')\n# Add 'Beat-Bank' to the Python path\nsys.path.append(src_path)\nfrom src.models import Base\nfrom logging.config import fileConfig\nfrom sqlalchemy import engine_from_config\nfrom sqlalchemy import pool\nfrom alembic import context\n# this is the Alembic Config object, which provides",
+        "detail": "alembic.env",
+        "documentation": {}
+    },
+    {
+        "label": "src_path",
+        "kind": 5,
+        "importPath": "alembic.env",
+        "description": "alembic.env",
+        "peekOfCode": "src_path = os.path.join(beat_bank_path, 'src')\n# Add 'Beat-Bank' to the Python path\nsys.path.append(src_path)\nfrom src.models import Base\nfrom logging.config import fileConfig\nfrom sqlalchemy import engine_from_config\nfrom sqlalchemy import pool\nfrom alembic import context\n# this is the Alembic Config object, which provides\n# access to the values within the .ini file in use.",
+        "detail": "alembic.env",
+        "documentation": {}
+    },
+    {
         "label": "config",
         "kind": 5,
         "importPath": "alembic.env",
         "description": "alembic.env",
-        "peekOfCode": "config = context.config\n# Interpret the config file for Python logging.\n# This line sets up loggers basically.\nif config.config_file_name is not None:\n    fileConfig(config.config_file_name)\n# add your model's MetaData object here\n# for 'autogenerate' support\n# from myapp import mymodel\n# target_metadata = mymodel.Base.metadata\ntarget_metadata = None",
+        "peekOfCode": "config = context.config\n# Interpret the config file for Python logging.\n# This line sets up loggers basically.\nif config.config_file_name is not None:\n    fileConfig(config.config_file_name)\n# add your model's MetaData object here\n# for 'autogenerate' support\n# from myapp import mymodel\n# target_metadata = mymodel.Base.metadata\ntarget_metadata = Base.metadata  # This is the metadata object from src/models/__init__.py",
         "detail": "alembic.env",
         "documentation": {}
     },
@@ -1151,8 +1290,44 @@
         "kind": 5,
         "importPath": "alembic.env",
         "description": "alembic.env",
-        "peekOfCode": "target_metadata = None\n# other values from the config, defined by the needs of env.py,\n# can be acquired:\n# my_important_option = config.get_main_option(\"my_important_option\")\n# ... etc.\ndef run_migrations_offline() -> None:\n    \"\"\"Run migrations in 'offline' mode.\n    This configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation",
+        "peekOfCode": "target_metadata = Base.metadata  # This is the metadata object from src/models/__init__.py\n# other values from the config, defined by the needs of env.py,\n# can be acquired:\n# my_important_option = config.get_main_option(\"my_important_option\")\n# ... etc.\ndef run_migrations_offline() -> None:\n    \"\"\"Run migrations in 'offline' mode.\n    This configures the context with just a URL\n    and not an Engine, though an Engine is acceptable\n    here as well.  By skipping the Engine creation",
         "detail": "alembic.env",
+        "documentation": {}
+    },
+    {
+        "label": "EditTrackBusinessModel",
+        "kind": 6,
+        "importPath": "src.business.edit_track_business",
+        "description": "src.business.edit_track_business",
+        "peekOfCode": "class EditTrackBusinessModel:\n    def update_track(self, track):\n        with SessionLocal() as session:\n            try:\n                session.merge(track)  # Merge the updated track object\n                session.commit()\n                print(\"Track updated successfully in the database.\")\n            except Exception as e:\n                print(f\"An error occurred: {e}\")\n                session.rollback()",
+        "detail": "src.business.edit_track_business",
+        "documentation": {}
+    },
+    {
+        "label": "TrackBusinessModel",
+        "kind": 6,
+        "importPath": "src.business.track_business_model",
+        "description": "src.business.track_business_model",
+        "peekOfCode": "class TrackBusinessModel:\n    def add_track(self, track_obj, version_obj):\n        try:\n            with SessionLocal() as session:\n                session.add(track_obj)\n                session.add(version_obj)\n                session.commit()\n        finally:\n            session.close()\n    def delete_track(self, track_id):",
+        "detail": "src.business.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "UserSettingsBusinessModel",
+        "kind": 6,
+        "importPath": "src.business.user_settings_business_model",
+        "description": "src.business.user_settings_business_model",
+        "peekOfCode": "class UserSettingsBusinessModel:\n    def get_developer_mode(self):\n        with SessionLocal() as session:\n            settings = session.query(UserSettings).first()\n            if settings is not None:\n                return settings.developer_mode\n            else:\n                # If no settings are found, return a default value (e.g., False)\n                return False\n    def toggle_developer_mode(self):",
+        "detail": "src.business.user_settings_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "EditTrackController",
+        "kind": 6,
+        "importPath": "src.controllers.edit_track_controller",
+        "description": "src.controllers.edit_track_controller",
+        "peekOfCode": "class EditTrackController:\n    def __init__(self, view):\n        self.model = TrackBusinessModel()\n        self.view = view\n        self.view.track_updated.connect(self.update_track)\n    def update_track(self, track):\n        self.model.update_track(track)",
+        "detail": "src.controllers.edit_track_controller",
         "documentation": {}
     },
     {
@@ -1187,7 +1362,7 @@
         "kind": 6,
         "importPath": "src.gui.edit_track_window",
         "description": "src.gui.edit_track_window",
-        "peekOfCode": "class EditTrackWindow(QWidget):\n    track_updated = pyqtSignal()\n    def __init__(self, track=None, session=None):\n        super().__init__()\n        self.initUI()\n        self.track = track\n        self.session = session\n    def initUI(self):\n        print(\"Initializing UI for edit window...\")\n        # Create widgets for label and text entry",
+        "peekOfCode": "class EditTrackWindow(QWidget):\n    track_updated = pyqtSignal()\n    def __init__(self, track=None, session=None):\n        super().__init__()\n        self.initUI()\n        self.track = track\n        self.controller = EditTrackController(self)\n    def initUI(self):\n        print(\"Initializing UI for edit window...\")\n        # Create widgets for label and text entry",
         "detail": "src.gui.edit_track_window",
         "documentation": {}
     },
@@ -1196,7 +1371,7 @@
         "kind": 6,
         "importPath": "src.gui.main_window",
         "description": "src.gui.main_window",
-        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.init_ui()\n        self.track_controller = TrackController(self)\n        self.user_settings = UserSettings()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")\n        self.setWindowTitle('Beat Bank')\n        self.setGeometry(100, 100, 1400, 200)",
+        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self):\n        super().__init__()\n        self.track_controller = TrackController(self)\n        self.user_settings = UserSettings()\n        self._updating_cell = False\n        self.isEditing = False\n        self.init_ui()\n    def init_ui(self):\n        print(\"Initializing UI for main window...\")",
         "detail": "src.gui.main_window",
         "documentation": {}
     },
@@ -1223,17 +1398,8 @@
         "kind": 6,
         "importPath": "src.models.track",
         "description": "src.models.track",
-        "peekOfCode": "class Track(Base):\n    __tablename__ = 'tracks'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    title = Column(String)\n    artist = Column(String)\n    bpm = Column(Float)\n    length = Column(String)\n    key = Column(String)\n    date_created = Column(Date)\n    date_added = Column(Date)",
+        "peekOfCode": "class Track(Base):\n    __tablename__ = 'tracks'\n    __table_args__ = {'extend_existing': True}\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    title = Column(String)\n    artist = Column(String)\n    bpm = Column(Float)\n    length = Column(String)\n    key = Column(String)\n    date_created = Column(Date)",
         "detail": "src.models.track",
-        "documentation": {}
-    },
-    {
-        "label": "TrackBusinessModel",
-        "kind": 6,
-        "importPath": "src.models.track_business_model",
-        "description": "src.models.track_business_model",
-        "peekOfCode": "class TrackBusinessModel:\n    def add_track(self, track_obj, version_obj):\n        try:\n            with SessionLocal() as session:\n                session.add(track_obj)\n                session.add(version_obj)\n                session.commit()\n        finally:\n            session.close()\n    def get_tracks(self):",
-        "detail": "src.models.track_business_model",
         "documentation": {}
     },
     {
@@ -1246,20 +1412,11 @@
         "documentation": {}
     },
     {
-        "label": "UserSettingsBusinessModel",
-        "kind": 6,
-        "importPath": "src.models.user_settings_business_model",
-        "description": "src.models.user_settings_business_model",
-        "peekOfCode": "class UserSettingsBusinessModel:\n    def get_developer_mode(self):\n        with SessionLocal() as session:\n            settings = session.query(UserSettings).first()\n            if settings is not None:\n                return settings.developer_mode\n            else:\n                # If no settings are found, return a default value (e.g., False)\n                return False\n    def toggle_developer_mode(self):",
-        "detail": "src.models.user_settings_business_model",
-        "documentation": {}
-    },
-    {
         "label": "Version",
         "kind": 6,
         "importPath": "src.models.version",
         "description": "src.models.version",
-        "peekOfCode": "class Version(Base):\n    __tablename__ = 'versions'\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    track_id = Column(Integer, ForeignKey('tracks.id'))\n    title = Column(String)\n    artist = Column(String)\n    length = Column(String)\n    key = Column(String)\n    date_added = Column(Date)\n    date_created = Column(Date)",
+        "peekOfCode": "class Version(Base):\n    __tablename__ = 'versions'\n    __table_args__ = {'extend_existing': True}\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    track_id = Column(Integer, ForeignKey('tracks.id'))\n    title = Column(String)\n    artist = Column(String)\n    length = Column(String)\n    key = Column(String)\n    date_added = Column(Date)",
         "detail": "src.models.version",
         "documentation": {}
     },
@@ -1300,6 +1457,15 @@
         "documentation": {}
     },
     {
+        "label": "session_scope",
+        "kind": 2,
+        "importPath": "src.database",
+        "description": "src.database",
+        "peekOfCode": "def session_scope():\n    session = SessionLocal()\n    try:\n        yield session\n        session.commit()\n    except Exception:\n        session.rollback()\n        raise\n    finally:\n        session.close()",
+        "detail": "src.database",
+        "documentation": {}
+    },
+    {
         "label": "init_db",
         "kind": 2,
         "importPath": "src.database",
@@ -1313,7 +1479,7 @@
         "kind": 5,
         "importPath": "src.database",
         "description": "src.database",
-        "peekOfCode": "engine = create_engine('sqlite:///music_db.sqlite3')\n# Create a custom Session class\nSessionLocal = sessionmaker(bind=engine)\ndef init_db():\n    # Create tables in the database\n    Base.metadata.create_all(bind=engine)",
+        "peekOfCode": "engine = create_engine('sqlite:///music_db.sqlite3')\n# Create a custom Session class\nSessionLocal = sessionmaker(bind=engine)\n@contextmanager\ndef session_scope():\n    session = SessionLocal()\n    try:\n        yield session\n        session.commit()\n    except Exception:",
         "detail": "src.database",
         "documentation": {}
     },
@@ -1322,7 +1488,7 @@
         "kind": 5,
         "importPath": "src.database",
         "description": "src.database",
-        "peekOfCode": "SessionLocal = sessionmaker(bind=engine)\ndef init_db():\n    # Create tables in the database\n    Base.metadata.create_all(bind=engine)",
+        "peekOfCode": "SessionLocal = sessionmaker(bind=engine)\n@contextmanager\ndef session_scope():\n    session = SessionLocal()\n    try:\n        yield session\n        session.commit()\n    except Exception:\n        session.rollback()\n        raise",
         "detail": "src.database",
         "documentation": {}
     },

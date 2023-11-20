@@ -3,7 +3,7 @@ import mutagen
 from database import SessionLocal
 from models.track import Track
 from models.version import Version
-from models.track_business_model import TrackBusinessModel
+from business.track_business_model import TrackBusinessModel
 import os
 from models.track import Track
 
@@ -71,17 +71,23 @@ class TrackController:
     def get_tracks(self):
         tracks = self.model.get_tracks()
         return tracks
+    
+    def get_track(self, track_id):
+        track = self.model.get_track(track_id)
+        return track
 
     def delete_track(self, track_id):
         # Delete track logic
-        track = self.session.query(Track).filter(Track.id == track_id).first()
-        if track:
-            self.session.delete(track)
-            self.session.commit()
-    
+        self.model.delete_track(track_id)
+
     def update_database(self, row, column, new_value):
         pass
     
-    
+    def get_versions(self, track_id):
+        track = self.model.get_track(track_id)
+        return track.versions
+
+    def update_track(self, updated_track):
+        self.model.update_track(updated_track)
 
     # Other methods for different actions (edit, refresh, etc.)

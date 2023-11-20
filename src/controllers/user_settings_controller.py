@@ -1,4 +1,4 @@
-from models.user_settings_business_model import UserSettingsBusinessModel
+from business.user_settings_business_model import UserSettingsBusinessModel
 
 class UserSettingsController:
     def __init__(self, view):

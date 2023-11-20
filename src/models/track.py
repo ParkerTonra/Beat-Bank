@@ -4,6 +4,7 @@ from models import Base  # Import the Base object from __init__.py
 
 class Track(Base):
     __tablename__ = 'tracks'
+    __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)
     artist = Column(String)
@@ -18,7 +19,7 @@ class Track(Base):
     
     current_version_id = Column(Integer, ForeignKey('versions.id'))
     current_version = relationship('Version', foreign_keys=[current_version_id], back_populates='track', uselist=False)
-    versions = relationship('Version', back_populates='track', foreign_keys='Version.track_id')
+    versions = relationship('Version', back_populates='track', foreign_keys='Version.track_id', cascade='all, delete-orphan')
     # TODO: waveform
     # waveform = Column(Binary)  # You may want to change this based on how you handle waveforms
 

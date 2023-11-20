@@ -2,6 +2,7 @@ import sys
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
+from controllers.edit_track_controller import EditTrackController
 from database import SessionLocal
 
 class EditTrackWindow(QWidget):
@@ -10,7 +11,7 @@ class EditTrackWindow(QWidget):
         super().__init__()
         self.initUI()
         self.track = track
-        self.session = session
+        self.controller = EditTrackController(self)
         
     def initUI(self):
         print("Initializing UI for edit window...")
@@ -73,21 +74,8 @@ class EditTrackWindow(QWidget):
         self.track.key = self.track_key_line_edit.text()
         self.track.notes = self.track_notes_text_edit.toPlainText()
         
-        try:
-            self.session.add(self.track)
-            self.session.flush()
-            self.session.commit()
-            print("Track updated successfully in the database.")
-            self.track_updated.emit()
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            self.session.rollback()  # Rollback in case of error
-        finally:
-            #TODO: signal to refresh the database
-            self.session.close()
-            # Close the window
-            self.close()
-        
+        self.track_updated.emit(self.track)  # Emit the track object for the controller to handle
+        self.close()
         
     def setTrackInfo(self, track):
         self.track_title_line_edit.setText(track.title)
@@ -95,3 +83,12 @@ class EditTrackWindow(QWidget):
         self.track_bpm_line_edit.setText(str(track.bpm))
         self.track_key_line_edit.setText(track.key)
         self.track_notes_text_edit.setText(track.notes)
+
+    def save_changes(self):
+        # Collect the changes from the UI elements
+        self.track.artist = self.artist_edit.text()
+        self.track.title = self.title_edit.text()
+        # ... collect other fields similarly
+        
+        self.track_updated.emit(self.track)  # Emit the updated track
+        self.close()

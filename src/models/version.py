@@ -4,6 +4,7 @@ from models import Base
 
 class Version(Base):
     __tablename__ = 'versions'
+    __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True, autoincrement=True)
     track_id = Column(Integer, ForeignKey('tracks.id'))
     title = Column(String)
