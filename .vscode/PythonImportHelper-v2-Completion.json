@@ -549,6 +549,14 @@
         "documentation": {}
     },
     {
+        "label": "Track",
+        "importPath": "models.track",
+        "description": "models.track",
+        "isExtraImport": true,
+        "detail": "models.track",
+        "documentation": {}
+    },
+    {
         "label": "Version",
         "importPath": "models.version",
         "description": "models.version",
@@ -594,6 +602,30 @@
         "description": "business.track_business_model",
         "isExtraImport": true,
         "detail": "business.track_business_model",
+        "documentation": {}
+    },
+    {
+        "label": "EditTrackBusinessModel",
+        "importPath": "business.edit_track_business",
+        "description": "business.edit_track_business",
+        "isExtraImport": true,
+        "detail": "business.edit_track_business",
+        "documentation": {}
+    },
+    {
+        "label": "EditTrackWindow",
+        "importPath": "gui.edit_track_window",
+        "description": "gui.edit_track_window",
+        "isExtraImport": true,
+        "detail": "gui.edit_track_window",
+        "documentation": {}
+    },
+    {
+        "label": "EditTrackWindow",
+        "importPath": "gui.edit_track_window",
+        "description": "gui.edit_track_window",
+        "isExtraImport": true,
+        "detail": "gui.edit_track_window",
         "documentation": {}
     },
     {
@@ -1039,14 +1071,6 @@
         "documentation": {}
     },
     {
-        "label": "EditTrackWindow",
-        "importPath": "gui.edit_track_window",
-        "description": "gui.edit_track_window",
-        "isExtraImport": true,
-        "detail": "gui.edit_track_window",
-        "documentation": {}
-    },
-    {
         "label": "time",
         "kind": 6,
         "isExtraImport": true,
@@ -1362,7 +1386,7 @@
         "kind": 6,
         "importPath": "src.gui.edit_track_window",
         "description": "src.gui.edit_track_window",
-        "peekOfCode": "class EditTrackWindow(QWidget):\n    track_updated = pyqtSignal()\n    def __init__(self, track=None, session=None):\n        super().__init__()\n        self.initUI()\n        self.track = track\n        self.controller = EditTrackController(self)\n    def initUI(self):\n        print(\"Initializing UI for edit window...\")\n        # Create widgets for label and text entry",
+        "peekOfCode": "class EditTrackWindow(QWidget):\n    track_updated = pyqtSignal(Track)\n    def __init__(self, track):\n        super().__init__()\n        self.initUI()\n        self.track = track\n        self.controller = EditTrackController(self)\n        self.submitButton.clicked.connect(self.submit_edit)\n    def initUI(self):\n        print(\"Initializing UI for edit window...\")",
         "detail": "src.gui.edit_track_window",
         "documentation": {}
     },

@@ -6,13 +6,15 @@ from models.version import Version
 from business.track_business_model import TrackBusinessModel
 import os
 from models.track import Track
-
+from business.edit_track_business import EditTrackBusinessModel
+from gui.edit_track_window import EditTrackWindow
 
 class TrackController:
     def __init__(self, view):
         super().__init__()
         self.model = TrackBusinessModel()
         self.view = view
+        
         
     def add_track(self, path, new_track=True):
         if new_track == False:
@@ -21,6 +23,16 @@ class TrackController:
         else:
             self.add_new_track(path)
         return
+    
+    def request_edit_track(self, track):
+        self.edit_window = EditTrackWindow(track)
+        self.edit_window.setTrackInfo(track)
+        self.edit_window.track_updated.connect(self.update_table_row_after_edit)
+        self.edit_window.show()
+
+    def update_table_row_after_edit(self, track):
+        self.update_track(track)
+        self.view.update_table_row(track.id)
     
     def add_new_version(self, path):
         pass #TODO: add new version to existing track
@@ -89,5 +101,11 @@ class TrackController:
 
     def update_track(self, updated_track):
         self.model.update_track(updated_track)
+
+    def handle_dropped_file(self, path):
+        if self.already_in_database(path):
+            self.view.show_warning_message("Track Already in Database", "This track is already in the database.")
+        else:
+            self.add_track(path, new_track=True)
 
     # Other methods for different actions (edit, refresh, etc.)

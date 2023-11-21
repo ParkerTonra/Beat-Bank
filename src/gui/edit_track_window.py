@@ -4,14 +4,16 @@ from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
 from controllers.edit_track_controller import EditTrackController
 from database import SessionLocal
+from models.track import Track
 
 class EditTrackWindow(QWidget):
-    track_updated = pyqtSignal()
-    def __init__(self, track=None, session=None):
+    track_updated = pyqtSignal(Track)
+    def __init__(self, track):
         super().__init__()
         self.initUI()
         self.track = track
         self.controller = EditTrackController(self)
+        self.submitButton.clicked.connect(self.submit_edit)
         
     def initUI(self):
         print("Initializing UI for edit window...")

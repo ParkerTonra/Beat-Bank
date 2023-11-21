@@ -179,6 +179,7 @@ class MainWindow(QMainWindow):
             return
         self.table.blockSignals(True)
         print("Refreshing table...")
+        
         tracks = self.track_controller.get_tracks()
         self.table.setRowCount(len(tracks))
 
@@ -197,13 +198,19 @@ class MainWindow(QMainWindow):
         self.table.blockSignals(False)
         
     # Takes a track as parameter and updates that row in the table
-    def update_table_row(self, track_id, row_index):
+    def update_table_row(self, row_index):
         try:
-            updated_track = self.track_controller.get_track(track_id)
-            if updated_track:
-                self.set_table_row_data(row_index, updated_track)
+            print(f"Updating table row for track in row \'{row_index}\'...")
+            track_item = self.table.item(row_index, 0)
+            if track_item:
+                track = track_item.data(Qt.ItemDataRole.UserRole)
+                if track:
+                    print(f"Found track \"{track.title}\" at row {row_index}. Updating table row...")
+                    self.set_table_row_data(row_index, track)
+                else:
+                    print("Track object not found in the selected row.")
             else:
-                self.handle_track_not_found(track_id)
+                self.handle_track_not_found(track.id)
         except Exception as e:
             print(f"An error occurred: {e}")
 
@@ -238,7 +245,7 @@ class MainWindow(QMainWindow):
         else:
             print("No track selected.")
         
-    
+
     # Select row from item selected
     def select_row(self):
         # Get the selected row
@@ -259,24 +266,15 @@ class MainWindow(QMainWindow):
     
     # Edit track metadata
     def edit_track(self):
-        print("Editing track...")
+        
         row_index = self.select_row()
+        print(f"Editing track at row {row_index}..")
         if row_index:
             track_item = self.table.item(row_index, 0)
             if track_item:
                 track = track_item.data(Qt.ItemDataRole.UserRole)
-                if track:
-                    self.edit_window = EditTrackWindow(track)
-                    self.edit_window.track_updated.connect(self.table_refresh)
-                    self.edit_window.setTrackInfo(track)
-                    self.edit_window.show()
-                else:
-                    print("Track object not found in the selected row.")
-            else:
-                print("No item found in the selected row.")
-        else:
-            print("No track selected.")
-    
+                self.track_controller.request_edit_track(track)
+
     def update_cell(self, item):
         if self._updating_cell or self.isEditing:
             return
@@ -334,10 +332,10 @@ class MainWindow(QMainWindow):
             self.lastClickTime = current_time
          
     def handleSingleClick(self, event):
-        print("Single click event")
         #on the table, select the cell at that position
         item = self.table.itemAt(event.pos())
-        self.table.setCurrentItem(item)
+        if item:
+            print(f"Item clicked: {item.text()} at row {item.row()}, column {item.column()}")
         self.dragStartPosition = event.pos()
         
     def handleDoubleClick(self, event):
@@ -347,7 +345,7 @@ class MainWindow(QMainWindow):
         column = self.table.columnAt(event.pos().x())
         item = self.table.item(row, column)
         if item:
-            print(f"Double clicked on {item.text()}")
+            print(f"Double clicked on {item.text()} in row {row}, column {column}")
             self.table.setCurrentItem(item)  # Select the item
             item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable) # Make the item editable
             self.table.editItem(item)
@@ -390,22 +388,12 @@ class MainWindow(QMainWindow):
     def dropEvent(self, event):
         # if file or link is dropped and it's an audio file
         if event.mimeData().hasUrls() and event.mimeData().urls()[0].toLocalFile().endswith(('.mp3', '.wav', '.flac')):
-            print("Adding track " + event.mimeData().urls()[0].toLocalFile() + " to database...")
-            try:
-                path = event.mimeData().urls()[0].toLocalFile()
-                # query the database to see if this file is already in the database
-                session = SessionLocal()
-                if self.track_controller.already_in_database(path):
-                    session.close()
-                    self.show_warning_message("Track Already in Database", "This track is already in the database.")
-                    return
-                self.add_track(path)
-            except Exception as e:
-                print(f"An error occurred: {e} .. unable to add track to database.")
-            event.accept() # Allow the drop
+            print("Adding track " + event.mimeData().urls()[0].toLocalFile() + "...")
+            path = event.mimeData().urls()[0].toLocalFile()
+            self.track_controller.handle_dropped_file(path)
         else:
             print("Error. Unable to add track to database. Is the file an audio file?")
-            event.ignore()
+            event.ignore()   
 
     # Ask user if the new track is a new version of an existing track
     def ask_if_new_track(self, path):
