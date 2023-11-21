@@ -1,8 +1,5 @@
 import re
-import PyQt6
 import sys
-import os
-import threading
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QTableWidget, QTableWidgetItem,
     QPushButton, QVBoxLayout, QWidget, QLabel, QFileDialog, QHeaderView, QMessageBox,
@@ -10,8 +7,13 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6 import QtGui
 from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime
+
+from controllers import track_controller
 from database import SessionLocal, init_db
-from models import Track, Version
+from business.track_business_model import TrackBusinessModel
+from models.track import Track
+from models.version import Version
+from controllers.track_controller import TrackController
 from gui.edit_track_window import EditTrackWindow
 import mutagen  # Install mutagen with pip install mutagen
 import os
@@ -19,7 +21,9 @@ import time
 from PyQt6.QtWidgets import QAbstractItemView
 from PyQt6.QtGui import QDrag
 from PyQt6 import QtWidgets
+from models.user_settings import UserSettings
 
+#TODO: remember settings for window size / other user settings and position from cache or something
 # Initialize the database
 init_db()
 
@@ -29,6 +33,10 @@ init_db()
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.track_controller = TrackController(self)
+        self.user_settings = UserSettings()
+        self._updating_cell = False
+        self.isEditing = False
         self.init_ui()
 
     def init_ui(self):
@@ -48,7 +56,7 @@ class MainWindow(QMainWindow):
         
         # Refresh button
         self.refresh_button = QPushButton('Refresh', self)
-        self.refresh_button.clicked.connect(self.full_update_table)
+        self.refresh_button.clicked.connect(self.table_refresh)
         self.refresh_button.setIcon(QtGui.QIcon('src/assets/pictures/refresh.png'))
         left_layout.addWidget(self.refresh_button)
         
@@ -118,7 +126,7 @@ class MainWindow(QMainWindow):
         self.table.mouseMoveEvent = self.tableMouseMoveEvent
         
         #populate the table
-        self.populate_table()
+        self.setup_table()
         table_layout.addWidget(self.table)
         
         # -----------------------------------------------------------------------------
@@ -135,96 +143,109 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.container)
 
-
+        
     # =============================================================================
     # MAIN WINDOW FUNCTIONS
     # =============================================================================
     
-    # Refresh the entire table    
-    def full_update_table(self):
-        session = SessionLocal()
-        tracks = session.query(Track).all()
-        self.table.setRowCount(len(tracks))
-        for i, track in enumerate(tracks):
-            self.table.setItem(i, 0, QTableWidgetItem(track.artist))
-            self.table.setItem(i, 1, QTableWidgetItem(track.title))
-            self.table.setItem(i, 2, QTableWidgetItem(str(track.BPM)))
-            self.table.setItem(i, 3, QTableWidgetItem(track.length))
-            self.table.setItem(i, 4, QTableWidgetItem(track.file_path))
-        session.close()
-        
-    # Takes a track as parameter and updates that row in the table
-    def update_table(self, track, row_index):
-        session = SessionLocal()
-        # Query the database to find the track with the same id as the passed track object
-        updated_track = session.query(Track).filter(Track.id == track.id).first()
-        if updated_track:
-            # Update the table directly using the known row index
-            self.table.setItem(row_index, 0, QTableWidgetItem(updated_track.artist))
-            self.table.setItem(row_index, 1, QTableWidgetItem(updated_track.title))
-            self.table.setItem(row_index, 2, QTableWidgetItem(str(updated_track.BPM)))
-            self.table.setItem(row_index, 3, QTableWidgetItem(updated_track.length))
-            self.table.setItem(row_index, 4, QTableWidgetItem(updated_track.file_path))
-        session.close()
-    
-    # Refreshes the whole table
-    def populate_table(self):
-        session = SessionLocal()
-        # Query the database
-        tracks = session.query(Track).all()
-        self.table.setRowCount(len(tracks))
-        self.table.setColumnCount(5)  # Adjust column count based on data
-        self.table.setHorizontalHeaderLabels(['Artist', 'Title', 'BPM', 'Length', 'File Path', ])  # Set column headers
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)  # Stretch columns to fill space
-        for i, track in enumerate(tracks):
-            self.table.setItem(i, 0, QTableWidgetItem(track.artist))
-            self.table.setItem(i, 1, QTableWidgetItem(track.title))
-            self.table.setItem(i, 2, QTableWidgetItem(str(track.BPM)))
-            self.table.setItem(i, 3, QTableWidgetItem(track.length))
-            self.table.setItem(i, 4, QTableWidgetItem(track.file_path))
-        session.close()
-    
-    def populate_version_table(self, track):
-        with SessionLocal as session:
-            versions = session.query(Version).filter(Version.track_id == track.id).all()
-            self.version_table.setRowCount(len(versions))
-            self.version_table.setColumnCount(2)
-    
     # Add a new track as a Track object to the database
     def add_track(self, path=None):
+        if self.ask_if_new_track(path) is False:
+            print("TODO. Track not added.")
+            # add_new_version(path)
+            return
         if path:
             file_name = path
         else:
             file_name, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
-        session = SessionLocal()
         if file_name:
-            audio = mutagen.File(file_name, easy=True)  # Extract metadata
-            new_track = Track(
-                title=audio.get('title', [os.path.basename(file_name)])[0],
-                artist=audio.get('artist', ['Unknown'])[0],
-                length=str(int(audio.info.length // 60)) + ':' + str(int(audio.info.length % 60)),
-                file_path=file_name,
-                BPM=0  # Assuming BPM is not available in metadata
-            )
-            session.add(new_track)
-            session.commit()
-            self.populate_table()
-            # select the row of the newly added track
+            self.track_controller.add_track(file_name)
+            self.table_refresh()
             self.table.selectRow(self.table.rowCount() - 1)
-            #edit_track on the new track
             self.edit_track()
-        session.close()
+    
+    # Initialize the table
+    def setup_table(self):
+        print("Initializing the tracks table...")
+        self.table.setColumnCount(5)
+        self.table.setHorizontalHeaderLabels(['Artist', 'Title', 'BPM', 'Length', 'File Path', ])
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch)  # Stretch columns to fill space
+        print("Table initialized.")
+        self.table_refresh()
+    
+    # Refresh the entire table    
+    def table_refresh(self):
+        if self.isEditing:
+            return
+        self.table.blockSignals(True)
+        print("Refreshing table...")
+        
+        tracks = self.track_controller.get_tracks()
+        self.table.setRowCount(len(tracks))
+
+        for i, track in enumerate(tracks):
+            print(f"Adding track {track.title} to table...")
+            # Visible columns
+            self.table.setItem(i, 0, QTableWidgetItem(track.artist))
+            self.table.setItem(i, 1, QTableWidgetItem(track.title))
+            self.table.setItem(i, 2, QTableWidgetItem(str(track.bpm)))
+            self.table.setItem(i, 3, QTableWidgetItem(track.length))
+            self.table.setItem(i, 4, QTableWidgetItem(track.file_path))
+            
+            # Store the track object data in the first column
+            print(f"Storing track object data in row {i}...")
+            self.table.item(i, 0).setData(Qt.ItemDataRole.UserRole, track)
+        self.table.blockSignals(False)
+        
+    # Takes a track as parameter and updates that row in the table
+    def update_table_row(self, row_index):
+        try:
+            print(f"Updating table row for track in row \'{row_index}\'...")
+            track_item = self.table.item(row_index, 0)
+            if track_item:
+                track = track_item.data(Qt.ItemDataRole.UserRole)
+                if track:
+                    print(f"Found track \"{track.title}\" at row {row_index}. Updating table row...")
+                    self.set_table_row_data(row_index, track)
+                else:
+                    print("Track object not found in the selected row.")
+            else:
+                self.handle_track_not_found(track.id)
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+    def set_table_row_data(self, row_index, track):
+        # Set each cell in the row to the corresponding track attribute
+        self.table.setItem(row_index, 0, QTableWidgetItem(track.artist))
+        self.table.setItem(row_index, 1, QTableWidgetItem(track.title))
+        self.table.setItem(row_index, 2, QTableWidgetItem(str(track.bpm)))  # Assuming the attribute is `bpm` in the model
+        self.table.setItem(row_index, 3, QTableWidgetItem(track.length))
+        self.table.setItem(row_index, 4, QTableWidgetItem(track.file_path))
+
+    def populate_version_table(self, track):
+        versions = self.track_controller.get_versions(track.id)
+        self.version_table.setRowCount(len(versions))
+        self.version_table.setColumnCount(2)
 
     # Delete a track from the database
     def delete_track(self):
-        session = SessionLocal()
+        print("Deleting track...")
         row_index = self.select_row()
-        track = session.query(Track).all()[row_index]
-        session.delete(track)
-        session.commit()
-        self.full_update_table()
-        session.close()
-    
+        if row_index is not None:
+            track_item = self.table.item(row_index, 0)
+            if track_item:
+                track = track_item.data(Qt.ItemDataRole.UserRole)
+                if track:
+                    self.track_controller.delete_track(track.id)
+                    self.table_refresh()
+                else:
+                    print("Track object not found in the selected row.")
+            else:
+                print("No item found in the selected row.")
+        else:
+            print("No track selected.")
+        
+
     # Select row from item selected
     def select_row(self):
         # Get the selected row
@@ -245,53 +266,50 @@ class MainWindow(QMainWindow):
     
     # Edit track metadata
     def edit_track(self):
-        print("Editing track...")
-        session = SessionLocal()
-
-        # Get the selected row
+        
         row_index = self.select_row()
-        if row_index is not None:
-            with SessionLocal() as session:
-                track = session.query(Track).all()[row_index]
-                self.edit_window = EditTrackWindow(track, session)
-                self.edit_window.track_updated.connect(self.full_update_table)
-                self.edit_window.setTrackInfo(track)
-                self.edit_window.show()
-    
+        print(f"Editing track at row {row_index}..")
+        if row_index:
+            track_item = self.table.item(row_index, 0)
+            if track_item:
+                track = track_item.data(Qt.ItemDataRole.UserRole)
+                self.track_controller.request_edit_track(track)
+
     def update_cell(self, item):
-        row = item.row()
-        column = item.column()
-        new_value = item.text()
-        self.update_database(row, column, new_value)
-    
-    def update_database(self, row, column, new_value):
-        session = SessionLocal()
+        if self._updating_cell or self.isEditing:
+            return
+        self._updating_cell = True
         try:
-            track = session.query(Track).all()[row]
-            
+            row = item.row()
+            column = item.column()
+            new_value = item.text()
+            track_item = self.table.item(row, 0)
+            if track_item:
+                track = track_item.data(Qt.ItemDataRole.UserRole)
+                if track:
+                    self.update_track_attribute(track, column, new_value)
+                    self.track_controller.update_track(track)
+                    self.table_refresh()
+        finally:
+            self._updating_cell = False
+            # self.table.blockSignals(False)  # FIXME: This causes the table to not update
+        
+    def update_track_attribute(self, track, column, new_value):
+        try:
             if column == 0:
                 track.artist = new_value
             elif column == 1:
                 track.title = new_value
             elif column == 2:
-                try:
-                    track.BPM = float(new_value)
-                except ValueError:
-                    raise ValueError("BPM must be a number.")
+                track.bpm = float(new_value)
             elif column == 3:
-                if not re.match(r'^\d+:\d+$', new_value):
-                    raise ValueError("Length must be in format 'xx:xx'.")
                 track.length = new_value
             elif column == 4:
                 track.file_path = new_value
-
-            session.commit()
+            # + Any other columns that are edited...
         except Exception as e:
-            session.rollback()
             print(f"An error occurred: {e}")
-            # Here you can handle the error, like showing a message box to the user
-        finally:
-            session.close()
+            # TODO: Handle the error, like showing a message box to the user
     
     # TODO: Implement settings function
     def open_settings(self):
@@ -300,17 +318,7 @@ class MainWindow(QMainWindow):
         # local library or path mode
         # dark mode off (WHY WOULD YOU DO THIS)
 
-    # Show a warning message
-    def show_warning_message(self, title, message):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setWindowTitle(title)
-        msg.setText(message)
-        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
-        msg.exec()
-
     # drag and drop
-    #TODO:
     def tableMousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             current_time = QTime.currentTime()
@@ -324,19 +332,27 @@ class MainWindow(QMainWindow):
             self.lastClickTime = current_time
          
     def handleSingleClick(self, event):
-        print("Single click event")
         #on the table, select the cell at that position
         item = self.table.itemAt(event.pos())
-        self.table.setCurrentItem(item)
+        if item:
+            print(f"Item clicked: {item.text()} at row {item.row()}, column {item.column()}")
         self.dragStartPosition = event.pos()
         
     def handleDoubleClick(self, event):
         print("Double click event")
-        item = self.table.itemAt(event.pos())
-        self.table.setCurrentItem(item)
-        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)
-        self.table.editItem(item)
-    
+        self.isEditing = True  # Set edit mode flag
+        row = self.table.rowAt(event.pos().y())
+        column = self.table.columnAt(event.pos().x())
+        item = self.table.item(row, column)
+        if item:
+            print(f"Double clicked on {item.text()} in row {row}, column {column}")
+            self.table.setCurrentItem(item)  # Select the item
+            item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable) # Make the item editable
+            self.table.editItem(item)
+        else:
+            print("No item found at that position.")
+        self.isEditing = False  # Unset edit mode flag
+
     def tableMouseMoveEvent(self, event):
         if not (event.buttons() & Qt.MouseButton.LeftButton):
             return
@@ -372,24 +388,48 @@ class MainWindow(QMainWindow):
     def dropEvent(self, event):
         # if file or link is dropped and it's an audio file
         if event.mimeData().hasUrls() and event.mimeData().urls()[0].toLocalFile().endswith(('.mp3', '.wav', '.flac')):
-            print("Adding track " + event.mimeData().urls()[0].toLocalFile() + " to database...")
-            try:
-                path = event.mimeData().urls()[0].toLocalFile()
-                # query the database to see if this file is already in the database
-                session = SessionLocal()
-                track = session.query(Track).filter(Track.file_path == path).first()
-                session.close()
-                if track:
-                    print("Track already in database.")
-                    self.show_warning_message("Track Already in Database", "This track is already in the database.")
-                    return
-                self.add_track(path)
-            except Exception as e:
-                print(f"An error occurred: {e} .. unable to add track to database.")
-            event.accept() # Allow the drop
+            print("Adding track " + event.mimeData().urls()[0].toLocalFile() + "...")
+            path = event.mimeData().urls()[0].toLocalFile()
+            self.track_controller.handle_dropped_file(path)
         else:
             print("Error. Unable to add track to database. Is the file an audio file?")
-            event.ignore()
+            event.ignore()   
+
+    # Ask user if the new track is a new version of an existing track
+    def ask_if_new_track(self, path):
+        # query the database to see if this file is already in the database
+        if self.track_controller.already_in_database(path):
+            self.show_warning_message("Track Already in Database", "This file is already in the database.")
+            return
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Question)
+            msg.setWindowTitle("New Track? or new version?")
+            msg.setText("Is this a new track? Select no if another version is already in the database.")
+            msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            msg.setDefaultButton(QMessageBox.StandardButton.Yes)
+            response = msg.exec()
+            if response == QMessageBox.StandardButton.Yes:
+                return True
+            else:
+                return False
+
+    # Show a warning message
+    def show_warning_message(self, title, message):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Icon.Warning)
+        msg.setWindowTitle(title)
+        msg.setText(message)
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+        msg.exec()
+
+    def handle_track_not_found(self, track_id):
+        # Log the error, show a message box, or take other appropriate action
+        print(f"Track with ID {track_id} not found.")
+
+    def handle_update_error(self, exception):
+        # Log the error, show a message box, or take other appropriate action
+        print(f"An error occurred during table update: {exception}")
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)

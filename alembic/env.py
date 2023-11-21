@@ -1,10 +1,24 @@
+import os
+import sys
+# Get the current directory of this script
+current_dir = os.path.dirname(__file__)
+
+# Calculate the path to the 'Beat-Bank' directory
+beat_bank_path = os.path.abspath(os.path.join(current_dir, '..'))
+
+src_path = os.path.join(beat_bank_path, 'src')
+# Add 'Beat-Bank' to the Python path
+sys.path.append(src_path)
+
+from src.models import Base
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from src.models import Base
+
+
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -19,7 +33,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata  # This is the metadata object from src/models/__init__.py
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
