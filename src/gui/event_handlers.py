@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt, QTime, QMimeData
+from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QDrag
 
@@ -15,17 +15,17 @@ def tableMousePressEvent(self, event):
         self.lastClickTime = current_time
         
 def handleSingleClick(self, event):
-    index = self.tableView.indexAt(event.pos())
+    index = self.indexAt(event.pos())
     if index.isValid():
         print(f"Item clicked at row {index.row()}, column {index.column()}")
     self.dragStartPosition = event.pos()
 
 def handleDoubleClick(self, event):
     print("Double click event")
-    index = self.tableView.indexAt(event.pos())
+    index = self.indexAt(event.pos())
     if index.isValid():
         print(f"Double clicked in row {index.row()}, column {index.column()}")
-        self.tableView.edit(index)
+        self.edit(index)
 
 def tableMouseMoveEvent(self, event):
         if not (event.buttons() & Qt.MouseButton.LeftButton):
@@ -47,10 +47,6 @@ def startDragOperation(self, item):
     drag.setMimeData(mime_data)
     drag.exec(Qt.DropAction.CopyAction | Qt.DropAction.MoveAction)
 
-def isDraggableCell(self, item):
-    # if the column is the file path column
-    return item.column() == 4
-
 def dragEnterEvent(self, event):
     if event.mimeData().hasUrls():
         event.acceptProposedAction()
@@ -64,7 +60,8 @@ def dropEvent(self, event):
     if event.mimeData().hasUrls() and event.mimeData().urls()[0].toLocalFile().endswith(('.mp3', '.wav', '.flac')):
         print("Adding track " + event.mimeData().urls()[0].toLocalFile() + "...")
         path = event.mimeData().urls()[0].toLocalFile()
-        self.track_controller.handle_dropped_file(path)
+        self.trackDropped.emit(path)
     else:
         print("Error. Unable to add track to database. Is the file an audio file?")
         event.ignore()   
+

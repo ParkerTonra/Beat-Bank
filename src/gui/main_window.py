@@ -164,7 +164,7 @@ class MainWindow(QMainWindow):
             self.table.selectRow(self.table.rowCount() - 1)
             self.edit_track()
     
-    # Initialize the table
+    # Initialize the table 
     def setup_table(self):
         print("Initializing the tracks table...")
         self.table.setColumnCount(5)
@@ -430,6 +430,8 @@ class MainWindow(QMainWindow):
     def handle_update_error(self, exception):
         # Log the error, show a message box, or take other appropriate action
         print(f"An error occurred during table update: {exception}")
+    
+ 
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
