@@ -1,21 +1,18 @@
-# app.py (root)/src/app.py
-
-import sys, qdarktheme
+import sys, os, qdarktheme
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtSql import QSqlDatabase
-from QSql_database import init_db
-from gui.BeatBank import MainWindow
+from database import init_db
+from gui.main_window import MainWindow
 
 def main():
+    # Initialize the database
+    init_db()
+
     # Create the application object
     app = QApplication(sys.argv)
     
     # Dark mode theme
     qdarktheme.setup_theme()
     
-    # Initialize the database
-    init_db()
-
     # Create the main window
     main_window = MainWindow()
 
