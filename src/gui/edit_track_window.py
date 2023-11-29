@@ -2,19 +2,18 @@ import sys
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
-from controllers.edit_track_controller import EditTrackController
-from database import SessionLocal
 from models.track import Track
+from PyQt6.QtSql import QSqlQuery
 
 class EditTrackWindow(QWidget):
-    track_updated = pyqtSignal(Track)
-    def __init__(self, track):
+    trackEdited = pyqtSignal()
+    def __init__(self, track_id):
         super().__init__()
+        self.track_id = track_id
         self.initUI()
-        self.track = track
-        self.controller = EditTrackController(self)
-        self.submitButton.clicked.connect(self.submit_edit)
-        
+        track_record = self.get_track_record(track_id)
+        self.setTrackInfo(track_record)
+
     def initUI(self):
         print("Initializing UI for edit window...")
         # Create widgets for label and text entry
@@ -65,32 +64,42 @@ class EditTrackWindow(QWidget):
         self.submitButton.clicked.connect(self.submit_edit)
 
         self.setWindowTitle('Edit Track')
-        
-    # Submits the entered data and commits to the database.
-    def submit_edit(self, rowindex):
-        print("Submitting data...")
-        # Update the track's info
-        self.track.title = self.track_title_line_edit.text()
-        self.track.artist = self.track_artist_line_edit.text()
-        self.track.bpm = float(self.track_bpm_line_edit.text())
-        self.track.key = self.track_key_line_edit.text()
-        self.track.notes = self.track_notes_text_edit.toPlainText()
-        
-        self.track_updated.emit(self.track)  # Emit the track object for the controller to handle
-        self.close()
-        
-    def setTrackInfo(self, track):
-        self.track_title_line_edit.setText(track.title)
-        self.track_artist_line_edit.setText(track.artist)
-        self.track_bpm_line_edit.setText(str(track.bpm))
-        self.track_key_line_edit.setText(track.key)
-        self.track_notes_text_edit.setText(track.notes)
 
-    def save_changes(self):
-        # Collect the changes from the UI elements
-        self.track.artist = self.artist_edit.text()
-        self.track.title = self.title_edit.text()
-        # ... collect other fields similarly
-        
-        self.track_updated.emit(self.track)  # Emit the updated track
+    def get_track_record(self, track_id):
+        print("Fetching track record...")
+        query = QSqlQuery()
+        query.exec(f"SELECT * FROM tracks WHERE id = {track_id}")
+        if query.next():
+            return query.record()
+        else:
+            print("Track not found")
+            return None
+
+
+    def submit_edit(self):
+        print("Submitting data...")
+        query = QSqlQuery()
+        query.prepare("UPDATE tracks SET title = :title, artist = :artist, bpm = :bpm, "
+                      "key = :key, notes = :notes WHERE id = :id")
+        query.bindValue(":title", self.track_title_line_edit.text())
+        query.bindValue(":artist", self.track_artist_line_edit.text())
+        query.bindValue(":bpm", float(self.track_bpm_line_edit.text()))
+        query.bindValue(":key", self.track_key_line_edit.text())
+        query.bindValue(":notes", self.track_notes_text_edit.toPlainText())
+        query.bindValue(":id", self.track_id)
+
+        if query.exec():
+            print("Track updated successfully.")
+            self.trackEdited.emit()
+        else:
+            print("Failed to update track:", query.lastError().text())
+
         self.close()
+
+    def setTrackInfo(self, track):
+        # Assuming track is a QSqlRecord or similar
+        self.track_title_line_edit.setText(track.value("title"))
+        self.track_artist_line_edit.setText(track.value("artist"))
+        self.track_bpm_line_edit.setText(str(track.value("bpm")))
+        self.track_key_line_edit.setText(track.value("key"))
+        self.track_notes_text_edit.setText(track.value("notes"))

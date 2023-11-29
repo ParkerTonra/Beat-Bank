@@ -1,28 +1,17 @@
-#DEPRECATING... database.py
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from models import Base
-from contextlib import contextmanager
+# QSql_database.py (root)/src/QSql_database.py
 
-# Create an engine
-engine = create_engine('sqlite:///music_db.sqlite3')
-
-# Create a custom Session class
-SessionLocal = sessionmaker(bind=engine)
-
-@contextmanager
-def session_scope():
-    session = SessionLocal()
-    try:
-        yield session
-        session.commit()
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+from PyQt6.QtSql import QSqlDatabase
+import sys, os
 
 def init_db():
-    # Create tables in the database
-    Base.metadata.create_all(bind=engine)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    print(f'Current directory: {current_dir}')
+    db_path = os.path.join(current_dir, '..', 'music_db.sqlite3')
+    print(f'Database path: {db_path}')
+    db = QSqlDatabase.addDatabase('QSQLITE')
+    db.setDatabaseName(db_path)
+    
+    if not db.open():
+        last_error = db.lastError().text()
+        print(f'Unable to open database: {last_error}')
+        sys.exit(1)

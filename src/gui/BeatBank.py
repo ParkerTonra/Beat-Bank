@@ -12,6 +12,7 @@ from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime, QEvent, QDateTime, pyqtSign
 
 from controllers.database_controller import DatabaseManager
 from gui import event_handlers
+from gui.edit_track_window import EditTrackWindow
 #TODO: get rid of buttons and place in toolbar
 #TODO: user stories:
 # user story: user can right click a track and select "open file location" to open the folder where the track is located
@@ -23,6 +24,7 @@ from gui import event_handlers
 # user story: user can right click a track and select "add to set" that shows open sets or "add to new sets" to add the track to a set
 # user story: user can right click a track and select "play audio" to play the audio file in the default audio player
 # user story: user can go to settings from the toolbar and "enable/disable" edit mode to reorganize the table
+# User story : user can drag and drop a file from this program to another
 '''# old imports
 from database import SessionLocal, init_db
 from business.track_business_model import TrackBusinessModel
@@ -47,6 +49,8 @@ class MainWindow(QMainWindow):
         self.isEditing = False
         self.init_ui()
         self.table.trackDropped.connect(self.add_track)
+        self.editWindow = None
+        
 
     def init_ui(self):
         self.setupWindow()
@@ -57,7 +61,7 @@ class MainWindow(QMainWindow):
         self.setupButtons()
         self.finalizeLayout()
         # Populate the model
-        self.model.select()
+        self.model.select() #33333
         
     def setupWindow(self):
         print("Setting up window...")
@@ -191,17 +195,35 @@ class MainWindow(QMainWindow):
         else:
             print("Failed to add track:", query.lastError().text())
     
-    def audio_file_dialog(self):
-        # open the file dialog
-        pass
-    
     def delete_track(self):
-        #ask users "are you sure you want to delete this track?
-        # if user says no, dont delete the track
-        # if yes, select the whole row of whatever item is selected and delete that row from the table.
-        # refresh the table
-        pass
+        selected_row = self.table.currentIndex().row()
+        if selected_row < 0:
+            self.show_warning_message("No Selection", "Please select a track to delete.")
+            return
         
+        reply = QMessageBox.question(self, 'Delete Track', 'Are you sure you want to delete this track?',
+                                        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
+                                        QMessageBox.StandardButton.No)
+        
+        if reply == QMessageBox.StandardButton.Yes:
+            track_id = self.model.record(selected_row).value("id")
+            self.delete_from_database(track_id)
+            self.table_refresh()
+        else:
+            print("Track deletion cancelled.")
+            return
+
+    def delete_from_database(self, track_id):
+        query = QSqlQuery()
+        query.prepare("DELETE FROM tracks WHERE id = :id")
+        query.bindValue(":id", track_id)
+        if query.exec():
+            print("Track deleted successfully.")
+            self.table_refresh()
+        else:
+            print("Failed to delete track:", query.lastError().text())
+
+
     def show_warning_message(self, title, message):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Icon.Warning)
@@ -221,8 +243,17 @@ class MainWindow(QMainWindow):
 
     
     def edit_track(self):
-        # replace the file with a new file.
-        pass
+        print("Editing track...")
+        selected_row = self.table.currentIndex().row()
+        if selected_row < 0:
+            print("No track selected for editing.")
+            return
+        track_id = self.model.record(selected_row).value("id")
+        self.editWindow = EditTrackWindow(track_id)
+        self.editWindow.trackEdited.connect(self.table_refresh)
+        self.editWindow.show()
+        
+
     def open_settings(self):
         # open the settings window
         pass

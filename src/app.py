@@ -3,7 +3,7 @@
 import sys, qdarktheme
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtSql import QSqlDatabase
-from QSql_database import init_db
+from database import init_db
 from gui.BeatBank import MainWindow
 
 def main():
