@@ -9,7 +9,8 @@ from PyQt6.QtWidgets import (
     QPushButton, QAbstractItemView, QTableView, QAbstractScrollArea, QMenu
 )
 from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime, QEvent, QDateTime, pyqtSignal
-
+# import pyqt6 QAction
+from PyQt6.QtGui import QAction
 from controllers.database_controller import DatabaseManager
 from gui import event_handlers
 from gui.edit_track_window import EditTrackWindow
@@ -59,6 +60,7 @@ class MainWindow(QMainWindow):
         self.init_beat_table()
         self.init_filteredTableView() #TODO
         self.setupButtons()
+        self.init_menu_bar()
         self.finalizeLayout()
         # Populate the model
         self.model.select() #33333
@@ -145,6 +147,53 @@ class MainWindow(QMainWindow):
         self.container.setLayout(self.main_layout)
         self.setCentralWidget(self.container)
         self.table_layout.addWidget(self.table)
+        
+
+    
+    # ORDER THIS LATER
+    def init_menu_bar(self):
+        # Create Menu Bar
+        menu_bar = self.menuBar()
+        
+        # Add Menus
+        file_menu = menu_bar.addMenu("&File")
+        edit_menu = menu_bar.addMenu("&Edit")
+        view_menu = menu_bar.addMenu("&View")
+        settings_menu = menu_bar.addMenu("&Settings")
+        help_menu = menu_bar.addMenu("&Help")
+        
+
+
+    # Add Actions - delete , refresh
+        # file menu actions
+        exit_action = QAction("&Exit", self)
+        add_track_action = QAction("&Add Track", self)
+        refresh_action = QAction("&Refresh", self)
+        
+        # edit menu actions
+        edit_track_action = QAction("&Edit Track", self)
+        edit_test_action = QAction("&Edit Test", self)
+        delete_track_action = QAction("&Delete Track", self)
+        
+        
+        #view menu actions
+            #TODO - lock / unlock the sorting of the table. - sort by different columns
+            #TODO: enable / disable columns
+        
+        # connect the actions 
+        exit_action.triggered.connect(sys.exit)
+        add_track_action.triggered.connect(self.add_track)
+        edit_track_action.triggered.connect(self.edit_track)
+        delete_track_action.triggered.connect(self.delete_track)
+        
+        file_menu.addAction(exit_action)
+        file_menu.addAction(add_track_action)
+        file_menu.addAction(refresh_action)
+        
+        edit_menu.addAction(edit_track_action)
+        edit_menu.addAction(edit_test_action)
+        edit_menu.addAction(delete_track_action)
+        
 
 # =============================================================================
 # MAIN WINDOW FUNCTIONS
