@@ -2,23 +2,35 @@ import datetime
 import platform
 import subprocess
 import mutagen, os, time, sys
+import pickle
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtSql import QSqlTableModel, QSqlDatabase, QSqlQuery
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QVBoxLayout, 
     QWidget, QLabel, QFileDialog, QHeaderView, QMessageBox, QHBoxLayout, QFrame,
-    QPushButton, QAbstractItemView, QTableView, QAbstractScrollArea, QMenu
+    QPushButton, QAbstractItemView, QTableView, QAbstractScrollArea, QMenu, QDialog, QLineEdit, QInputDialog
 )
-from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime, QEvent, QDateTime, pyqtSignal, QSettings
+from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime, QEvent, QDateTime, pyqtSignal, QSettings, QSortFilterProxyModel
 # import pyqt6 QAction
 from PyQt6.QtGui import QAction
+
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+import webbrowser
+import threading
+
 from controllers.database_controller import DatabaseManager
 from gui import event_handlers
 from gui.edit_track_window import EditTrackWindow
-#TODO: Figure out way column's won't resize, figure out why open file location isn't working
+#TODO: Fix google drive integration
+#TODO: Figure out way column's won't resize (works on mac, not on windows)
+#TODO: make file location persistent
 #TODO: user stories:
 # user story: user can right click a track and select "open file location" to open the folder where the track is located
+# user story: user can store the music DB on google drive.
 # user story: there is a group of items on the context menu called "show similar" when the user highlights this,
     # an option comes up to show similar tracks by bpm or key (eventually tags perhaps) in the filtered table view
 # user story: user can right click a track and select "open in ableton" to open the ableton project associated with the track :O
@@ -60,6 +72,7 @@ class MainWindow(QMainWindow):
         self.init_ui()
         self.table.trackDropped.connect(self.add_track)
         self.editWindow = None
+        self.init_google_drive()
 
     def init_ui(self):
         self.setupWindow()
@@ -117,13 +130,17 @@ class MainWindow(QMainWindow):
         self.model.setEditStrategy(QSqlTableModel.EditStrategy.OnFieldChange)
         self.model.select()
         
+        # Initialize the QSortFilterProxyModel
+        self.proxyModel = QSortFilterProxyModel(self)
+        self.proxyModel.setSourceModel(self.model)  # Set the source model
         
         print("Model initialized")
 
     def init_beat_table(self):
         print("Initializing table...")
         self.table = BeatTable(self)
-        self.table.setModel(self.model)
+        self.table.setModel(self.proxyModel)
+        self.table.setSortingEnabled(True)
         # Hide unnecessary columns
         self.table.hideColumn(0)  
         self.table.hideColumn(8)  
@@ -132,6 +149,21 @@ class MainWindow(QMainWindow):
         self.table_refresh()
         
         print("Table initialized")
+        
+    def init_google_drive(self):
+        print("Checking for existing Google Drive credentials...")
+        credentials = self.load_credentials()
+        if credentials and credentials.valid:
+            print("Credentials loaded.")
+            self.gdrive_service = build('drive', 'v3', credentials=credentials)
+        elif credentials and credentials.expired and credentials.refresh_token:
+            print("Refreshing credentials...")
+            credentials.refresh(Request())
+            self.save_credentials(credentials)  # Make sure to save the refreshed credentials
+            self.gdrive_service = build('drive', 'v3', credentials=credentials)
+        else:
+            print("No cached credentials found. Please log in to access Google Drive features.")
+
 
     def init_filteredTableView(self):
         # TODO: Create a table view widget for the filtered tracks table
@@ -168,10 +200,18 @@ class MainWindow(QMainWindow):
         
         refresh_action = QAction("&Refresh", self)
         refresh_action.triggered.connect(self.table_refresh)
+        
+        gdrive_action = QAction("&Google Drive Sign in", self)
+        gdrive_action.triggered.connect(self.authenticate_user)
+        
+        gdrive_folder_action = QAction("&Folder", self)
+        gdrive_folder_action.triggered.connect(self.find_or_create_beatbank_folder)
 
         file_menu.addAction(add_track_action)
         file_menu.addAction(refresh_action)
         file_menu.addAction(exit_action)
+        file_menu.addAction(gdrive_action)
+        file_menu.addAction(gdrive_folder_action)
 
         # Edit Menu Actions
         edit_track_action = QAction("&Edit Track", self)
@@ -184,19 +224,28 @@ class MainWindow(QMainWindow):
         edit_menu.addAction(delete_track_action)
         
         # Settings Menu Actions
-        self.toggle_reorder_action = QAction("&Allow reorder", self, checkable=True)
-        self.toggle_reorder_action.triggered.connect(self.toggle_reorder)
+        toggle_reorder_action = QAction("&Allow reorder", self, checkable=True)
+        toggle_reorder_action.triggered.connect(self.toggle_reorder)
         
-        settings_menu.addAction(self.toggle_reorder_action)
+        print_service_action = QAction("&Print Service Object", self)
+        print_service_action.triggered.connect(self.print_service_object)
+        
+        choose_folder_action = QAction("&Choose Folder", self)
+        choose_folder_action.triggered.connect(self.list_and_choose_folder)
+        
+        settings_menu.addAction(toggle_reorder_action)
+        settings_menu.addAction(print_service_action)
+        settings_menu.addAction(choose_folder_action)
+        
 
         
 
         # View Menu Actions
-        self.show_similar_tracks_action = QAction("Always Show Similar Tracks Table", self, checkable=True)
-        self.show_similar_tracks_action.toggled.connect(self.toggle_similar_tracks)
+        show_similar_tracks_action = QAction("Always Show Similar Tracks Table", self, checkable=True)
+        show_similar_tracks_action.toggled.connect(self.toggle_similar_tracks)
         
         
-        view_menu.addAction(self.show_similar_tracks_action)
+        view_menu.addAction(show_similar_tracks_action)
 
         # Help Menu Actions
         read_me_action = QAction("Read Me", self)
@@ -309,6 +358,40 @@ class MainWindow(QMainWindow):
         else:
             print("Failed to add track:", query.lastError().text())
     
+    def authenticate_user(self):
+        if hasattr(self, 'gdrive_service'):
+            print("User already authenticated.")
+            return
+        
+        print("Authenticating user...")
+        # Define the scopes your application requires
+        SCOPES = ['https://www.googleapis.com/auth/drive']
+        
+        
+        secret_path = os.path.join(os.path.dirname(__file__), '..','client_secrets.json')
+        secret_path = os.path.abspath(secret_path)
+        
+        
+        # Start the flow using the client secrets file you downloaded from the Google Developer Console
+        flow = InstalledAppFlow.from_client_secrets_file(secret_path, SCOPES)
+        
+        # This will open the default web browser for the user to log in
+        # After logging in, the user will be prompted to give your application access to their Google Drive
+        auth_url, _ = flow.authorization_url(prompt='consent')
+        
+        webbrowser.open(auth_url)
+        
+        # Once authorized, exchange the authorization code for tokens
+        flow.run_local_server(port=0)
+        
+        # Now you have credentials, you can create a service object to interact with the Drive API
+        credentials = flow.credentials
+        self.save_credentials(credentials)
+        print("User authenticated. Saving credentials...")
+        # Use these credentials to access Google Drive, for example
+        self.gdrive_service = build('drive', 'v3', credentials=credentials)
+        print("Service object created.")
+    
     def edit_track(self):
         print("Editing track...")
         selected_row = self.table.currentIndex().row()
@@ -408,13 +491,143 @@ class MainWindow(QMainWindow):
                 visible = settings.value(f"columnVisibility/{i}", True, type=bool)
                 self.table.setColumnHidden(i, not visible)
         else:
-            print("No state found.")          
+            print("No state found.")   
+       
     def closeEvent(self, event):
         print("Shutting down...")
         settings = QSettings("Parker Tonra", "Beat Bank")
         settings.setValue("tableState", self.table.horizontalHeader().saveState())
         super().closeEvent(event)
+        
+    def ask_user(self, title, message):
+        dialog = AskUserDialog(title, message)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            return dialog.user_input
+        return None
+    
+    # Function to save credentials to a file
+    def save_credentials(self, credentials):
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(credentials, token)
+    
+    # Function to load credentials from a file
+    def load_credentials(self):
+        if os.path.exists('token.pickle'):
+            with open('token.pickle', 'rb') as token:
+                return pickle.load(token)
+        return None
+    # Google Drive Integration
+    # -------------------------------------------------------------------------
+    
+    # function to find or create a folder in google drive
+    def find_or_create_beatbank_folder(self):
+        if not hasattr(self, 'gdrive_service'):
+            print("User not authenticated.")
+            return
+        service = self.gdrive_service
+        # Search for the folder by name
+        folder_name = self.ask_user("Beat Bank folder", "Enter the name of the folder to store your Beat Bank files.")
+        if folder_name:
+            print(f"Folder: {folder_name}")
+        else:
+            print("No answer was entered or dialog was canceled.")
+            return
+        query = f"mimeType='application/vnd.google-apps.folder' and name='{folder_name}' and trashed=false"
+        response = service.files().list(q=query,
+                                        spaces='drive',
+                                        fields='files(id, name)').execute()
+        
+        folders = response.get('files', [])
 
+        # If the folder exists, return its ID
+        if folders:
+            return folders[0]['id']  # Assuming the first match is the one you want
+
+        # If the folder doesn't exist, create it
+        folder_metadata = {
+            'name': folder_name,
+            'mimeType': 'application/vnd.google-apps.folder'
+        }
+        folder = service.files().create(body=folder_metadata, fields='id').execute()
+        return folder.get('id')
+    
+    def list_and_choose_folder(self):
+        if not hasattr(self, 'gdrive_service'):
+            print("User not authenticated.")
+            return
+
+        service = self.gdrive_service
+        # Query to list folders
+        query = "mimeType='application/vnd.google-apps.folder' and trashed=false"
+        response = service.files().list(q=query,
+                                        spaces='drive',
+                                        fields='files(id, name)',
+                                        pageSize=100).execute()  # Adjust pageSize as needed
+        
+        folders = response.get('files', [])
+
+        # Check if there are folders
+        if not folders:
+            print("No folders found.")
+            return
+
+        # Create a dialog or use a custom method to display folders and let the user choose
+        folder_names = [folder['name'] for folder in folders]
+        folder_id, ok = self.show_folder_selection_dialog(folder_names)
+
+        if ok and folder_id:
+            # User made a selection, return the selected folder's ID
+            selected_folder_name = folder_names[folder_id]
+            for folder in folders:
+                if folder['name'] == selected_folder_name:
+                    return folder['id']
+        else:
+            print("No folder was selected or dialog was canceled.")
+            return
+
+    def show_folder_selection_dialog(self, folder_names):
+        dialog = QInputDialog(self)
+        dialog.setWindowTitle("Choose Folder")
+        dialog.setLabelText("Select the folder to store your Beat Bank files:")
+        dialog.setComboBoxItems(folder_names)
+        dialog.setComboBoxEditable(False)
+        ok = dialog.exec()
+        return dialog.comboBoxItems().index(dialog.textValue()), ok
+        
+    def print_service_object(self):
+        if hasattr(self, 'gdrive_service'):
+            print(self.gdrive_service)
+        else:
+            print("User not authenticated.")
+        return
+        
+class AskUserDialog(QDialog):
+    def __init__(self, title, message):
+        super().__init__()
+        self.setWindowTitle(title)
+        self.setGeometry(100, 100, 300, 100)
+
+        # Layout
+        layout = QVBoxLayout()
+
+        # Label
+        self.label = QLabel(message)
+        layout.addWidget(self.label)
+
+        # Text Edit
+        self.lineEdit = QLineEdit()
+        layout.addWidget(self.lineEdit)
+
+        # Button
+        self.button = QPushButton("OK")
+        self.button.clicked.connect(self.on_ok_clicked)
+        layout.addWidget(self.button)
+
+        self.setLayout(layout)
+    
+    def on_ok_clicked(self):
+        self.user_input = self.lineEdit.text()
+        self.accept()  # Closes the dialog and sets result to Accepted
 
 class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
