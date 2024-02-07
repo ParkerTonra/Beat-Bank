@@ -9,11 +9,12 @@ from PyQt6.QtSql import QSqlTableModel, QSqlDatabase, QSqlQuery
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QVBoxLayout, 
     QWidget, QLabel, QFileDialog, QHeaderView, QMessageBox, QHBoxLayout, QFrame,
-    QPushButton, QAbstractItemView, QTableView, QAbstractScrollArea, QMenu, QDialog, QLineEdit, QInputDialog
+    QPushButton, QAbstractItemView, QTableView, QAbstractScrollArea, QMenu, QDialog, QLineEdit, QInputDialog,
+    QStyledItemDelegate
 )
 from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime, QEvent, QDateTime, pyqtSignal, QSettings, QSortFilterProxyModel
 # import pyqt6 QAction
-from PyQt6.QtGui import QAction
+from PyQt6.QtGui import QAction, QBrush, QColor
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -139,6 +140,8 @@ class MainWindow(QMainWindow):
     def init_beat_table(self):
         print("Initializing table...")
         self.table = BeatTable(self)
+        self.delegate = InvalidFileDelegate(self.table)
+        self.table.setItemDelegate(self.delegate)
         self.table.setModel(self.proxyModel)
         self.table.setSortingEnabled(True)
         # Hide unnecessary columns
@@ -187,6 +190,7 @@ class MainWindow(QMainWindow):
         edit_menu = menu_bar.addMenu("&Edit")
         view_menu = menu_bar.addMenu("&View")
         settings_menu = menu_bar.addMenu("&Settings")
+        tools_menu = menu_bar.addMenu("&Tools")
         help_menu = menu_bar.addMenu("&Help")
         columns_menu = view_menu.addMenu("&Columns")
         self.init_columns_submenu(columns_menu)
@@ -247,6 +251,11 @@ class MainWindow(QMainWindow):
         
         view_menu.addAction(show_similar_tracks_action)
 
+        # Tools Menu Actions
+        check_integrity_action = QAction("Check Song File Integrity", self)
+        check_integrity_action.triggered.connect(self.check_song_file_integrity)
+        tools_menu.addAction(check_integrity_action)
+        
         # Help Menu Actions
         read_me_action = QAction("Read Me", self)
         # Connect read_me_action to the appropriate slot
@@ -600,6 +609,34 @@ class MainWindow(QMainWindow):
         else:
             print("User not authenticated.")
         return
+     
+    def check_song_file_integrity(self):
+        invalid_rows = []
+        query = QSqlQuery("SELECT id, file_path FROM tracks")  # Adjust SQL query as needed
+
+        row = 0
+        if query.exec():
+            while query.next():
+                file_path = query.value(1)  # Assuming file_path is the second column
+
+                if not os.path.exists(file_path):
+                    invalid_rows.append(row)
+                row += 1
+        else:
+            print(f"Failed to execute query: {query.lastError().text()}")
+
+        # Update the delegate with the invalid rows
+        if invalid_rows:
+            self.delegate.set_invalid_rows(invalid_rows)
+            self.report_invalid_files(invalid_rows)
+        else:
+            print("All song file paths are valid.")
+
+    def report_invalid_files(self, invalid_files):
+        # Here you can implement how you want to report the invalid files to the user
+        # For example, showing a dialog with a list of invalid file paths and options to remove or update them
+        message = "The following files have invalid paths:\n" + "\n".join(f"ID: {song_id}, Path: {path}" for song_id, path in invalid_files)
+        QMessageBox.information(self, "Invalid File Paths", message)
         
 class AskUserDialog(QDialog):
     def __init__(self, title, message):
@@ -655,3 +692,18 @@ class BeatTable(QTableView):
         event_handlers.dragMoveEvent(self, event)
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
+
+class InvalidFileDelegate(QStyledItemDelegate):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        # A set to keep track of rows that have invalid file paths
+        self.invalid_rows = set()
+
+    def paint(self, painter, option, index):
+        if index.row() in self.invalid_rows:
+            option.backgroundBrush = QBrush(QColor(255, 200, 200))  # Light red
+        super().paint(painter, option, index)
+
+    def set_invalid_rows(self, rows):
+        self.invalid_rows = set(rows)
+        self.parent().viewport().update()  # Update the view to reflect changes
