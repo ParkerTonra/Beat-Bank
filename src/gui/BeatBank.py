@@ -158,15 +158,20 @@ class MainWindow(QMainWindow):
         credentials = self.load_credentials()
         if credentials and credentials.valid:
             print("Credentials loaded.")
-            self.gdrive_service = build('drive', 'v3', credentials=credentials)
         elif credentials and credentials.expired and credentials.refresh_token:
             print("Refreshing credentials...")
-            credentials.refresh(Request())
-            self.save_credentials(credentials)  # Make sure to save the refreshed credentials
-            self.gdrive_service = build('drive', 'v3', credentials=credentials)
+            try:
+                credentials.refresh(Request())
+                self.save_credentials(credentials)  # Make sure to save the refreshed credentials
+                print("Credentials refreshed and saved.")
+            except Exception as e:
+                print(f"Error refreshing credentials: {e}")
+                return
         else:
-            print("No cached credentials found. Please log in to access Google Drive features.")
+            print("No valid credentials available.")
+            return
 
+        self.gdrive_service = build('drive', 'v3', credentials=credentials)
 
     def init_filteredTableView(self):
         # TODO: Create a table view widget for the filtered tracks table
