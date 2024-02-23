@@ -25,6 +25,7 @@ import threading
 
 from controllers.database_controller import DatabaseManager
 from gui import event_handlers
+from gui import play_audio
 from gui.edit_track_window import EditTrackWindow
 #TODO: Fix google drive integration
 #TODO: Figure out way column's won't resize (works on mac, not on windows)
@@ -41,23 +42,10 @@ from gui.edit_track_window import EditTrackWindow
 # User story : user can drag and drop a file from this program to another
 # user story: users can change the width of the columns, and the changes are saved
     #user story: users can lock column width from settings menu
-    
+# TODO: don't let users be able to change certain columns like id, date added, date created, etc
 #COMPLETED:
 # user story: users can change the order of the columns, and the changes are saved
     #user story: users can lock column order from settings menu
-'''# old imports
-from database import SessionLocal, init_db
-from business.track_business_model import TrackBusinessModel
-
-from models.user_settings import UserSettings
-
-from gui.edit_track_window import EditTrackWindow
-
-from models.track import Track
-from models.version import Version
-
-from controllers import database_controller, track_controller
-from controllers.track_controller import TrackController'''
 
 # BeatBank.py (root)/src/gui/BeatBank.py
 
@@ -84,10 +72,15 @@ class MainWindow(QMainWindow):
         self.init_filteredTableView() #TODO
         # self.setupButtons()
         self.init_menu_bar()
+        self.init_play_audio()
         self.finalizeLayout()
         # Populate the model
         self.model.select() #33333
-        
+
+    # -------------------------------------------------------------------------
+    # UI component initialization
+    # -------------------------------------------------------------------------
+    
     def setupWindow(self):
         print("Setting up window...")
         self.setWindowTitle('Beat Bank')
@@ -100,10 +93,7 @@ class MainWindow(QMainWindow):
         self.container.setLayout(self.main_layout)
         self.setCentralWidget(self.container)
         self.table_layout.addWidget(self.table)
-    
-    # -------------------------------------------------------------------------
-    # UI component initialization
-    # -------------------------------------------------------------------------
+
     def init_setupLayouts(self):
         print("Setting up layouts...")
         self.main_layout = QVBoxLayout()
@@ -111,16 +101,13 @@ class MainWindow(QMainWindow):
         # Create top and table layouts
         self.top_layout = QHBoxLayout()
         self.table_layout = QVBoxLayout()
+        self.bottom_layout = QHBoxLayout()
+        
 
         # Add top and table layouts to the main layout
         self.main_layout.addLayout(self.top_layout)
         self.main_layout.addLayout(self.table_layout)
-
-        # Create left and right layouts
-        self.left_layout = QVBoxLayout()
-        self.right_layout = QVBoxLayout()
-        self.top_layout.addLayout(self.left_layout)
-        self.top_layout.addLayout(self.right_layout)
+        self.main_layout.addLayout(self.bottom_layout)
 
         print("Layouts initialized.")
             
@@ -182,6 +169,11 @@ class MainWindow(QMainWindow):
         # users can select which columns to display
         #users can toggle this table on and off
         #users can select which columns to display  
+    
+    def init_play_audio(self):
+        self.audio_player = play_audio.AudioPlayer()
+        self.bottom_layout.addWidget(self.audio_player)
+        
     
     # -------------------------------------------------------------------------
     # Menu bar and Actions
