@@ -14,10 +14,10 @@ def main():
     qdarktheme.setup_theme()
     
     # Initialize the database
-    init_db()
+    db = init_db()
 
     # Create the main window
-    main_window = MainWindow()
+    main_window = MainWindow(db)
 
     # Show the main window
     main_window.show()

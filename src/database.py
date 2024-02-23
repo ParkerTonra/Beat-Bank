@@ -1,4 +1,4 @@
-# QSql_database.py (root)/src/QSql_database.py
+#database.py (root)/src/database.py
 
 from PyQt6.QtSql import QSqlDatabase
 import sys, os
@@ -15,3 +15,5 @@ def init_db():
         last_error = db.lastError().text()
         print(f'Unable to open database: {last_error}')
         sys.exit(1)
+    
+    return db
