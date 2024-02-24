@@ -2,6 +2,7 @@ from PyQt6.QtSql import QSqlQuery, QSqlTableModel, QSqlDatabase
 from PyQt6.QtCore import QObject, QDateTime, pyqtSignal
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 
+from utilities.util import Utils
 import mutagen
 import os
 import datetime
@@ -47,19 +48,18 @@ class DatabaseController(QObject):
 
         # Execute query
         if query.exec():
-            print("Track added successfully.")
-            self.table_refresh()
+            print(f"Adding track to database: {title} by {artist}")
+            return True
         else:
             print("Failed to add track:", query.lastError().text())
+            return False
     
     def controller_delete_track(self, selected_row):
         if selected_row < 0:
             self.show_warning_message("No Selection", "Please select a track to delete.")
             return
         
-        reply = QMessageBox.question(self, 'Delete Track', 'Are you sure you want to delete this track?',
-                                        QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                                        QMessageBox.StandardButton.No)
+        reply = Utils.ask_user("Delete Track", "Are you sure you want to delete this track?")
         
         if reply == QMessageBox.StandardButton.Yes:
             track_id = self.model.record(selected_row).value("id")

@@ -28,7 +28,7 @@ from controllers.database_controller import DatabaseController
 from gui import event_handlers
 from gui import play_audio
 from gui.edit_track_window import EditTrackWindow
-#TODO: Fix google drive integration
+#TODO: improve google drive integration
 #TODO: Figure out way column's won't resize (works on mac, not on windows)
 #TODO: make file location persistent
 #TODO: make it so that user can toggle double click to edit track.
@@ -61,9 +61,22 @@ class MainWindow(QMainWindow):
         self.google_drive = GoogleDriveIntegration()
         self._updating_cell = False
         self.isEditing = False
+        self.audio_signal = PlayAudioSignal()  # Make it an instance attribute
+        self.audio_signal.playAudioSignal.connect(self.model_play_audio)
+        self.audio_player = play_audio.AudioPlayer()
         self.init_ui()
+        self.bottom_layout.addWidget(self.audio_player)
         self.table.trackDropped.connect(self.add_track)
         self.editWindow = None
+        
+    def model_play_audio(self):
+        print("Playing audio... pt2")
+        current_row = self.table.currentIndex().row()
+        path = self.model.record(current_row).value("file_path")
+        track_title = self.model.record(current_row).value("title")
+        self.audio_player.update_current_track(track_title)
+        self.audio_player.playAudio(path)
+          
 
     def init_ui(self):
         self.setupWindow()
@@ -74,7 +87,7 @@ class MainWindow(QMainWindow):
         self.init_filteredTableView() #TODO
         # self.setupButtons()
         self.init_menu_bar()
-        self.init_play_audio()
+        
         self.finalizeLayout()
         # Populate the model
         self.model.select() #33333
@@ -128,7 +141,7 @@ class MainWindow(QMainWindow):
 
     def init_beat_table(self):
         print("Initializing table...")
-        self.table = BeatTable(self)
+        self.table = BeatTable(self, self.audio_signal)
         self.delegate = InvalidFileDelegate(self.table)
         self.table.setItemDelegate(self.delegate)
         self.table.setModel(self.proxyModel)
@@ -152,11 +165,6 @@ class MainWindow(QMainWindow):
         #users can toggle this table on and off
         #users can select which columns to display  
     
-    def init_play_audio(self):
-        self.audio_player = play_audio.AudioPlayer()
-        self.bottom_layout.addWidget(self.audio_player)
-        
-    
     # -------------------------------------------------------------------------
     # Menu bar and Actions
     # -------------------------------------------------------------------------
@@ -173,6 +181,7 @@ class MainWindow(QMainWindow):
         help_menu = menu_bar.addMenu("&Help")
         columns_menu = view_menu.addMenu("&Columns")
         self.init_columns_submenu(columns_menu)
+        
 
         # File Menu Actions
         exit_action = QAction("&Exit", self)
@@ -210,6 +219,9 @@ class MainWindow(QMainWindow):
         toggle_reorder_action = QAction("&Allow reorder", self, checkable=True)
         toggle_reorder_action.triggered.connect(self.toggle_reorder)
         
+        toggle_click_edit = QAction("&Allow click to edit", self, checkable=True)
+        toggle_click_edit.triggered.connect(self.toggle_click_edit)
+        
         print_service_action = QAction("&Print Service Object", self)
         print_service_action.triggered.connect(self.print_service_object)
         
@@ -217,10 +229,11 @@ class MainWindow(QMainWindow):
         choose_folder_action.triggered.connect(self.show_folder_selection_dialog)
         
         settings_menu.addAction(toggle_reorder_action)
+        settings_menu.addAction(toggle_click_edit)
         settings_menu.addAction(print_service_action)
         settings_menu.addAction(choose_folder_action)
         
-
+        self.init_toggles(toggle_click_edit)
         
 
         # View Menu Actions
@@ -248,7 +261,16 @@ class MainWindow(QMainWindow):
             action.setChecked(not self.table.isColumnHidden(i))
             action.toggled.connect(lambda checked, index=i: self.toggle_column(checked, index))
             columns_menu.addAction(action)
-
+    
+    def init_toggles(self, toggle_click_edit):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        clickToEdit = settings.value("clickToEdit", type=bool)
+        print(f"clickToEdit: {clickToEdit}")
+        toggle_click_edit.setChecked(clickToEdit)
+        if clickToEdit:
+            self.table.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
+        else:
+            self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
     def toggle_column(self, checked, index):
         self.table.setColumnHidden(index, not checked)
         settings = QSettings("Parker Tonra", "Beat Bank")
@@ -271,6 +293,16 @@ class MainWindow(QMainWindow):
         else:
             # Emit signal or perform action to disallow reordering
             pass
+
+    def toggle_click_edit(self, checked):
+        #toggle table editing. when checked, allow editing. When unchecked, disallow editing
+        if checked:
+            self.table.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked)
+        else:
+            self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        print(f"saving clickToEdit as: {checked}")
+        settings.setValue("clickToEdit", checked)
 
     def open_read_me(self):
         # Open the readme file
@@ -308,8 +340,15 @@ class MainWindow(QMainWindow):
         if not path:
             path, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
             if not path:
-                self.get_path()
-        self.controller.controller_add_track(path)
+                #open file dialog to select file
+                Utils.open_file_dialog()
+        added = self.controller.controller_add_track(path)
+        if added:
+            self.table_refresh()
+            print(f"Added track {path} to database.")
+        else:
+            print("Failed to add track.")
+        
 
     def edit_track(self):
         print("Editing track...")
@@ -470,9 +509,17 @@ class AskUserDialog(QDialog):
 
 class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
-    def __init__(self, parent=None):
+    click_edit_toggled = pyqtSignal(bool)
+    
+    def __init__(self, parent=None, audio_signal=None):
         super().__init__(parent)
-        
+        if audio_signal is not None:
+            print("signal linked!")
+            self.audio_signal = audio_signal
+        else:
+            self.audio_signal = PlayAudioSignal()
+        print("audio_signal: ", audio_signal)
+        self.audio_player = play_audio.AudioPlayer()
         self.lastClickTime = QTime()
         self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()
         self.setAcceptDrops(True)
@@ -480,12 +527,23 @@ class BeatTable(QTableView):
         self.setMinimumHeight(500)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
         self.horizontalHeader().setSectionsMovable(True)
+        
 
-    
     def handleSingleClick(self, event):
         event_handlers.handleSingleClick(self, event)
     def tableMouseMoveEvent(self, event):
         event_handlers.tableMouseMoveEvent(self, event)
+    def mousePressEvent(self, event) -> None:
+        event_handlers.tableMousePressEvent(self, event)
+    def handleDoubleClick(self, event):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        clickToEdit = settings.value("clickToEdit", type=bool)
+        if clickToEdit:
+            event_handlers.handleDoubleClick(self, event)
+        else:
+            print("not in edit mode, so not handling double click event")
+            event_handlers.doubleClickPlay(self, event)
+        
     def startDragOperation(self, item):
         event_handlers.startDragOperation(self, item)
     def dragEnterEvent(self, event):
@@ -494,7 +552,18 @@ class BeatTable(QTableView):
         event_handlers.dragMoveEvent(self, event)
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
-
+    def play_audio(self):
+        #emit a signal to play the audio
+        self.audio_signal.playAudioSignal.emit()
+        print("Playing audio...")
+        
+    
+    def findColumnIndexByName(self, column_name):
+        for column in range(self.model().columnCount()):
+            if self.model().headerData(column, Qt.Orientation.Horizontal, ) == column_name:
+                print(f"Found column {column_name} at index {column}")
+                return column
+        return -1  # Return -1 if not found
 #TODO: for checking integrity. looks if any file paths are invalid, paints the row red.
 class InvalidFileDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
@@ -510,3 +579,6 @@ class InvalidFileDelegate(QStyledItemDelegate):
     def set_invalid_rows(self, rows):
         self.invalid_rows = set(rows)
         self.parent().viewport().update()  # Update the view to reflect changes
+        
+class PlayAudioSignal(QtCore.QObject):
+    playAudioSignal = pyqtSignal()

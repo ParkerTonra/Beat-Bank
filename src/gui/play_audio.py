@@ -4,6 +4,7 @@ from PyQt6.QtCore import QUrl, Qt
 from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtWidgets import QToolButton, QWidget, QFileDialog, QSlider, QGridLayout, QHBoxLayout, QLabel, QSizePolicy, QSpacerItem
 from PyQt6.QtGui import QIcon
+from PyQt6.QtMultimedia import QAudioOutput
 
 class AudioPlayer(QWidget):
     def __init__(self):
@@ -11,7 +12,11 @@ class AudioPlayer(QWidget):
         
         # Initialize QMediaPlayer
         self.player = QMediaPlayer()
-        
+        self.audio_out = QAudioOutput()
+        self.player.setAudioOutput(self.audio_out)
+        self.player.positionChanged.connect(self.positionChanged)
+        self.player.errorOccurred.connect(self.handleError)
+
         # icon paths
         current_dir = os.path.dirname(__file__)
         play_icon_path = os.path.join(current_dir, '../assets/pictures/play.png')
@@ -49,7 +54,7 @@ class AudioPlayer(QWidget):
         self.volume_slider.setValue(50)  # Set initial volume
         
         # Connect UI actions to functions
-        self.play_button.clicked.connect(self.playMusic)
+        self.play_button.clicked.connect(self.playAudio)
         self.pause_button.clicked.connect(self.pauseMusic)
         self.stop_button.clicked.connect(self.stopMusic)
         
@@ -76,7 +81,11 @@ class AudioPlayer(QWidget):
         self.main_layout.addLayout(self.current_track_layout, 0, 1, alignment=Qt.AlignmentFlag.AlignCenter)
         self.main_layout.addLayout(self.volume_slider_layout, 0, 3, alignment=Qt.AlignmentFlag.AlignCenter)
         
-    def playMusic(self):
+    def playAudio(self, file_path):
+        print(f"playing track at path: {file_path}")
+        full_path = QUrl.fromLocalFile(file_path)
+        self.player.setSource(full_path)
+        print(f"Playing audio: {full_path}")
         self.player.play()
 
     def pauseMusic(self):
@@ -95,7 +104,14 @@ class AudioPlayer(QWidget):
             self.player.setMedia(QUrl.fromLocalFile(file_path))
             self.playMusic()
 
+    def positionChanged(self, position):
+        # Your positionChanged slot implementation goes here
+        pass  # Placeholder for your implementation
+    
     # TODO: set a self.now_playing flag on mainwindow that updates when a new song is playing.
-    def update_current_track(self, current_track):
-        current_title = current_track.title
+    def update_current_track(self, track_title):
+        current_title = track_title
         self.current_track.setText(current_title)
+        
+    def handleError(self, error, errorString):
+        print(f"Error occurred: {errorString}")
