@@ -2,6 +2,13 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
 from utilities.util import Utils
+from PyQt6.QtWidgets import QInputDialog
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+import webbrowser
+import threading
 import webbrowser
 import os
 
@@ -10,11 +17,24 @@ class GoogleDriveIntegration:
         self.gdrive_service = gdrive_service
         if self.gdrive_service is None:
             self.init_google_drive()
-        self.authenticate_user()
+    
+    def show_folder_selection(self):
+        folder_names = self.list_and_choose_folder()
+        print(folder_names)
+        dialog = QInputDialog()
+        dialog.setWindowTitle("Choose Folder")
+        dialog.setLabelText("Select the folder to store your Beat Bank files:")
+        dialog.setComboBoxItems(folder_names)
+        dialog.setComboBoxEditable(False)
+        ok = dialog.exec()
+        return dialog.comboBoxItems().index(dialog.textValue()), ok
+        
+    
     
     def init_google_drive(self):
         print("Checking for existing Google Drive credentials...")
         credentials = Utils.load_credentials()
+        print(f"Credentials: {credentials}")
         if credentials and credentials.valid:
             print("Credentials loaded.")
         elif credentials and credentials.expired and credentials.refresh_token:
@@ -98,9 +118,9 @@ class GoogleDriveIntegration:
         return folder.get('id')
     
     def list_and_choose_folder(self):
-        if not hasattr(self, 'gdrive_service'):
-            print("User not authenticated.")
-            return
+        if not hasattr(self, 'gdrive_service') or self.gdrive_service is None:
+            print("User not authenticated / service not initialized.")
+            return []
 
         service = self.gdrive_service
         # Query to list folders

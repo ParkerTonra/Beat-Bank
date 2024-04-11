@@ -82,11 +82,28 @@ class AudioPlayer(QWidget):
         self.main_layout.addLayout(self.volume_slider_layout, 0, 3, alignment=Qt.AlignmentFlag.AlignCenter)
         
     def playAudio(self, file_path):
-        print(f"playing track at path: {file_path}")
-        full_path = QUrl.fromLocalFile(file_path)
-        self.player.setSource(full_path)
-        print(f"Playing audio: {full_path}")
-        self.player.play()
+        current_state = self.player.playbackState()
+        current_track = self.player.source().toString()
+        full_path = QUrl.fromLocalFile(file_path).toString()
+
+        # Check if the requested track is already playing
+        if current_state == QMediaPlayer.PlaybackState.PlayingState and current_track == full_path:
+            print(f"Pausing track: {file_path}")
+            self.player.pause()
+            return
+
+        # If the player is paused and the same track is requested, resume playing
+        if current_state == QMediaPlayer.PlaybackState.PausedState and current_track == full_path:
+            print(f"Resuming track: {file_path}")
+            self.player.play()
+            return
+
+        # If a different track is requested or the player is stopped, play the new track
+        if current_track != full_path or current_state == QMediaPlayer.PlaybackState.StoppedState:
+            print(f"Playing track at path: {file_path}")
+            self.player.setSource(QUrl.fromLocalFile(file_path))
+            print(f"Playing audio: {full_path}")
+            self.player.play()
 
     def pauseMusic(self):
         self.player.pause()

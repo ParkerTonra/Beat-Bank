@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl
+from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl, QItemSelectionModel
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QDrag
 
@@ -22,6 +22,16 @@ def handleSingleClick(self, event):
     
     if index.isValid():
         print(f"Item clicked at row {index.row()}, column {index.column()}")
+        # Select the row
+        selectionModel = self.selectionModel()
+        selectionModel.clearSelection()
+        
+        # PyQt6 way of specifying selection flags
+        flags = QItemSelectionModel.SelectionFlag.Select | QItemSelectionModel.SelectionFlag.Rows
+        
+        # Using the select method with the correct flags
+        selectionModel.select(index, flags)
+        
     self.dragStartPosition = event.pos()
 
 def handleDoubleClick(self, event):

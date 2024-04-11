@@ -1,55 +1,23 @@
-import datetime
-import platform
-import subprocess
-import mutagen, os, time, sys
-import pickle
+#BeatBank.py (root)/src/gui/BeatBank.py
+import os, sys
 
-from PyQt6 import QtCore, QtGui, QtWidgets
-from PyQt6.QtSql import QSqlTableModel, QSqlDatabase, QSqlQuery
+from PyQt6.QtSql import QSqlTableModel, QSqlQuery
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QVBoxLayout, 
-    QWidget, QLabel, QFileDialog, QHeaderView, QMessageBox, QHBoxLayout, QFrame,
-    QPushButton, QAbstractItemView, QTableView, QAbstractScrollArea, QMenu, QDialog, QLineEdit, QInputDialog,
-    QStyledItemDelegate
+    QMainWindow, QVBoxLayout, QWidget, QFileDialog, QMessageBox, QHBoxLayout, QFrame,
+    QAbstractItemView, QTableView, QMenu, QDialog,QStyledItemDelegate
 )
-from PyQt6.QtCore import Qt, QUrl, QMimeData, QTime, QEvent, QDateTime, pyqtSignal, QSettings, QSortFilterProxyModel
-# import pyqt6 QAction
+from PyQt6.QtCore import Qt, QSettings, QSortFilterProxyModel
 from PyQt6.QtGui import QAction, QBrush, QColor
-
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-import webbrowser
-import threading
 
 from utilities.util import Utils
 from controllers.database_controller import DatabaseController
-from gui import event_handlers
 from gui import play_audio
+from gui.BeatTable import BeatTable
+from gui.signals import PlayAudioSignal
 from gui.edit_track_window import EditTrackWindow
-#TODO: improve google drive integration
-#TODO: Figure out way column's won't resize (works on mac, not on windows)
-#TODO: make file location persistent
-#TODO: make it so that user can toggle double click to edit track.
-#TODO: user stories:
-# user story: user can right click a track and select "open file location" to open the folder where the track is located
-# user story: user can store the music DB on google drive.
-# user story: there is a group of items on the context menu called "show similar" when the user highlights this,
-    # an option comes up to show similar tracks by bpm or key (eventually tags perhaps) in the filtered table view
-# user story: user can right click a track and select "open in ableton" to open the ableton project associated with the track :O
-# user story: user can right click a track and select "add to set" that shows open sets or "add to new sets" to add the track to a set
-# user story: user can right click a track and select "play audio" to play the audio file in the default audio player
-# user story: user can go to settings from the toolbar and "enable/disable" edit mode to reorganize the table
-# User story : user can drag and drop a file from this program to another
-# user story: users can change the width of the columns, and the changes are saved
-    #user story: users can lock column width from settings menu
-# TODO: don't let users be able to change certain columns like id, date added, date created, etc
-#COMPLETED:
-# user story: users can change the order of the columns, and the changes are saved
-    #user story: users can lock column order from settings menu
+from gui.ask_user import AskUserDialog
+from gui.menu_bar import InitializeMenuBar
 
-# BeatBank.py (root)/src/gui/BeatBank.py
 from controllers.gdrive_integration import GoogleDriveIntegration
 class MainWindow(QMainWindow):
     # -------------------------------------------------------------------------
@@ -71,11 +39,27 @@ class MainWindow(QMainWindow):
         
     def model_play_audio(self):
         print("Playing audio... pt2")
-        current_row = self.table.currentIndex().row()
-        path = self.model.record(current_row).value("file_path")
-        track_title = self.model.record(current_row).value("title")
-        self.audio_player.update_current_track(track_title)
-        self.audio_player.playAudio(path)
+
+        # Get the selection model from the table view
+        selectionModel = self.table.selectionModel()
+
+        # Check if there is any selection
+        if selectionModel.hasSelection():
+            # Get the indexes of the selected rows
+            selectedIndexes = selectionModel.selectedRows()
+
+            # Assuming you want to play the first selected item
+            if selectedIndexes:
+                firstSelectedIndex = selectedIndexes[0]
+                current_row = firstSelectedIndex.row()
+                path = self.model.record(current_row).value("file_path")
+                track_title = self.model.record(current_row).value("title")
+
+                # Update the audio player with the current track and play
+                self.audio_player.update_current_track(track_title)
+                self.audio_player.playAudio(path)
+        else:
+            print("No selection made.")
           
 
     def init_ui(self):
@@ -169,89 +153,10 @@ class MainWindow(QMainWindow):
     # Menu bar and Actions
     # -------------------------------------------------------------------------
     def init_menu_bar(self):
-        # Create Menu Bar
-        menu_bar = self.menuBar()
-
-        # Add Menus
-        file_menu = menu_bar.addMenu("&File")
-        edit_menu = menu_bar.addMenu("&Edit")
-        view_menu = menu_bar.addMenu("&View")
-        settings_menu = menu_bar.addMenu("&Settings")
-        tools_menu = menu_bar.addMenu("&Tools")
-        help_menu = menu_bar.addMenu("&Help")
-        columns_menu = view_menu.addMenu("&Columns")
-        self.init_columns_submenu(columns_menu)
+        print("Initializing (NEW) menu bar...")
+        menubar = InitializeMenuBar(self)
+        menubar.init_menu_bar()
         
-
-        # File Menu Actions
-        exit_action = QAction("&Exit", self)
-        exit_action.triggered.connect(sys.exit)
-        
-        add_track_action = QAction("&Add Track", self)
-        add_track_action.triggered.connect(self.add_track)
-        
-        refresh_action = QAction("&Refresh", self)
-        refresh_action.triggered.connect(self.table_refresh)
-        
-        gdrive_action = QAction("&Google Drive Sign in", self)
-        gdrive_action.triggered.connect(self.google_drive.authenticate_user)
-        
-        gdrive_folder_action = QAction("&Folder", self)
-        gdrive_folder_action.triggered.connect(self.google_drive.find_or_create_beatbank_folder)
-
-        file_menu.addAction(add_track_action)
-        file_menu.addAction(refresh_action)
-        file_menu.addAction(exit_action)
-        file_menu.addAction(gdrive_action)
-        file_menu.addAction(gdrive_folder_action)
-
-        # Edit Menu Actions
-        edit_track_action = QAction("&Edit Track", self)
-        edit_track_action.triggered.connect(self.edit_track)
-        
-        delete_track_action = QAction("&Delete Track", self)
-        delete_track_action.triggered.connect(self.delete_track)
-
-        edit_menu.addAction(edit_track_action)
-        edit_menu.addAction(delete_track_action)
-        
-        # Settings Menu Actions
-        toggle_reorder_action = QAction("&Allow reorder", self, checkable=True)
-        toggle_reorder_action.triggered.connect(self.toggle_reorder)
-        
-        toggle_click_edit = QAction("&Allow click to edit", self, checkable=True)
-        toggle_click_edit.triggered.connect(self.toggle_click_edit)
-        
-        print_service_action = QAction("&Print Service Object", self)
-        print_service_action.triggered.connect(self.print_service_object)
-        
-        choose_folder_action = QAction("&Choose Folder", self)
-        choose_folder_action.triggered.connect(self.show_folder_selection_dialog)
-        
-        settings_menu.addAction(toggle_reorder_action)
-        settings_menu.addAction(toggle_click_edit)
-        settings_menu.addAction(print_service_action)
-        settings_menu.addAction(choose_folder_action)
-        
-        self.init_toggles(toggle_click_edit)
-        
-
-        # View Menu Actions
-        show_similar_tracks_action = QAction("Always Show Similar Tracks Table", self, checkable=True)
-        show_similar_tracks_action.toggled.connect(self.toggle_similar_tracks)
-        
-        
-        view_menu.addAction(show_similar_tracks_action)
-
-        # Tools Menu Actions
-        check_integrity_action = QAction("Check Song File Integrity", self)
-        check_integrity_action.triggered.connect(self.check_song_file_integrity)
-        tools_menu.addAction(check_integrity_action)
-        
-        # Help Menu Actions
-        read_me_action = QAction("Read Me", self)
-        # Connect read_me_action to the appropriate slot
-        help_menu.addAction(read_me_action)
 
     def init_columns_submenu(self, columns_menu):
         for i in range(self.table.model().columnCount()):
@@ -354,6 +259,7 @@ class MainWindow(QMainWindow):
         print("Editing track...")
         selected_row = self.table.currentIndex().row()
         if selected_row < 0:
+            #set the font color to gray and say "no track playing"
             print("No track selected for editing.")
             return
         track_id = self.model.record(selected_row).value("id")
@@ -429,24 +335,25 @@ class MainWindow(QMainWindow):
         Utils.open_file_location(file_path)
         
     def check_song_file_integrity(self):
-        invalid_rows = []
+        invalid_files = []  # Store tuples of (song_id, file_path)
         query = QSqlQuery("SELECT id, file_path FROM tracks")  # Adjust SQL query as needed
 
-        row = 0
         if query.exec():
             while query.next():
+                song_id = query.value(0)  # Assuming song_id is the first column
                 file_path = query.value(1)  # Assuming file_path is the second column
 
                 if not os.path.exists(file_path):
-                    invalid_rows.append(row)
-                row += 1
+                    invalid_files.append((song_id, file_path))  # Append tuple of song_id and file_path
+
         else:
             print(f"Failed to execute query: {query.lastError().text()}")
 
-        # Update the delegate with the invalid rows
-        if invalid_rows:
-            self.delegate.set_invalid_rows(invalid_rows)
-            self.report_invalid_files(invalid_rows)
+        # Update the delegate with the invalid files, if necessary
+        if invalid_files:
+            # Assuming you update your delegate to handle a list of (song_id, file_path) tuples
+            self.delegate.set_invalid_rows(invalid_files)
+            self.report_invalid_files(invalid_files)
         else:
             print("All song file paths are valid.")
 
@@ -460,110 +367,9 @@ class MainWindow(QMainWindow):
     # Google Drive Integration
     # -------------------------------------------------------------------------
 
-    def show_folder_selection_dialog(self):
-        folder_names = self.google_drive.list_and_choose_folder()
-        print(folder_names)
-        dialog = QInputDialog(self)
-        dialog.setWindowTitle("Choose Folder")
-        dialog.setLabelText("Select the folder to store your Beat Bank files:")
-        dialog.setComboBoxItems(folder_names)
-        dialog.setComboBoxEditable(False)
-        ok = dialog.exec()
-        return dialog.comboBoxItems().index(dialog.textValue()), ok
-    
-    def print_service_object(self):
-        if hasattr(self, 'gdrive_service'):
-            print(self.gdrive_service)
-        else:
-            print("User not authenticated.")
-        return
-     
-    
-class AskUserDialog(QDialog):
-    def __init__(self, title, message):
-        super().__init__()
-        self.setWindowTitle(title)
-        self.setGeometry(100, 100, 300, 100)
 
-        # Layout
-        layout = QVBoxLayout()
 
-        # Label
-        self.label = QLabel(message)
-        layout.addWidget(self.label)
 
-        # Text Edit
-        self.lineEdit = QLineEdit()
-        layout.addWidget(self.lineEdit)
-
-        # Button
-        self.button = QPushButton("OK")
-        self.button.clicked.connect(self.on_ok_clicked)
-        layout.addWidget(self.button)
-
-        self.setLayout(layout)
-    
-    def on_ok_clicked(self):
-        self.user_input = self.lineEdit.text()
-        self.accept()  # Closes the dialog and sets result to Accepted
-
-class BeatTable(QTableView):
-    trackDropped = pyqtSignal(str)
-    click_edit_toggled = pyqtSignal(bool)
-    
-    def __init__(self, parent=None, audio_signal=None):
-        super().__init__(parent)
-        if audio_signal is not None:
-            print("signal linked!")
-            self.audio_signal = audio_signal
-        else:
-            self.audio_signal = PlayAudioSignal()
-        print("audio_signal: ", audio_signal)
-        self.audio_player = play_audio.AudioPlayer()
-        self.lastClickTime = QTime()
-        self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()
-        self.setAcceptDrops(True)
-        self.setDragEnabled(True)
-        self.setMinimumHeight(500)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
-        self.horizontalHeader().setSectionsMovable(True)
-        
-
-    def handleSingleClick(self, event):
-        event_handlers.handleSingleClick(self, event)
-    def tableMouseMoveEvent(self, event):
-        event_handlers.tableMouseMoveEvent(self, event)
-    def mousePressEvent(self, event) -> None:
-        event_handlers.tableMousePressEvent(self, event)
-    def handleDoubleClick(self, event):
-        settings = QSettings("Parker Tonra", "Beat Bank")
-        clickToEdit = settings.value("clickToEdit", type=bool)
-        if clickToEdit:
-            event_handlers.handleDoubleClick(self, event)
-        else:
-            print("not in edit mode, so not handling double click event")
-            event_handlers.doubleClickPlay(self, event)
-        
-    def startDragOperation(self, item):
-        event_handlers.startDragOperation(self, item)
-    def dragEnterEvent(self, event):
-        event_handlers.dragEnterEvent(self, event)
-    def dragMoveEvent(self, event):
-        event_handlers.dragMoveEvent(self, event)
-    def dropEvent(self, event):
-        event_handlers.dropEvent(self, event)
-    def play_audio(self):
-        #emit a signal to play the audio
-        self.audio_signal.playAudioSignal.emit()
-        print("Playing audio...")
-        
-    
-    def findColumnIndexByName(self, column_name):
-        for column in range(self.model().columnCount()):
-            if self.model().headerData(column, Qt.Orientation.Horizontal, ) == column_name:
-                print(f"Found column {column_name} at index {column}")
-                return column
-        return -1  # Return -1 if not found
 #TODO: for checking integrity. looks if any file paths are invalid, paints the row red.
 class InvalidFileDelegate(QStyledItemDelegate):
     def __init__(self, parent=None):
@@ -579,6 +385,4 @@ class InvalidFileDelegate(QStyledItemDelegate):
     def set_invalid_rows(self, rows):
         self.invalid_rows = set(rows)
         self.parent().viewport().update()  # Update the view to reflect changes
-        
-class PlayAudioSignal(QtCore.QObject):
-    playAudioSignal = pyqtSignal()
+
