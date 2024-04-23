@@ -77,3 +77,12 @@ class Utils:
         options |= QFileDialog.Option.DontUseNativeDialog
         file_name, _ = QFileDialog.getOpenFileName(None, "Open File", "", "All Files (*)", options=options)
         return file_name
+    
+    @staticmethod
+    def load_settings():
+        settings = QSettings("BeatBank", "BeatBank")
+        return settings
+    
+    @staticmethod
+    def save_settings(settings):
+        settings.sync()

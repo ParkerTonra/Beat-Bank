@@ -14,6 +14,11 @@ import os
 
 class GoogleDriveIntegration:
     def __init__(self, gdrive_service=None):
+        #if setting "gdrive_toggle" is false, don't initialize gdrive. Otherwise, proceed.
+        settings = Utils.load_settings()
+        if settings.value("gdrive_toggle") == False:
+            print("Google Drive integration is disabled. Skipping initialization.")
+            return
         self.gdrive_service = gdrive_service
         if self.gdrive_service is None:
             self.init_google_drive()
@@ -29,9 +34,18 @@ class GoogleDriveIntegration:
         ok = dialog.exec()
         return dialog.comboBoxItems().index(dialog.textValue()), ok
         
-    
+    def toggle_gdrive(self):
+        settings = Utils.load_settings()
+        if settings.value("gdrive_toggle") == False:
+            settings.setValue("gdrive_toggle", True)
+            self.__init__()
+        else:
+            settings.setValue("gdrive_toggle", False)
+            self.gdrive_service = None
+        Utils.save_settings(settings)
     
     def init_google_drive(self):
+        
         print("Checking for existing Google Drive credentials...")
         credentials = Utils.load_credentials()
         print(f"Credentials: {credentials}")

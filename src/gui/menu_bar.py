@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QSettings, Qt
 from PyQt6.QtGui import QAction
-
+from utilities.util import Utils
 
 class InitializeMenuBar:
     # Init functions
@@ -65,21 +65,31 @@ class InitializeMenuBar:
     def init_settings_menu(self):
         settings_menu = self.menu_bar.addMenu("&Settings")
         
+        toggle_gdrive_action = QAction("&Toggle Google Drive", self.main_window, checkable=True)
+        toggle_gdrive_action.triggered.connect(lambda checked: self.main_window.google_drive.toggle_gdrive(checked))
+        
         toggle_reorder_action = QAction("&Allow reorder", self.main_window, checkable=True)
-        toggle_reorder_action.triggered.connect(self.main_window.toggle_reorder)
+        toggle_reorder_action.triggered.connect(lambda checked: self.main_window.toggle_reorder(checked))
         
         toggle_click_edit = QAction("&Allow click to edit", self.main_window, checkable=True)
-        toggle_click_edit.triggered.connect(self.main_window.toggle_click_edit)
-        
+        toggle_click_edit.triggered.connect(lambda checked: self.main_window.toggle_click_edit(checked))
+
         choose_folder_action = QAction("&Choose Folder", self.main_window)
         choose_folder_action.triggered.connect(self.main_window.google_drive.show_folder_selection)
         
+        settings_menu.addAction(toggle_gdrive_action)
         settings_menu.addAction(toggle_reorder_action)
         settings_menu.addAction(toggle_click_edit)
         settings_menu.addAction(choose_folder_action)
-        
-        self.main_window.init_toggles(toggle_click_edit)  # Assuming this method exists
 
+    def load_settings(self):
+        settings = Utils.load_settings()
+        return settings
+    
+    def toggle_gdrive(self):
+        self.main_window.google_drive.toggle_gdrive()
+        
+    
     def init_tools_menu(self):
         tools_menu = self.menu_bar.addMenu("&Tools")
         
