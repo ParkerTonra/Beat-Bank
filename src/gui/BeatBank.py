@@ -10,13 +10,11 @@ from PyQt6.QtWidgets import (
     QMessageBox,
     QHBoxLayout,
     QFrame,
-    QAbstractItemView,
     QTableView,
     QMenu,
     QDialog
 )
-from PyQt6.QtCore import Qt, QSettings, QSortFilterProxyModel
-from PyQt6.QtGui import QAction, QBrush, QColor
+from PyQt6.QtCore import QSettings
 
 from utilities.util import Utils
 from controllers.database_controller import DatabaseController
@@ -71,9 +69,19 @@ class MainWindow(QMainWindow):
         self.top_layout = QHBoxLayout()
         self.table_layout = QVBoxLayout()
         self.bottom_layout = QHBoxLayout()
+        
+        self.sidebar_layout = QVBoxLayout()
+        
+        self.beatbank_layout = QHBoxLayout()
+        
         self.main_layout.addLayout(self.top_layout)
         self.main_layout.addLayout(self.table_layout)
         self.main_layout.addLayout(self.bottom_layout)
+        
+        self.beatbank_layout.addLayout(self.sidebar_layout)
+        self.beatbank_layout.addLayout(self.main_layout)
+        
+        #TODO: sidebar
 
     def finalizeLayout(self):
         self.container = QWidget(self)
@@ -88,6 +96,25 @@ class MainWindow(QMainWindow):
         self.table.setModel(self.model_manager.proxyModel)
         self.table.setSortingEnabled(True)
         self.table.verticalHeader().hide()
+        self.table.setStyleSheet("""
+        QTableView {
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #222;
+            color: #EEE;
+        }
+        QHeaderView::section {
+            background-color: #333;
+            padding: 5px;
+            border: 1px solid #444;
+            font-size: 14px;
+            color: #FFF;
+        }
+        QTableView QTableCornerButton::section {
+            background: #333;
+            border: 1px solid #444;
+        }
+        """)
 
     def init_filteredTableView(self):
         self.filteredTableView = QTableView(self)
