@@ -12,11 +12,12 @@ from PyQt6.QtWidgets import (
     QFrame,
     QTableView,
     QMenu,
-    QDialog
+    QDialog,
+    QWidgetItem
 )
 from PyQt6.QtCore import QSettings
 
-from utilities.util import Utils
+
 from controllers.database_controller import DatabaseController
 from gui import play_audio
 from gui.BeatTable import BeatTable
@@ -24,10 +25,12 @@ from gui.signals import PlayAudioSignal
 from gui.edit_track_window import EditTrackWindow
 from gui.ask_user import AskUserDialog
 from gui.menu_bar import InitializeMenuBar
+from gui.side_bar import SideBar
 from gui.InvalidFileDelegate import InvalidFileDelegate
 from gui.model_manager import ModelManager
 
 from controllers.gdrive_integration import GoogleDriveIntegration
+from utilities.utils import Utils
 
 class MainWindow(QMainWindow):
     def __init__(self, db):
@@ -41,6 +44,10 @@ class MainWindow(QMainWindow):
         self.audio_signal.playAudioSignal.connect(self.model_play_audio)
         self.audio_player = play_audio.AudioPlayer()
         
+        #flags to universally know what is selected and playing
+        self.selected_track = None
+        self.playing_track = None
+        
         # Initialize the model manager
         self.model_manager = ModelManager(db, self)
         self.model_manager.setup_models()
@@ -53,6 +60,7 @@ class MainWindow(QMainWindow):
     # UI Setup
     def init_ui(self):
         self.setupWindow()
+        self.init_side_bar()
         self.init_setupLayouts()
         self.init_beat_table()
         self.restore_table_state()
@@ -64,28 +72,37 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Beat Bank')
         self.setGeometry(100, 100, 1400, 200)
 
+    def init_side_bar(self):
+        print("creating sidebar...")
+        self.sidebar = SideBar(self)
+        print("sidebar: ", self.sidebar)
     def init_setupLayouts(self):
-        self.main_layout = QVBoxLayout()
-        self.top_layout = QHBoxLayout()
-        self.table_layout = QVBoxLayout()
-        self.bottom_layout = QHBoxLayout()
-        
-        self.sidebar_layout = QVBoxLayout()
+        print("Setting up layouts...")
         
         self.beatbank_layout = QHBoxLayout()
+        self.sidebar_layout = QVBoxLayout()
+        self.main_layout = QVBoxLayout()
+        self.table_layout = QHBoxLayout()
+        self.bottom_layout = QHBoxLayout()
         
-        self.main_layout.addLayout(self.top_layout)
+        self.sidebar_layout.addWidget(self.sidebar)
+        
+        
+        #add table, bottom to main
         self.main_layout.addLayout(self.table_layout)
         self.main_layout.addLayout(self.bottom_layout)
         
+        #put sidebar, main in beatbank
         self.beatbank_layout.addLayout(self.sidebar_layout)
         self.beatbank_layout.addLayout(self.main_layout)
+
+        print("Layouts initialized.")
         
         #TODO: sidebar
 
     def finalizeLayout(self):
         self.container = QWidget(self)
-        self.container.setLayout(self.main_layout)
+        self.container.setLayout(self.beatbank_layout)
         self.setCentralWidget(self.container)
         self.table_layout.addWidget(self.table)
 
@@ -124,6 +141,9 @@ class MainWindow(QMainWindow):
         menubar = InitializeMenuBar(self)
         menubar.init_menu_bar()
     # Event Handlers and Slots
+    
+    
+    
     def toggle_column(self, checked, index):
         self.table.setColumnHidden(index, not checked)
         settings = QSettings("Parker Tonra", "Beat Bank")
@@ -190,6 +210,27 @@ class MainWindow(QMainWindow):
     def delete_track(self):
         selected_row = self.table.currentIndex().row()
         self.controller.controller_delete_track(selected_row)
+    
+    def add_playlist(self):
+        print("Adding playlist...")
+        # Add playlist logic here
+        pass
+    #remove_playlist
+    #open_settings
+    #refresh_list
+    def remove_playlist(self):
+        print("Removing playlist...")
+        # Remove playlist logic here
+        pass
+    
+    def open_settings(self):
+        print("Opening settings...")
+        # Open settings dialog or window
+        pass
+    
+    def show_similar_tracks(self):
+        # Show similar tracks logic here
+        pass
     
     # Database Operations
     def delete_from_database(self, track_id):

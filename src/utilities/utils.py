@@ -73,7 +73,7 @@ class Utils:
     
     @staticmethod
     def open_file_dialog():
-        options = QFileDialog.Options()
+        options = QFileDialog.options()
         options |= QFileDialog.Option.DontUseNativeDialog
         file_name, _ = QFileDialog.getOpenFileName(None, "Open File", "", "All Files (*)", options=options)
         return file_name

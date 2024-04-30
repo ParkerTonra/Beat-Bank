@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QSettings, Qt
 from PyQt6.QtGui import QAction
-from utilities.util import Utils
+from utilities.utils import Utils
 
 class InitializeMenuBar:
     # Init functions

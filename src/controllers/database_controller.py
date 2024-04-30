@@ -2,7 +2,7 @@ from PyQt6.QtSql import QSqlQuery, QSqlTableModel, QSqlDatabase
 from PyQt6.QtCore import QObject, QDateTime, pyqtSignal
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 
-from utilities.util import Utils
+from utilities.utils import Utils
 import mutagen
 import os
 import datetime
