@@ -13,7 +13,7 @@ from PyQt6.QtWidgets import (
     QTableView,
     QMenu,
     QDialog,
-    QWidgetItem
+    QSplitter
 )
 from PyQt6.QtCore import QSettings
 
@@ -78,7 +78,7 @@ class MainWindow(QMainWindow):
         print("sidebar: ", self.sidebar)
     def init_setupLayouts(self):
         print("Setting up layouts...")
-        
+        self.beatbank_splitter = QSplitter()
         self.beatbank_layout = QHBoxLayout()
         self.sidebar_layout = QVBoxLayout()
         self.main_layout = QVBoxLayout()
@@ -88,9 +88,11 @@ class MainWindow(QMainWindow):
         self.sidebar_layout.addWidget(self.sidebar)
         
         
-        #add table, bottom to main
+        # Add table and bottom to main layout
         self.main_layout.addLayout(self.table_layout)
         self.main_layout.addLayout(self.bottom_layout)
+        self.beatbank_layout.addLayout(self.sidebar_layout, 10)
+        self.beatbank_layout.addLayout(self.main_layout, 90)
         
         #put sidebar, main in beatbank
         self.beatbank_layout.addLayout(self.sidebar_layout)
