@@ -58,7 +58,7 @@ class SideBar(QWidget):
 
     def delete_playlist(self):
         selected = self.sets_list.currentRow()
-        if selected != -1 and QMessageBox.question(self, "Delete playlist", f"Are you sure you want to delete the playlist '{self.sets_list.item(selected).text()}'?") == QMessageBox.StandardButton.Yes:
+        if selected != -1 and Utils.ask_user_bool("Delete Track", "Are you sure you want to delete this set?"):
             self.sets_list.takeItem(selected)
             self.save_playlists()
 
