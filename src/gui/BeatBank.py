@@ -61,6 +61,7 @@ class MainWindow(QMainWindow):
     def init_ui(self):
         self.setupWindow()
         self.init_side_bar()
+        self.declare_layouts()
         self.init_setupLayouts()
         self.init_beat_table()
         self.restore_table_state()
@@ -72,27 +73,50 @@ class MainWindow(QMainWindow):
         self.setWindowTitle('Beat Bank')
         self.setGeometry(100, 100, 1400, 200)
 
-    def init_side_bar(self):
-        print("creating sidebar...")
-        self.sidebar = SideBar(self)
-        print("sidebar: ", self.sidebar)
-    def init_setupLayouts(self):
-        print("Setting up layouts...")
-        self.beatbank_splitter = QSplitter()
-        self.beatbank_layout = QHBoxLayout()
-        self.sidebar_layout = QVBoxLayout()
+    
+
+    def declare_layouts(self):
+        print("Creating layouts...")
+        self.beatbank_splitter = QSplitter() #Splitter for sidebar and main
+        self.beatbank_layout = QHBoxLayout() 
         self.main_layout = QVBoxLayout()
         self.table_layout = QHBoxLayout()
         self.bottom_layout = QHBoxLayout()
-        
-        self.sidebar_layout.addWidget(self.sidebar)
+
+    def init_side_bar(self):
+            print("creating sidebar...")
+            self.sidebar = SideBar(self)
+            self.setStyleSheet("""
+                QListView {
+                    background-color: #222; /* Dark background */
+                    color: #EEE; /* Light text color */
+                    font: 16px; /* Font size */
+                    border: none; /* No border around the view */
+                }
+                QListView::item {
+                    border: 1px solid #FFFFFF; /* Subtle border for each item */
+                    border-radius: 6px; /* Slightly rounded corners for the border */
+                    margin: 2px; /* Margin around items */
+                    padding: 5px; /* Padding inside items */
+                }
+                QListView::item:selected {
+                    background-color: #666; /* Background color of a selected item */
+                }
+                QListView::item:hover {
+                    background-color: #555; /* Background color when hovering over an item */
+                }
+                """)
+            self.sidebar_layout = self.sidebar.sidebar_layout
+    
+    def init_setupLayouts(self):
+        print("Setting up layouts...")
         
         
         # Add table and bottom to main layout
         self.main_layout.addLayout(self.table_layout)
         self.main_layout.addLayout(self.bottom_layout)
-        self.beatbank_layout.addLayout(self.sidebar_layout, 10)
-        self.beatbank_layout.addLayout(self.main_layout, 90)
+        self.beatbank_layout.addLayout(self.sidebar_layout, 10) # sidebar takes up 10% of space
+        self.beatbank_layout.addLayout(self.main_layout, 90) # main takes up 90% of space
         
         #put sidebar, main in beatbank
         self.beatbank_layout.addLayout(self.sidebar_layout)

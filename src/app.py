@@ -23,6 +23,7 @@ def main():
     main_window.show()
 
     # Enter the application's main event loop
+
     sys.exit(app.exec())
 
 if __name__ == '__main__':
