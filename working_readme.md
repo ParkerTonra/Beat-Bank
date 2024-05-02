@@ -31,8 +31,12 @@ WORKING FEATURES:
 - Column reorder in beats table
 - sets reorder in sidebar
 
+SEMI WORKING FEATURES:
+ - plays audio
+
+
 BROKEN FEATURES:
-- tracks do not play
+- if audio plays while already playing, program crashes.
 - selected track is not updated properly.
 
 CONSIDERATIONS:
