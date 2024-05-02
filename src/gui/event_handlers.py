@@ -16,7 +16,7 @@ def tableMousePressEvent(self, event):
             self.handleSingleClick(event)
         
         self.lastClickTime = current_time
-        
+
 def handleSingleClick(self, event):
     index = self.indexAt(event.pos())
     
@@ -31,6 +31,7 @@ def handleSingleClick(self, event):
         
         # Using the select method with the correct flags
         selectionModel.select(index, flags)
+        
         
     self.dragStartPosition = event.pos()
 

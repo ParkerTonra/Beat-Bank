@@ -34,20 +34,31 @@ class InitializeMenuBar:
         gdrive_folder_action = QAction("&Folder", self.main_window)
         gdrive_folder_action.triggered.connect(self.main_window.google_drive.find_or_create_beatbank_folder)
         
+        debug_action = QAction("&Debug", self.main_window)
+        debug_action.triggered.connect(self.main_window.debug_print)
+        
+        save_as_default_action = QAction("&Save as default", self.main_window)
+        save_as_default_action.triggered.connect(self.main_window.save_as_default)
+        
+        load_default_action = QAction("&Load default template", self.main_window)
+        load_default_action.triggered.connect(self.main_window.load_default)
+        
         file_menu.addAction(add_track_action)
         file_menu.addAction(refresh_action)
         file_menu.addAction(exit_action)
         file_menu.addAction(gdrive_action)
         file_menu.addAction(gdrive_folder_action)
-          
+        file_menu.addAction(debug_action)
+        file_menu.addAction(save_as_default_action)
+        file_menu.addAction(load_default_action)
     def init_edit_menu(self):
         edit_menu = self.menu_bar.addMenu("&Edit")
         
         edit_track_action = QAction("&Edit Track", self.main_window)
-        edit_track_action.triggered.connect(self.main_window.edit_track)
+        edit_track_action.triggered.connect(self.main_window.edit_beat)
         
         delete_track_action = QAction("&Delete Track", self.main_window)
-        delete_track_action.triggered.connect(self.main_window.delete_track)
+        delete_track_action.triggered.connect(self.main_window.delete_beat)
 
         edit_menu.addAction(edit_track_action)
         edit_menu.addAction(delete_track_action)
@@ -63,13 +74,19 @@ class InitializeMenuBar:
         view_menu.addAction(show_similar_tracks_action)
 
     def init_settings_menu(self):
+        # Restore the reorder state for the UI component
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        reorder_state = settings.value("reorderState", True, type=bool)  # Default to True if not set
+        
         settings_menu = self.menu_bar.addMenu("&Settings")
         
         toggle_gdrive_action = QAction("&Toggle Google Drive", self.main_window, checkable=True)
         toggle_gdrive_action.triggered.connect(lambda checked: self.main_window.google_drive.toggle_gdrive(checked))
         
         toggle_reorder_action = QAction("&Allow reorder", self.main_window, checkable=True)
+        toggle_reorder_action.setChecked(reorder_state)
         toggle_reorder_action.triggered.connect(lambda checked: self.main_window.toggle_reorder(checked))
+
         
         toggle_click_edit = QAction("&Allow click to edit", self.main_window, checkable=True)
         toggle_click_edit.triggered.connect(lambda checked: self.main_window.toggle_click_edit(checked))

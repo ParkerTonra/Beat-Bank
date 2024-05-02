@@ -72,6 +72,10 @@ class Utils:
         return False
     
     @staticmethod
+    def warn_user(title, message):
+        QMessageBox.warning(title=title, message=message)
+    
+    @staticmethod
     def open_file_dialog():
         options = QFileDialog.options()
         options |= QFileDialog.Option.DontUseNativeDialog

@@ -14,7 +14,7 @@ class BeatTable(QTableView):
     def __init__(self, parent=None, audio_signal=None):
         super().__init__(parent)
         if audio_signal is not None:
-            print("signal linked!")
+            print("Audio signal linked!")
             self.audio_signal = audio_signal
         else:
             self.audio_signal = PlayAudioSignal()
@@ -33,6 +33,7 @@ class BeatTable(QTableView):
         event_handlers.handleSingleClick(self, event)
         print("Single click handled")
     def tableMouseMoveEvent(self, event):
+        print("table mouse move event")
         event_handlers.tableMouseMoveEvent(self, event)
     def mousePressEvent(self, event) -> None:
         event_handlers.tableMousePressEvent(self, event)

@@ -9,6 +9,7 @@ class ModelManager:
         self.parent = parent
         self.model = None
         self.proxyModel = None
+        
 
     def setup_models(self):
         self.init_beat_model()
@@ -71,3 +72,10 @@ class ModelManager:
             print("Track added successfully")
         else:
             print("Failed to add track:", query.lastError().text())
+
+    def get_id_for_row(self, proxy_row):
+        """
+        Get the ID for a given row in the model.
+        """
+        source_index = self.proxyModel.mapToSource(self.proxyModel.index(proxy_row, 0))
+        return self.model.record(source_index.row()).value('id')

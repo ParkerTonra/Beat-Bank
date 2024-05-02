@@ -54,9 +54,9 @@ class DatabaseController(QObject):
             print("Failed to add track:", query.lastError().text())
             return False
     
-    def controller_delete_track(self, selected_row):
+    def controller_delete_beat(self, selected_row):
         if selected_row < 0:
-            self.show_warning_message("No Selection", "Please select a track to delete.")
+            Utils.warn_user("Error.", "No track selected.")
             return
         
         reply = Utils.ask_user("Delete Track", "Are you sure you want to delete this track?")

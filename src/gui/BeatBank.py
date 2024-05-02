@@ -13,9 +13,10 @@ from PyQt6.QtWidgets import (
     QTableView,
     QMenu,
     QDialog,
-    QSplitter
+    QSplitter,
+    QHeaderView
 )
-from PyQt6.QtCore import QSettings
+from PyQt6.QtCore import QSettings, Qt
 
 
 from controllers.database_controller import DatabaseController
@@ -44,15 +45,19 @@ class MainWindow(QMainWindow):
         self.audio_signal.playAudioSignal.connect(self.model_play_audio)
         self.audio_player = play_audio.AudioPlayer()
         
+        
+        
         #flags to universally know what is selected and playing
-        self.selected_track = None
-        self.playing_track = None
+        self.selected_beat = None
+        self.playing_beat = None
         
         # Initialize the model manager
         self.model_manager = ModelManager(db, self)
         self.model_manager.setup_models()
         
         self.init_ui()
+        selection_model = self.table.selectionModel()
+        selection_model.currentRowChanged.connect(self.update_selected_beat)
         self.bottom_layout.addWidget(self.audio_player)
         self.table.trackDropped.connect(self.add_track)
         self.editWindow = None
@@ -61,10 +66,11 @@ class MainWindow(QMainWindow):
     def init_ui(self):
         self.setupWindow()
         self.init_side_bar()
+        self.init_beat_table()
         self.declare_layouts()
         self.init_setupLayouts()
-        self.init_beat_table()
         self.restore_table_state()
+        self.restore_reorder_state()
         self.init_filteredTableView()
         self.init_menu_bar()
         self.finalizeLayout()
@@ -80,7 +86,7 @@ class MainWindow(QMainWindow):
         self.beatbank_splitter = QSplitter() #Splitter for sidebar and main
         self.beatbank_layout = QHBoxLayout() 
         self.main_layout = QVBoxLayout()
-        self.table_layout = QHBoxLayout()
+        self.table_layout = QVBoxLayout()
         self.bottom_layout = QHBoxLayout()
 
     def init_side_bar(self):
@@ -110,18 +116,17 @@ class MainWindow(QMainWindow):
     
     def init_setupLayouts(self):
         print("Setting up layouts...")
-        
+        self.table_layout.addWidget(self.table)
         
         # Add table and bottom to main layout
-        self.main_layout.addLayout(self.table_layout)
-        self.main_layout.addLayout(self.bottom_layout)
+        self.main_layout.addLayout(self.table_layout, 80)
+        self.main_layout.addLayout(self.bottom_layout, 20)
+        
         self.beatbank_layout.addLayout(self.sidebar_layout, 10) # sidebar takes up 10% of space
         self.beatbank_layout.addLayout(self.main_layout, 90) # main takes up 90% of space
         
-        #put sidebar, main in beatbank
-        self.beatbank_layout.addLayout(self.sidebar_layout)
-        self.beatbank_layout.addLayout(self.main_layout)
-
+        
+        
         print("Layouts initialized.")
         
         #TODO: sidebar
@@ -130,7 +135,7 @@ class MainWindow(QMainWindow):
         self.container = QWidget(self)
         self.container.setLayout(self.beatbank_layout)
         self.setCentralWidget(self.container)
-        self.table_layout.addWidget(self.table)
+        
 
     def init_beat_table(self):
         self.table = BeatTable(self, self.audio_signal)
@@ -158,6 +163,7 @@ class MainWindow(QMainWindow):
             border: 1px solid #444;
         }
         """)
+        
 
     def init_filteredTableView(self):
         self.filteredTableView = QTableView(self)
@@ -166,10 +172,8 @@ class MainWindow(QMainWindow):
     def init_menu_bar(self):
         menubar = InitializeMenuBar(self)
         menubar.init_menu_bar()
+    
     # Event Handlers and Slots
-    
-    
-    
     def toggle_column(self, checked, index):
         self.table.setColumnHidden(index, not checked)
         settings = QSettings("Parker Tonra", "Beat Bank")
@@ -186,28 +190,9 @@ class MainWindow(QMainWindow):
 
     def model_play_audio(self):
         print("Playing audio... pt2")
-
-        # Get the selection model from the table view
-        selectionModel = self.table.selectionModel()
-
-        # Check if there is any selection
-        if selectionModel.hasSelection():
-            # Get the indexes of the selected rows
-            selectedIndexes = selectionModel.selectedRows()
-
-            # Assuming you want to play the first selected item
-            if selectedIndexes:
-                firstSelectedIndex = selectedIndexes[0]
-                current_row = firstSelectedIndex.row()
-                path = self.model.record(current_row).value("file_path")
-                track_title = self.model.record(current_row).value("title")
-
-                # Update the audio player with the current track and play
-                self.audio_player.update_current_track(track_title)
-                self.audio_player.playAudio(path)
-        else:
-            print("No selection made.")
-
+        self.selected_beat
+        
+        
     def add_track(self, path=None):
         if not path:
             path, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
@@ -221,21 +206,21 @@ class MainWindow(QMainWindow):
         else:
             print("Failed to add track.")
         
-    def edit_track(self):
+    def edit_beat(self):
         print("Editing track...")
         selected_row = self.table.currentIndex().row()
         if selected_row < 0:
             #set the font color to gray and say "no track playing"
             print("No track selected for editing.")
             return
-        track_id = self.model.record(selected_row).value("id")
+        track_id = self.model_manager.get_id_for_row(selected_row)
         self.editWindow = EditTrackWindow(track_id)
         self.editWindow.trackEdited.connect(self.table_refresh)
         self.editWindow.show()
     
-    def delete_track(self):
+    def delete_beat(self):
         selected_row = self.table.currentIndex().row()
-        self.controller.controller_delete_track(selected_row)
+        self.controller.controller_delete_beat(selected_row)
     
     def add_playlist(self):
         print("Adding playlist...")
@@ -292,6 +277,30 @@ class MainWindow(QMainWindow):
         else:
             print("All song file paths are valid.")
 
+    def debug_print(self):
+        print("Debugging...")
+        print("Selected track:", self.selected_beat)
+        print("Playing track:", self.playing_beat)
+    
+    def update_selected_beat(self, current, previous):
+        """
+        Update the selected beat information based on the current selection.
+        """
+        if not current.isValid():
+            self.selected_beat = None
+            print("No beat selected.")
+            return
+
+        # Assuming `current` is a QModelIndex, map it if using a proxy model
+        if hasattr(self, 'model_manager') and self.model_manager.proxyModel:
+            source_index = self.model_manager.proxyModel.mapToSource(current)
+            row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
+            self.selected_beat = row_data
+            print(f"Selected track updated: {self.selected_beat}")
+        else:
+            print("Model manager not defined or missing proxy model.")
+        
+    
     # Utility
     def table_refresh(self):
         self.model_manager.refresh_model()
@@ -317,6 +326,14 @@ class MainWindow(QMainWindow):
         else:
             print("No state found.")   
     
+    def restore_reorder_state(self):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        # Default to True if the setting has never been set
+        reorder_allowed = settings.value("reorderState", True, type=bool)
+        self.table.horizontalHeader().setSectionsMovable(reorder_allowed)
+        print(f"Reorder state restored: {'Enabled' if reorder_allowed else 'Disabled'}")
+    
+    
     def ask_user(self, title, message):
         dialog = AskUserDialog(title, message)
         if dialog.exec() == QDialog.DialogCode.Accepted:
@@ -332,7 +349,21 @@ class MainWindow(QMainWindow):
         file_path = self.model.record(current_row).value("file_path")
         print(f"Opening file location: {file_path}")
         Utils.open_file_location(file_path)
-        
+    
+    def save_as_default(self):
+            settings = QSettings("Parker Tonra", "Beat Bank")
+            settings.setValue("defaultTableState", self.table.horizontalHeader().saveState())
+            
+    def load_default(self):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        state = settings.value("tableState")
+        if state:
+            print(f"State found. Restoring table state...")
+            self.table.horizontalHeader().restoreState(state)
+            for i in range(self.table.model().columnCount()):
+                visible = settings.value(f"columnVisibility/{i}", True, type=bool)
+                self.table.setColumnHidden(i, not visible)
+            
     def report_invalid_files(self, invalid_files):
         # Here you can implement how you want to report the invalid files to the user
         # For example, showing a dialog with a list of invalid file paths and options to remove or update them
@@ -342,25 +373,39 @@ class MainWindow(QMainWindow):
     # Event Overrides
     def closeEvent(self, event):
         print("Shutting down...")
+        print("Saving table state..")
         settings = QSettings("Parker Tonra", "Beat Bank")
         settings.setValue("tableState", self.table.horizontalHeader().saveState())
         super().closeEvent(event)
+    
+    def toggle_reorder(self, allow_reorder):
+        # Set the movability of the table's column headers
+        self.table.horizontalHeader().setSectionsMovable(allow_reorder)
 
+        # Update the settings with the new reorder state
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        settings.setValue("reorderState", allow_reorder)
+        settings.sync()  # Ensure changes are immediately written to the persistent storage
+
+        
+    def action_triggered(self, checked):
+        self.toggle_reorder(checked)        
+    
     def contextMenuEvent(self, event):
         context_menu = QMenu(self)
         open_file_action = context_menu.addAction("Open File Location")
-        edit_track_action = context_menu.addAction("Edit Track")
-        delete_track_action = context_menu.addAction("Delete Track")
+        edit_beat_action = context_menu.addAction("Edit Beat")
+        delete_beat_action = context_menu.addAction("Delete Beat")
         open_ableton_action = context_menu.addAction("Open in Ableton") #TODO
         add_to_set_action = context_menu.addAction("Add to Set") #TODO
         play_audio_action = context_menu.addAction("Play Audio") #TODO
         action = context_menu.exec(event.globalPos())
         if action == open_file_action:
             self.open_file_location()
-        elif action == edit_track_action:
-            self.edit_track()
-        elif action == delete_track_action:
-            self.delete_track()
+        elif action == edit_beat_action:
+            self.edit_beat()
+        elif action == delete_beat_action:
+            self.delete_beat()
         elif action == open_ableton_action:
             pass
         elif action == add_to_set_action:
