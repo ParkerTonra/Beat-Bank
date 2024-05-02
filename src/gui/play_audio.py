@@ -5,18 +5,20 @@ from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtWidgets import QToolButton, QWidget, QFileDialog, QSlider, QGridLayout, QHBoxLayout, QLabel, QSizePolicy, QSpacerItem
 from PyQt6.QtGui import QIcon
 from PyQt6.QtMultimedia import QAudioOutput
+from gui.signals import PlayAudioSignal
 
 class AudioPlayer(QWidget):
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
-        
         # Initialize QMediaPlayer
         self.player = QMediaPlayer()
         self.audio_out = QAudioOutput()
         self.player.setAudioOutput(self.audio_out)
         self.player.positionChanged.connect(self.positionChanged)
         self.player.errorOccurred.connect(self.handleError)
-
+        self.audio_signal = PlayAudioSignal()
+        self.audio_signal.playAudioSignal.connect(self.playAudio)
+        self.main_window = main_window
         # icon paths
         current_dir = os.path.dirname(__file__)
         play_icon_path = os.path.join(current_dir, '../assets/pictures/play.png')
@@ -59,10 +61,7 @@ class AudioPlayer(QWidget):
         self.stop_button.clicked.connect(self.stopMusic)
         
         self.volume_slider.valueChanged.connect(self.volumeChanged)
-        
-        # Set initial volume
-        self.volume_slider.setValue(50)  # Example initial volume
-        
+
         self.volume_slider_layout = QHBoxLayout()
         self.volume_slider_layout.addWidget(self.volume_slider)
         
@@ -81,29 +80,31 @@ class AudioPlayer(QWidget):
         self.main_layout.addLayout(self.current_track_layout, 0, 1, alignment=Qt.AlignmentFlag.AlignCenter)
         self.main_layout.addLayout(self.volume_slider_layout, 0, 3, alignment=Qt.AlignmentFlag.AlignCenter)
         
-    def playAudio(self, file_path):
+    def playAudio(self):
+        if not hasattr(self, 'main_window'):
+            print("Main window reference is not set.")
+            return
+        
+        file_path = self.main_window.get_selected_beat_path()
+        if not file_path:
+            print("No file selected.")
+            return
+
         current_state = self.player.playbackState()
         current_track = self.player.source().toString()
         full_path = QUrl.fromLocalFile(file_path).toString()
 
-        # Check if the requested track is already playing
         if current_state == QMediaPlayer.PlaybackState.PlayingState and current_track == full_path:
-            print(f"Pausing track: {file_path}")
             self.player.pause()
-            return
-
-        # If the player is paused and the same track is requested, resume playing
-        if current_state == QMediaPlayer.PlaybackState.PausedState and current_track == full_path:
+            print(f"Pausing track: {file_path}")
+        elif current_state == QMediaPlayer.PlaybackState.PausedState and current_track == full_path:
+            self.player.play()
             print(f"Resuming track: {file_path}")
-            self.player.play()
-            return
-
-        # If a different track is requested or the player is stopped, play the new track
-        if current_track != full_path or current_state == QMediaPlayer.PlaybackState.StoppedState:
-            print(f"Playing track at path: {file_path}")
+        else:
             self.player.setSource(QUrl.fromLocalFile(file_path))
-            print(f"Playing audio: {full_path}")
             self.player.play()
+            print(f"Playing track: {file_path}")
+
 
     def pauseMusic(self):
         self.player.pause()

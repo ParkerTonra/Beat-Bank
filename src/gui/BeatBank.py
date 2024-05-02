@@ -20,7 +20,7 @@ from PyQt6.QtCore import QSettings, Qt
 
 
 from controllers.database_controller import DatabaseController
-from gui import play_audio
+from gui.play_audio import AudioPlayer
 from gui.BeatTable import BeatTable
 from gui.signals import PlayAudioSignal
 from gui.edit_track_window import EditTrackWindow
@@ -29,7 +29,7 @@ from gui.menu_bar import InitializeMenuBar
 from gui.side_bar import SideBar
 from gui.InvalidFileDelegate import InvalidFileDelegate
 from gui.model_manager import ModelManager
-
+from gui.setup_ui import MainWindowSetup
 from controllers.gdrive_integration import GoogleDriveIntegration
 from utilities.utils import Utils
 
@@ -42,18 +42,14 @@ class MainWindow(QMainWindow):
         self._updating_cell = False
         self.isEditing = False
         self.audio_signal = PlayAudioSignal()
-        self.audio_signal.playAudioSignal.connect(self.model_play_audio)
-        self.audio_player = play_audio.AudioPlayer()
-        
+        self.audio_player = AudioPlayer(self)
+        self.model_manager = ModelManager(db, self)
+        self.model_manager.setup_models()
         
         
         #flags to universally know what is selected and playing
         self.selected_beat = None
         self.playing_beat = None
-        
-        # Initialize the model manager
-        self.model_manager = ModelManager(db, self)
-        self.model_manager.setup_models()
         
         self.init_ui()
         selection_model = self.table.selectionModel()
@@ -61,6 +57,7 @@ class MainWindow(QMainWindow):
         self.bottom_layout.addWidget(self.audio_player)
         self.table.trackDropped.connect(self.add_track)
         self.editWindow = None
+
 
     # UI Setup
     def init_ui(self):
@@ -136,7 +133,13 @@ class MainWindow(QMainWindow):
         self.container.setLayout(self.beatbank_layout)
         self.setCentralWidget(self.container)
         
-
+    def get_selected_beat_path(self):
+        if self.selected_beat:
+            print("Selected beat:", self.selected_beat)
+            return self.selected_beat.get("File Location")
+        print("No beat selected.")
+        return None
+    
     def init_beat_table(self):
         self.table = BeatTable(self, self.audio_signal)
         self.delegate = InvalidFileDelegate(self.table)
@@ -144,8 +147,10 @@ class MainWindow(QMainWindow):
         self.table.setModel(self.model_manager.proxyModel)
         self.table.setSortingEnabled(True)
         self.table.verticalHeader().hide()
+        
         self.table.setStyleSheet("""
-        QTableView {
+        QTableView 
+        {
             border: 1px solid #444;
             border-radius: 5px;
             background-color: #222;
@@ -180,6 +185,7 @@ class MainWindow(QMainWindow):
         settings.setValue(f"columnVisibility/{index}", checked)
 
     def toggle_similar_tracks(self, checked):
+        # TODO: similar tracks.
         # Emit signal or perform action based on the state of the toggle
         if checked:
             # Emit signal or perform action to show similar tracks table
@@ -188,11 +194,9 @@ class MainWindow(QMainWindow):
             # Emit signal or perform action to hide similar tracks table
             pass
 
-    def model_play_audio(self):
-        print("Playing audio... pt2")
-        self.selected_beat
         
-        
+    def get_selected_beat(self):
+        return self.selected_beat    
     def add_track(self, path=None):
         if not path:
             path, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
@@ -221,28 +225,7 @@ class MainWindow(QMainWindow):
     def delete_beat(self):
         selected_row = self.table.currentIndex().row()
         self.controller.controller_delete_beat(selected_row)
-    
-    def add_playlist(self):
-        print("Adding playlist...")
-        # Add playlist logic here
-        pass
-    #remove_playlist
-    #open_settings
-    #refresh_list
-    def remove_playlist(self):
-        print("Removing playlist...")
-        # Remove playlist logic here
-        pass
-    
-    def open_settings(self):
-        print("Opening settings...")
-        # Open settings dialog or window
-        pass
-    
-    def show_similar_tracks(self):
-        # Show similar tracks logic here
-        pass
-    
+
     # Database Operations
     def delete_from_database(self, track_id):
         query = QSqlQuery()
@@ -296,6 +279,8 @@ class MainWindow(QMainWindow):
             source_index = self.model_manager.proxyModel.mapToSource(current)
             row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
             self.selected_beat = row_data
+            file_path = self.selected_beat.get("file_path")
+            print(f"Selected file path: {file_path}")
             print(f"Selected track updated: {self.selected_beat}")
         else:
             print("Model manager not defined or missing proxy model.")

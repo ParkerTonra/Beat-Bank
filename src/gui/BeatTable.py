@@ -6,20 +6,22 @@ from PyQt6 import QtWidgets
 from PyQt6.QtCore import pyqtSignal
 from gui import event_handlers, play_audio
 from gui.signals import PlayAudioSignal
-
+from gui.play_audio import AudioPlayer
 class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
     click_edit_toggled = pyqtSignal(bool)
     
     def __init__(self, parent=None, audio_signal=None):
-        super().__init__(parent)
+        super(BeatTable, self).__init__(parent)
+        self.parent = parent
+        self.main_window = parent
         if audio_signal is not None:
-            print("Audio signal linked!")
             self.audio_signal = audio_signal
         else:
             self.audio_signal = PlayAudioSignal()
-        print("audio_signal: ", audio_signal)
-        self.audio_player = play_audio.AudioPlayer()
+        
+        self.audio_player = AudioPlayer(parent)
+        self.audio_signal.playAudioSignal.connect(self.audio_player.playAudio)
         self.lastClickTime = QTime()
         self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()
         self.setAcceptDrops(True)
@@ -29,6 +31,25 @@ class BeatTable(QTableView):
         self.horizontalHeader().setSectionsMovable(True)
         
 
+    def update_selected_beat(self, current, previous):
+        """
+        Update the selected beat information based on the current selection.
+        """
+        if not current.isValid():
+            self.selected_beat = None
+            print("No beat selected.")
+            return
+
+        # Assuming `current` is a QModelIndex, map it if using a proxy model
+        if hasattr(self, 'model_manager') and self.model_manager.proxyModel:
+            source_index = self.model_manager.proxyModel.mapToSource(current)
+            row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
+            self.selected_beat = row_data
+            print(f"Selected track updated: {self.selected_beat}")
+        else:
+            print("Model manager not defined or missing proxy model.")
+        
+    
     def handleSingleClick(self, event):
         event_handlers.handleSingleClick(self, event)
         print("Single click handled")
@@ -55,8 +76,10 @@ class BeatTable(QTableView):
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
     def play_audio(self):
+        path = self.parent.get_selected_beat_path()
         #emit a signal to play the audio
-        self.audio_signal.playAudioSignal.emit()
+        if path:
+            self.audio_signal.playAudioSignal.emit(path)
         print("Playing audio...")
         
     

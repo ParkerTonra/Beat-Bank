@@ -20,11 +20,11 @@ def main():
     main_window = MainWindow(db)
 
     # Show the main window
+    main_window.table.clearFocus()
     main_window.show()
-
     # Enter the application's main event loop
 
     sys.exit(app.exec())
-
+    
 if __name__ == '__main__':
     main()

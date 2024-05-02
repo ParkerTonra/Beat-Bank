@@ -79,3 +79,10 @@ class ModelManager:
         """
         source_index = self.proxyModel.mapToSource(self.proxyModel.index(proxy_row, 0))
         return self.model.record(source_index.row()).value('id')
+    
+    def get_file_path_for_row(self, proxy_row):
+        """
+        Get the file path for a given row in the model.
+        """
+        source_index = self.proxyModel.mapToSource(self.proxyModel.index(proxy_row, 0))
+        return self.model.record(source_index.row()).value('file_path')
