@@ -2,7 +2,7 @@
 from PyQt6.QtSql import QSqlTableModel, QSqlQuery
 from PyQt6.QtCore import QSortFilterProxyModel
 from PyQt6.QtCore import Qt
-
+from utilities.utils import Utils
 class ModelManager:
     def __init__(self, database, parent=None):
         self.database = database
@@ -73,6 +73,22 @@ class ModelManager:
         else:
             print("Failed to add track:", query.lastError().text())
 
+    def delete_beat_from_database(self, beat_id):
+        """
+        Delete a beat from the database.
+        """
+        answer = Utils.ask_user_bool("Delete Beat", "Are you sure you want to delete this beat?")
+        if answer:
+            query = QSqlQuery(self.database)
+            query.prepare("DELETE FROM tracks WHERE id = :id")
+            query.bindValue(":id", beat_id)
+            if query.exec():
+                self.refresh_model()
+                print("Beat deleted successfully")
+            else:
+                print("Failed to delete beat:", query.lastError().text())
+        else:print("Beat deletion cancelled.")
+    
     def get_id_for_row(self, proxy_row):
         """
         Get the ID for a given row in the model.

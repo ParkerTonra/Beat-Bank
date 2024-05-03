@@ -2,7 +2,6 @@
 
 import sys, qdarktheme
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtSql import QSqlDatabase
 from database import init_db
 from gui.BeatBank import MainWindow
 
@@ -20,7 +19,6 @@ def main():
     main_window = MainWindow(db)
 
     # Show the main window
-    main_window.table.clearFocus()
     main_window.show()
     # Enter the application's main event loop
 

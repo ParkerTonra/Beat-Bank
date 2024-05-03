@@ -7,6 +7,7 @@ from PyQt6.QtCore import pyqtSignal
 from gui import event_handlers, play_audio
 from gui.signals import PlayAudioSignal
 from gui.play_audio import AudioPlayer
+
 class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
     click_edit_toggled = pyqtSignal(bool)
@@ -29,6 +30,7 @@ class BeatTable(QTableView):
         self.setMinimumHeight(500)
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
         self.horizontalHeader().setSectionsMovable(True)
+        self.doubleClicked.connect(self.handleDoubleClick)
         
 
     def update_selected_beat(self, current, previous):
@@ -45,27 +47,22 @@ class BeatTable(QTableView):
             source_index = self.model_manager.proxyModel.mapToSource(current)
             row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
             self.selected_beat = row_data
-            print(f"Selected track updated: {self.selected_beat}")
+            print(f"Selected track updated(BT))")
         else:
             print("Model manager not defined or missing proxy model.")
         
     
-    def handleSingleClick(self, event):
-        event_handlers.handleSingleClick(self, event)
-        print("Single click handled")
     def tableMouseMoveEvent(self, event):
         print("table mouse move event")
         event_handlers.tableMouseMoveEvent(self, event)
-    def mousePressEvent(self, event) -> None:
-        event_handlers.tableMousePressEvent(self, event)
     def handleDoubleClick(self, event):
         settings = QSettings("Parker Tonra", "Beat Bank")
         clickToEdit = settings.value("clickToEdit", type=bool)
         if clickToEdit:
             event_handlers.handleDoubleClick(self, event)
         else:
-            print("not in edit mode, so not handling double click event")
-            event_handlers.doubleClickPlay(self, event)
+            self.play_audio()
+            
         
     def startDragOperation(self, item):
         event_handlers.startDragOperation(self, item)

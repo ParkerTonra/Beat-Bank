@@ -1,7 +1,7 @@
 #BeatBank.py (root)/src/gui/BeatBank.py
 import os, sys
 
-from PyQt6.QtSql import QSqlTableModel, QSqlQuery
+from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import (
     QMainWindow,
     QVBoxLayout,
@@ -10,26 +10,20 @@ from PyQt6.QtWidgets import (
     QMessageBox,
     QHBoxLayout,
     QFrame,
-    QTableView,
+    QAbstractItemView,
     QMenu,
-    QDialog,
-    QSplitter,
-    QHeaderView
+    QSplitter
 )
 from PyQt6.QtCore import QSettings, Qt
 
-
-from controllers.database_controller import DatabaseController
 from gui.play_audio import AudioPlayer
 from gui.BeatTable import BeatTable
 from gui.signals import PlayAudioSignal
 from gui.edit_track_window import EditTrackWindow
-from gui.ask_user import AskUserDialog
 from gui.menu_bar import InitializeMenuBar
 from gui.side_bar import SideBar
 from gui.InvalidFileDelegate import InvalidFileDelegate
 from gui.model_manager import ModelManager
-from gui.setup_ui import MainWindowSetup
 from controllers.gdrive_integration import GoogleDriveIntegration
 from utilities.utils import Utils
 
@@ -37,7 +31,7 @@ class MainWindow(QMainWindow):
     def __init__(self, db):
         # Initialization and basic setup
         super().__init__()
-        self.controller = DatabaseController(db)
+
         self.google_drive = GoogleDriveIntegration()
         self._updating_cell = False
         self.isEditing = False
@@ -68,6 +62,7 @@ class MainWindow(QMainWindow):
         self.init_setupLayouts()
         self.restore_table_state()
         self.restore_reorder_state()
+        self.restore_edit_state()
         self.init_filteredTableView()
         self.init_menu_bar()
         self.finalizeLayout()
@@ -135,7 +130,7 @@ class MainWindow(QMainWindow):
         
     def get_selected_beat_path(self):
         if self.selected_beat:
-            print("Selected beat:", self.selected_beat)
+            print("Selected new beat(BB)")
             return self.selected_beat.get("File Location")
         print("No beat selected.")
         return None
@@ -171,8 +166,7 @@ class MainWindow(QMainWindow):
         
 
     def init_filteredTableView(self):
-        self.filteredTableView = QTableView(self)
-        self.filteredTableView.setFrameStyle(QFrame.Shape.Panel | QFrame.Shadow.Sunken)
+        self.filteredTableView = self.model_manager.proxyModel
 
     def init_menu_bar(self):
         menubar = InitializeMenuBar(self)
@@ -203,7 +197,7 @@ class MainWindow(QMainWindow):
             if not path:
                 #open file dialog to select file
                 Utils.open_file_dialog()
-        added = self.controller.controller_add_track(path)
+        added = self.model_manager.add_track_to_database(path)
         if added:
             self.table_refresh()
             print(f"Added track {path} to database.")
@@ -224,7 +218,8 @@ class MainWindow(QMainWindow):
     
     def delete_beat(self):
         selected_row = self.table.currentIndex().row()
-        self.controller.controller_delete_beat(selected_row)
+        id = self.model_manager.get_id_for_row(selected_row)
+        self.model_manager.delete_beat_from_database(id)
 
     # Database Operations
     def delete_from_database(self, track_id):
@@ -279,9 +274,7 @@ class MainWindow(QMainWindow):
             source_index = self.model_manager.proxyModel.mapToSource(current)
             row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
             self.selected_beat = row_data
-            file_path = self.selected_beat.get("file_path")
-            print(f"Selected file path: {file_path}")
-            print(f"Selected track updated: {self.selected_beat}")
+            print(f"Selected track updated (BB)")
         else:
             print("Model manager not defined or missing proxy model.")
         
@@ -313,25 +306,23 @@ class MainWindow(QMainWindow):
     
     def restore_reorder_state(self):
         settings = QSettings("Parker Tonra", "Beat Bank")
-        # Default to True if the setting has never been set
         reorder_allowed = settings.value("reorderState", True, type=bool)
         self.table.horizontalHeader().setSectionsMovable(reorder_allowed)
         print(f"Reorder state restored: {'Enabled' if reorder_allowed else 'Disabled'}")
-    
-    
-    def ask_user(self, title, message):
-        dialog = AskUserDialog(title, message)
-        if dialog.exec() == QDialog.DialogCode.Accepted:
-            return dialog.user_input
-        return None
-    
+
+    def restore_edit_state(self):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        edit_allowed = settings.value("editState", False, type=bool)
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked if edit_allowed else QAbstractItemView.EditTrigger.NoEditTriggers)
+        print(f"Edit state restored: {'Enabled' if edit_allowed else 'Disabled'}")
+
     def open_file_location(self):
         current_row = self.table.currentIndex().row()
         if current_row < 0:
             Utils.show_warning_message("No Selection", "Please select a track to open its file location.")
             return
 
-        file_path = self.model.record(current_row).value("file_path")
+        file_path = self.model_manager.get_file_path_for_row(current_row)
         print(f"Opening file location: {file_path}")
         Utils.open_file_location(file_path)
     
@@ -363,6 +354,15 @@ class MainWindow(QMainWindow):
         settings.setValue("tableState", self.table.horizontalHeader().saveState())
         super().closeEvent(event)
     
+    def toggle_click_edit(self, allow_edit):
+            # Set the editability of the table or other components as needed
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked if allow_edit else QAbstractItemView.EditTrigger.NoEditTriggers)
+
+        # Update the settings with the new edit state
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        settings.setValue("editState", allow_edit)
+        settings.sync()  # Ensure changes are immediately written to the persistent storage
+    
     def toggle_reorder(self, allow_reorder):
         # Set the movability of the table's column headers
         self.table.horizontalHeader().setSectionsMovable(allow_reorder)
@@ -372,10 +372,6 @@ class MainWindow(QMainWindow):
         settings.setValue("reorderState", allow_reorder)
         settings.sync()  # Ensure changes are immediately written to the persistent storage
 
-        
-    def action_triggered(self, checked):
-        self.toggle_reorder(checked)        
-    
     def contextMenuEvent(self, event):
         context_menu = QMenu(self)
         open_file_action = context_menu.addAction("Open File Location")

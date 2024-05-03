@@ -1,16 +1,13 @@
-# audio_player.py
 import sys, os
 from PyQt6.QtCore import QUrl, Qt
-from PyQt6.QtMultimedia import QMediaPlayer
+from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtWidgets import QToolButton, QWidget, QFileDialog, QSlider, QGridLayout, QHBoxLayout, QLabel, QSizePolicy, QSpacerItem
 from PyQt6.QtGui import QIcon
-from PyQt6.QtMultimedia import QAudioOutput
 from gui.signals import PlayAudioSignal
 
 class AudioPlayer(QWidget):
     def __init__(self, main_window):
         super().__init__()
-        # Initialize QMediaPlayer
         self.player = QMediaPlayer()
         self.audio_out = QAudioOutput()
         self.player.setAudioOutput(self.audio_out)
@@ -19,117 +16,114 @@ class AudioPlayer(QWidget):
         self.audio_signal = PlayAudioSignal()
         self.audio_signal.playAudioSignal.connect(self.playAudio)
         self.main_window = main_window
-        # icon paths
+
         current_dir = os.path.dirname(__file__)
         play_icon_path = os.path.join(current_dir, '../assets/pictures/play.png')
         pause_icon_path = os.path.join(current_dir, '../assets/pictures/pause.png')
         stop_icon_path = os.path.join(current_dir, '../assets/pictures/stop.png')
-        
-        # Create tool buttons & slider
+
         self.play_button = QToolButton(self)
         self.play_button.setIcon(QIcon(play_icon_path))
         self.play_button.setIconSize(self.play_button.sizeHint())
-        
+
         self.pause_button = QToolButton(self)
         self.pause_button.setIcon(QIcon(pause_icon_path))
         self.pause_button.setIconSize(self.pause_button.sizeHint())
-        
+
         self.stop_button = QToolButton(self)
         self.stop_button.setIcon(QIcon(stop_icon_path))
         self.stop_button.setIconSize(self.stop_button.sizeHint())
-        
+
         self.buttons_layout = QHBoxLayout()
         self.buttons_layout.addWidget(self.play_button)
         self.buttons_layout.addWidget(self.pause_button)
         self.buttons_layout.addWidget(self.stop_button)
-        
-        self.current_track = QLabel(self, text="No track selected (TODO: Add track name here)")
+
+        self.current_track = QLabel(self, text="No track selected")
         self.current_track.setStyleSheet("QLabel { color : #add8e6; font: bold 28px; }")
 
-        self.current_track_layout = QHBoxLayout()
-        self.current_track_layout.addWidget(self.current_track)
-        
         self.volume_slider = QSlider(self)
         self.volume_slider.setOrientation(Qt.Orientation.Horizontal)
         self.volume_slider.setMaximumWidth(175)
         self.volume_slider.setMinimumWidth(75)
-        self.volume_slider.setValue(50)  # Set initial volume
-        
-        # Connect UI actions to functions
+        self.volume_slider.setValue(50)
+
         self.play_button.clicked.connect(self.playAudio)
         self.pause_button.clicked.connect(self.pauseMusic)
         self.stop_button.clicked.connect(self.stopMusic)
-        
         self.volume_slider.valueChanged.connect(self.volumeChanged)
 
-        self.volume_slider_layout = QHBoxLayout()
-        self.volume_slider_layout.addWidget(self.volume_slider)
-        
-        # Main layout
         self.main_layout = QGridLayout(self)
-        self.main_layout.setColumnStretch(0, 5)
-        self.main_layout.setColumnStretch(2, 2)
-        self.main_layout.setColumnStretch(3, 4)
-        
-        # Spacer
-        spacer = QSpacerItem(5, 20, QSizePolicy.Policy.Minimum)
-        spacer_alt = QSpacerItem(10, 5, QSizePolicy.Policy.Minimum)
-        
-        # Add widgets to the layout
-        self.main_layout.addLayout(self.buttons_layout, 0, 0, alignment=Qt.AlignmentFlag.AlignCenter)
-        self.main_layout.addLayout(self.current_track_layout, 0, 1, alignment=Qt.AlignmentFlag.AlignCenter)
-        self.main_layout.addLayout(self.volume_slider_layout, 0, 3, alignment=Qt.AlignmentFlag.AlignCenter)
-        
+        self.main_layout.addLayout(self.buttons_layout, 0, 0)
+        self.main_layout.addWidget(self.current_track, 0, 1)
+        self.main_layout.addWidget(self.volume_slider, 0, 2)
+
     def playAudio(self):
-        if not hasattr(self, 'main_window'):
-            print("Main window reference is not set.")
-            return
-        
-        file_path = self.main_window.get_selected_beat_path()
-        if not file_path:
-            print("No file selected.")
-            return
-
-        current_state = self.player.playbackState()
-        current_track = self.player.source().toString()
-        full_path = QUrl.fromLocalFile(file_path).toString()
-
-        if current_state == QMediaPlayer.PlaybackState.PlayingState and current_track == full_path:
-            self.player.pause()
-            print(f"Pausing track: {file_path}")
-        elif current_state == QMediaPlayer.PlaybackState.PausedState and current_track == full_path:
-            self.player.play()
-            print(f"Resuming track: {file_path}")
-        else:
-            self.player.setSource(QUrl.fromLocalFile(file_path))
-            self.player.play()
-            print(f"Playing track: {file_path}")
-
+        try:
+            file_path = self.main_window.get_selected_beat_path()
+            if file_path:
+                print(file_path)
+                self.player.setSource(QUrl.fromLocalFile(file_path))
+                self.player.play()
+                self.current_track.setText(os.path.basename(file_path))
+            else:
+                print("No file selected.")
+        except Exception as e:
+            print(f"Failed to play audio: {e}")
 
     def pauseMusic(self):
-        self.player.pause()
+        try:
+            self.player.pause()
+        except Exception as e:
+            print(f"Failed to pause audio: {e}")
 
     def stopMusic(self):
-        self.player.stop()
+        try:
+            self.player.stop()
+        except Exception as e:
+            print(f"Failed to stop audio: {e}")
 
     def volumeChanged(self):
-        #TODO self.player.setVolume(self.horizontalSliderVolume.value())
-        print(f"Volume set to {self.volume_slider.value()}")
-
-    def openMusicFile(self):
-        file_path, _ = QFileDialog.getOpenFileName(self, "Open Music File", "", "Audio Files (*.mp3 *.wav *.flac)")
-        if file_path:
-            self.player.setMedia(QUrl.fromLocalFile(file_path))
-            self.playMusic()
+        try:
+            self.player.setVolume(self.volume_slider.value())
+        except Exception as e:
+            print(f"Failed to set volume: {e}")
 
     def positionChanged(self, position):
-        # Your positionChanged slot implementation goes here
-        pass  # Placeholder for your implementation
-    
-    # TODO: set a self.now_playing flag on mainwindow that updates when a new song is playing.
-    def update_current_track(self, track_title):
-        current_title = track_title
-        self.current_track.setText(current_title)
-        
+        pass
+
     def handleError(self, error, errorString):
         print(f"Error occurred: {errorString}")
+
+class Node:
+    def __init__(self, song_data, prev=None, next=None):
+        self.song_data = song_data
+        self.prev = prev
+        self.next = next
+
+class BeatJockey:
+    def __init__(self):
+        self.current = None
+
+    def add_song(self, song_data):
+        new_node = Node(song_data)
+        if not self.current:
+            self.current = new_node
+            self.current.prev = self.current
+            self.current.next = self.current
+        else:
+            last = self.current.prev
+            last.next = new_node
+            new_node.prev = last
+            new_node.next = self.current
+            self.current.prev = new_node
+
+    def update_selected_song(self, current_index):
+        if current_index.isValid():
+            temp = self.current
+            for _ in range(current_index.row()):
+                temp = temp.next
+            self.current = temp
+            print(f"Selected track updated(BJ)")
+        else:
+            print("No beat selected.")

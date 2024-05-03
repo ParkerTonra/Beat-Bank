@@ -1,39 +1,27 @@
+#event_handlers.py
 from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl, QItemSelectionModel
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QDrag
 
-def tableMousePressEvent(self, event):
-    print("Table mouse press event")
-    if event.button() == Qt.MouseButton.LeftButton:
-        current_time = QTime.currentTime()
 
-        if not self.lastClickTime.isNull() and \
-           self.lastClickTime.msecsTo(current_time) < self.doubleClickInterval:
-            print("Double click event")
-            self.handleDoubleClick(event)
-        else:
-            print("Single click event")
-            self.handleSingleClick(event)
-        
-        self.lastClickTime = current_time
 
 def handleSingleClick(self, event):
     index = self.indexAt(event.pos())
     
     if index.isValid():
-        print(f"Item clicked at row {index.row()}, column {index.column()}")
-        # Select the row
-        selectionModel = self.selectionModel()
-        selectionModel.clearSelection()
+        if index.isValid():
+            print(f"Item clicked at row {index.row()}, column {index.column()}")
+            # Select the row
+            selection_model = self.selectionModel()
+            selection_model.clearSelection()
+            flags = QItemSelectionModel.SelectionFlag.Rows
+            selection_model.select(index, flags)
+
+            # Update the selected beat after changing selection
+            self.update_selected_beat(index, None)
         
-        # PyQt6 way of specifying selection flags
-        flags = QItemSelectionModel.SelectionFlag.Select | QItemSelectionModel.SelectionFlag.Rows
         
-        # Using the select method with the correct flags
-        selectionModel.select(index, flags)
-        
-        
-    self.dragStartPosition = event.pos()
+    self.dragStartPosition = event.pos() #start dragposition at point of click
 
 def handleDoubleClick(self, event):
     print("Double click event")
@@ -42,10 +30,7 @@ def handleDoubleClick(self, event):
         print(f"Double clicked in row {index.row()}, column {index.column()}")
         self.edit(index)
 
-def doubleClickPlay(self, event):
-    index = self.indexAt(event.pos())
-    if index.isValid():
-        self.play_audio()
+
 
 def tableMouseMoveEvent(self, event):
         if not (event.buttons() & Qt.MouseButton.LeftButton):

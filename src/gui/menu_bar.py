@@ -74,31 +74,51 @@ class InitializeMenuBar:
         view_menu.addAction(show_similar_tracks_action)
 
     def init_settings_menu(self):
-        # Restore the reorder state for the UI component
-        settings = QSettings("Parker Tonra", "Beat Bank")
-        reorder_state = settings.value("reorderState", True, type=bool)  # Default to True if not set
-        
         settings_menu = self.menu_bar.addMenu("&Settings")
         
         toggle_gdrive_action = QAction("&Toggle Google Drive", self.main_window, checkable=True)
-        toggle_gdrive_action.triggered.connect(lambda checked: self.main_window.google_drive.toggle_gdrive(checked))
-        
+        toggle_gdrive_action.triggered.connect(lambda checked: self.toggle_setting('gdrive_enabled', checked))
+        reorder_state = self.load_reorder_state()
+        edit_state = self.load_click_edit_state()
+ 
         toggle_reorder_action = QAction("&Allow reorder", self.main_window, checkable=True)
         toggle_reorder_action.setChecked(reorder_state)
         toggle_reorder_action.triggered.connect(lambda checked: self.main_window.toggle_reorder(checked))
 
-        
-        toggle_click_edit = QAction("&Allow click to edit", self.main_window, checkable=True)
-        toggle_click_edit.triggered.connect(lambda checked: self.main_window.toggle_click_edit(checked))
+        toggle_click_edit_action = QAction("&Allow click to edit", self.main_window, checkable=True)
+        toggle_click_edit_action.setChecked(edit_state)
+        toggle_click_edit_action.triggered.connect(lambda checked: self.main_window.toggle_click_edit(checked))
 
         choose_folder_action = QAction("&Choose Folder", self.main_window)
         choose_folder_action.triggered.connect(self.main_window.google_drive.show_folder_selection)
         
         settings_menu.addAction(toggle_gdrive_action)
         settings_menu.addAction(toggle_reorder_action)
-        settings_menu.addAction(toggle_click_edit)
+        settings_menu.addAction(toggle_click_edit_action)
         settings_menu.addAction(choose_folder_action)
 
+    def load_click_edit_state(self):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        return settings.value("editState", False, type=bool)
+    
+    def toggle_setting(self, setting_name, value):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        settings.setValue(setting_name, value)
+        # If more actions need to be done after saving (e.g., updating UI elements)
+        self.apply_settings()
+    
+    def apply_settings(self):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        reorder_allowed = settings.value("reorderState", True, type=bool)
+        self.table.horizontalHeader().setSectionsMovable(reorder_allowed)
+        gdrive_enabled = settings.value("gdrive_enabled", False, type=bool)
+        self.main_window.google_drive.setEnabled(gdrive_enabled)  # Assuming there's a way to enable/disable Google Drive
+
+    
+    def load_reorder_state(self):
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        return settings.value("reorderState", True, type=bool)
+    
     def load_settings(self):
         settings = Utils.load_settings()
         return settings
