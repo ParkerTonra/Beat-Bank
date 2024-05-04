@@ -21,10 +21,30 @@ class ModelManager:
         """
         self.model = QSqlTableModel(self.parent, self.database)
         self.model.setTable('tracks')
-        self.model.setEditStrategy(QSqlTableModel.EditStrategy.OnFieldChange)
         self.model.select()
         self.setup_headers()
 
+    def set_file_path_role(self, proxy_index, file_path):
+        """
+        Set the file_path role for a given proxy index.
+        """
+        source_index = self.proxyModel.mapToSource(proxy_index)
+        row = source_index.row()
+        column = self.model.columnCount() - 1  # Assuming file_path is the last column
+        source_index = self.model.index(row, column)
+        self.model.setData(source_index, file_path, Qt.DisplayRole + 1)  # Setting custom user role for file_path
+
+    def get_data_for_row(self, proxy_row):
+        """
+        Get all data for a given row in the model.
+        """
+        source_index = self.proxyModel.mapToSource(self.proxyModel.index(proxy_row, 0))
+        row_data = {}
+        for column in range(self.model.columnCount()):
+            column_name = self.model.headerData(column, Qt.Orientation.Horizontal)
+            row_data[column_name] = self.model.record(source_index.row()).value(column)
+        return row_data
+    
     def setup_headers(self):
         """
         Set up readable column names for the model.

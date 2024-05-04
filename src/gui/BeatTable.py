@@ -12,17 +12,18 @@ class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
     click_edit_toggled = pyqtSignal(bool)
     
-    def __init__(self, parent=None, audio_signal=None):
+    def __init__(self, parent=None, audio_signal=None, beat_jockey=None):
         super(BeatTable, self).__init__(parent)
         self.parent = parent
         self.main_window = parent
+        self.beat_jockey = beat_jockey
         if audio_signal is not None:
             self.audio_signal = audio_signal
         else:
             self.audio_signal = PlayAudioSignal()
         
-        self.audio_player = AudioPlayer(parent)
-        self.audio_signal.playAudioSignal.connect(self.audio_player.playAudio)
+        self.audio_player = AudioPlayer(parent, beat_jockey=beat_jockey)
+        #self.audio_signal.playAudioSignal.connect(self.audio_player.playAudio)
         self.lastClickTime = QTime()
         self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()
         self.setAcceptDrops(True)
@@ -31,7 +32,6 @@ class BeatTable(QTableView):
         self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
         self.horizontalHeader().setSectionsMovable(True)
         self.doubleClicked.connect(self.handleDoubleClick)
-        
 
     def update_selected_beat(self, current, previous):
         """
@@ -73,11 +73,14 @@ class BeatTable(QTableView):
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
     def play_audio(self):
-        path = self.parent.get_selected_beat_path()
+        
+        path = self.beat_jockey
         #emit a signal to play the audio
         if path:
-            self.audio_signal.playAudioSignal.emit(path)
-        print("Playing audio...")
+            print("Playing audio...")
+            self.audio_player.playAudio(path)
+            #self.audio_signal.playAudioSignal.emit(path)
+        
         
     
     def findColumnIndexByName(self, column_name):

@@ -26,6 +26,7 @@ from gui.InvalidFileDelegate import InvalidFileDelegate
 from gui.model_manager import ModelManager
 from controllers.gdrive_integration import GoogleDriveIntegration
 from utilities.utils import Utils
+from gui.play_audio import BeatJockey
 
 class MainWindow(QMainWindow):
     def __init__(self, db):
@@ -33,13 +34,13 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.google_drive = GoogleDriveIntegration()
-        self._updating_cell = False
-        self.isEditing = False
-        self.audio_signal = PlayAudioSignal()
-        self.audio_player = AudioPlayer(self)
-        self.model_manager = ModelManager(db, self)
-        self.model_manager.setup_models()
         
+        self.audio_signal = PlayAudioSignal()
+        self.beat_jockey = BeatJockey(main_window=self)
+        self.audio_player = AudioPlayer(self, self.beat_jockey)
+        self.model_manager = ModelManager(db, self)
+        
+        self.model_manager.setup_models()
         
         #flags to universally know what is selected and playing
         self.selected_beat = None
@@ -136,7 +137,10 @@ class MainWindow(QMainWindow):
         return None
     
     def init_beat_table(self):
-        self.table = BeatTable(self, self.audio_signal)
+        self.table = BeatTable(parent = self, 
+                               audio_signal = self.audio_signal,
+                               beat_jockey = self.beat_jockey
+                               )
         self.delegate = InvalidFileDelegate(self.table)
         self.table.setItemDelegate(self.delegate)
         self.table.setModel(self.model_manager.proxyModel)
@@ -271,13 +275,20 @@ class MainWindow(QMainWindow):
 
         # Assuming `current` is a QModelIndex, map it if using a proxy model
         if hasattr(self, 'model_manager') and self.model_manager.proxyModel:
-            source_index = self.model_manager.proxyModel.mapToSource(current)
-            row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
-            self.selected_beat = row_data
-            print(f"Selected track updated (BB)")
-        else:
-            print("Model manager not defined or missing proxy model.")
+            proxy_row = current.row()
+            beat_id = self.model_manager.get_id_for_row(proxy_row)
+            query = QSqlQuery()
+            #query for the item with id 'beat_id'
+            query.exec(f"SELECT * FROM tracks WHERE id = {beat_id}")
+            if query.next():
+                self.selected_beat = query.record()
+                print(f"Selected track updated: {self.selected_beat.value('file_path')}")
+            path = self.selected_beat.value('file_path')
+            self.update_jockey_current(path=path)
         
+    def update_jockey_current(self, path):
+        self.beat_jockey.update_current_song(path)
+    
     
     # Utility
     def table_refresh(self):

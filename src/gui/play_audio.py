@@ -6,16 +6,15 @@ from PyQt6.QtGui import QIcon
 from gui.signals import PlayAudioSignal
 
 class AudioPlayer(QWidget):
-    def __init__(self, main_window):
+    def __init__(self, main_window, beat_jockey):
         super().__init__()
         self.player = QMediaPlayer()
         self.audio_out = QAudioOutput()
         self.player.setAudioOutput(self.audio_out)
         self.player.positionChanged.connect(self.positionChanged)
         self.player.errorOccurred.connect(self.handleError)
-        self.audio_signal = PlayAudioSignal()
-        self.audio_signal.playAudioSignal.connect(self.playAudio)
         self.main_window = main_window
+        self.beat_jockey = beat_jockey
 
         current_dir = os.path.dirname(__file__)
         play_icon_path = os.path.join(current_dir, '../assets/pictures/play.png')
@@ -58,9 +57,10 @@ class AudioPlayer(QWidget):
         self.main_layout.addWidget(self.current_track, 0, 1)
         self.main_layout.addWidget(self.volume_slider, 0, 2)
 
-    def playAudio(self):
+    def playAudio(self, audio_path=None):
         try:
-            file_path = self.main_window.get_selected_beat_path()
+            file_path = audio_path.current.song_data
+            print(f"!!!!!! {file_path}")
             if file_path:
                 print(file_path)
                 self.player.setSource(QUrl.fromLocalFile(file_path))
@@ -102,9 +102,9 @@ class Node:
         self.next = next
 
 class BeatJockey:
-    def __init__(self):
+    def __init__(self, main_window):
         self.current = None
-
+        self.main_window = main_window
     def add_song(self, song_data):
         new_node = Node(song_data)
         if not self.current:
@@ -118,12 +118,33 @@ class BeatJockey:
             new_node.next = self.current
             self.current.prev = new_node
 
-    def update_selected_song(self, current_index):
-        if current_index.isValid():
-            temp = self.current
-            for _ in range(current_index.row()):
-                temp = temp.next
-            self.current = temp
-            print(f"Selected track updated(BJ)")
+    def play_current_song(self):
+        if self.current:
+            print("Playing current song:", self.current.song_data)
+            # Implement code to play the current song
+    
+    def play_next_song(self):
+        if self.current:
+            self.current = self.current.next
+            self.play_current_song()
+            
+    def play_previous_song(self):
+        if self.current:
+            self.current = self.current.prev
+            self.play_current_song()
+
+    def get_current_song(self):
+        pass
+    
+    def get_current_path(self, current):
+        pass
+    
+    def update_current_song(self, path):
+        print(f"updating current song (path) to {path}")
+        if self.current:
+            self.current.song_data = path
         else:
-            print("No beat selected.")
+            # If no current node exists, create one
+            self.current = Node(path)
+            self.current.prev = self.current
+            self.current.next = self.current
