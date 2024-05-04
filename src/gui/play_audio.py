@@ -1,12 +1,12 @@
 import sys, os
-from PyQt6.QtCore import QUrl, Qt
+from PyQt6.QtCore import QUrl, Qt, qDebug
 from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtWidgets import QToolButton, QWidget, QFileDialog, QSlider, QGridLayout, QHBoxLayout, QLabel, QSizePolicy, QSpacerItem
 from PyQt6.QtGui import QIcon
 from gui.signals import PlayAudioSignal
 
 class AudioPlayer(QWidget):
-    def __init__(self, main_window, beat_jockey):
+    def __init__(self, main_window, beat_jockey=None):
         super().__init__()
         self.player = QMediaPlayer()
         self.audio_out = QAudioOutput()
@@ -58,13 +58,17 @@ class AudioPlayer(QWidget):
         self.main_layout.addWidget(self.volume_slider, 0, 2)
 
     def playAudio(self, audio_path=None):
+        if self.player.isPlaying():
+            self.player.stop()
         try:
-            file_path = audio_path.current.song_data
+            file_path = audio_path
             print(f"!!!!!! {file_path}")
             if file_path:
-                print(file_path)
-                self.player.setSource(QUrl.fromLocalFile(file_path))
+                print(f"file path right before playing: {file_path}")
+                url = QUrl.fromLocalFile(file_path)
+                self.player.setSource(url)
                 self.player.play()
+                print(f"is media muted?: {self.audio_out.volume()}")
                 self.current_track.setText(os.path.basename(file_path))
             else:
                 print("No file selected.")
@@ -85,7 +89,8 @@ class AudioPlayer(QWidget):
 
     def volumeChanged(self):
         try:
-            self.player.setVolume(self.volume_slider.value())
+            self.audio_out.setVolume(self.volume_slider.value() / 100)
+            print("now playing:" + self.beat_jockey.current)
         except Exception as e:
             print(f"Failed to set volume: {e}")
 
@@ -102,7 +107,8 @@ class Node:
         self.next = next
 
 class BeatJockey:
-    def __init__(self, main_window):
+    def __init__(self, main_window, audio_player=None):
+        self.audio_player = audio_player
         self.current = None
         self.main_window = main_window
     def add_song(self, song_data):
@@ -120,8 +126,8 @@ class BeatJockey:
 
     def play_current_song(self):
         if self.current:
-            print("Playing current song:", self.current.song_data)
-            # Implement code to play the current song
+            print(f"Playing current song: {self.current.song_data}")
+            self.audio_player.playAudio(self.current.song_data)
     
     def play_next_song(self):
         if self.current:
@@ -142,8 +148,11 @@ class BeatJockey:
     def update_current_song(self, path):
         print(f"updating current song (path) to {path}")
         if self.current:
+            print(f"already a song current. current song data: {self.current.song_data}")
+            print(f"updating current song to {path}")
             self.current.song_data = path
         else:
+            print(f"no current song. creating one with path {path}")
             # If no current node exists, create one
             self.current = Node(path)
             self.current.prev = self.current

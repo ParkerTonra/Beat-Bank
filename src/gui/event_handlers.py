@@ -24,11 +24,7 @@ def handleSingleClick(self, event):
     self.dragStartPosition = event.pos() #start dragposition at point of click
 
 def handleDoubleClick(self, event):
-    print("Double click event")
-    index = self.indexAt(event.pos())
-    if index.isValid():
-        print(f"Double clicked in row {index.row()}, column {index.column()}")
-        self.edit(index)
+    print("Double click event 222") #edit here for double click event
 
 
 

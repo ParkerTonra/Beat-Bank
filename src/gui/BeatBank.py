@@ -36,8 +36,8 @@ class MainWindow(QMainWindow):
         self.google_drive = GoogleDriveIntegration()
         
         self.audio_signal = PlayAudioSignal()
-        self.beat_jockey = BeatJockey(main_window=self)
-        self.audio_player = AudioPlayer(self, self.beat_jockey)
+        self.audio_player = AudioPlayer(self)
+        self.beat_jockey = BeatJockey(main_window=self, audio_player=self.audio_player)
         self.model_manager = ModelManager(db, self)
         
         self.model_manager.setup_models()
@@ -366,9 +366,8 @@ class MainWindow(QMainWindow):
         super().closeEvent(event)
     
     def toggle_click_edit(self, allow_edit):
-            # Set the editability of the table or other components as needed
+        # Set the editability of the table or other components as needed
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.DoubleClicked if allow_edit else QAbstractItemView.EditTrigger.NoEditTriggers)
-
         # Update the settings with the new edit state
         settings = QSettings("Parker Tonra", "Beat Bank")
         settings.setValue("editState", allow_edit)

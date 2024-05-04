@@ -57,11 +57,12 @@ class BeatTable(QTableView):
         event_handlers.tableMouseMoveEvent(self, event)
     def handleDoubleClick(self, event):
         settings = QSettings("Parker Tonra", "Beat Bank")
-        clickToEdit = settings.value("clickToEdit", type=bool)
+        clickToEdit = settings.value("editState", type=bool)
         if clickToEdit:
+            print("Double click event, editing track.")
             event_handlers.handleDoubleClick(self, event)
         else:
-            self.play_audio()
+            self.beat_jockey.play_current_song()
             
         
     def startDragOperation(self, item):
@@ -73,14 +74,7 @@ class BeatTable(QTableView):
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
     def play_audio(self):
-        
-        path = self.beat_jockey
-        #emit a signal to play the audio
-        if path:
-            print("Playing audio...")
-            self.audio_player.playAudio(path)
-            #self.audio_signal.playAudioSignal.emit(path)
-        
+        pass
         
     
     def findColumnIndexByName(self, column_name):

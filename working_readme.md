@@ -10,13 +10,18 @@ ModelManager manages the data models that interact with the SQL database
 
 
 TODO:
-- If there's already a song playing, the player glitches out. program crashes.
+- 
 - Allow Users to change column width
 - allow users to add songs to playlist 
     - first with context menu, then drag and drop
-- Figure out why a track is always selected when the program is ran.
+
 - make clicking a playlist display that playlist
 - make context menu reactive to where user right clicks.
+
+
+
+Figure out why a track is always selected when the program is ran.(meh oh well)
+
 
 
 SIDEBAR
