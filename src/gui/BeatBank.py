@@ -9,6 +9,7 @@ from PyQt6.QtWidgets import (
     QFileDialog,
     QMessageBox,
     QHBoxLayout,
+    QHeaderView,
     QFrame,
     QAbstractItemView,
     QMenu,
@@ -16,17 +17,17 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import QSettings, Qt
 
-from gui.play_audio import AudioPlayer
-from gui.BeatTable import BeatTable
-from gui.signals import PlayAudioSignal
-from gui.edit_track_window import EditTrackWindow
-from gui.menu_bar import InitializeMenuBar
-from gui.side_bar import SideBar
-from gui.InvalidFileDelegate import InvalidFileDelegate
-from gui.model_manager import ModelManager
-from controllers.gdrive_integration import GoogleDriveIntegration
-from utilities.utils import Utils
-from gui.play_audio import BeatJockey
+from src.gui.play_audio import AudioPlayer
+from src.gui.BeatTable import BeatTable
+from src.gui.signals import PlayAudioSignal
+from src.gui.edit_track_window import EditTrackWindow
+from src.gui.menu_bar import InitializeMenuBar
+from src.gui.side_bar import SideBar
+from src.gui.InvalidFileDelegate import InvalidFileDelegate
+from src.gui.model_manager import ModelManager
+from src.controllers.gdrive_integration import GoogleDriveIntegration
+from src.utilities.utils import Utils
+from src.gui.play_audio import BeatJockey
 
 class MainWindow(QMainWindow):
     def __init__(self, db):
@@ -49,6 +50,8 @@ class MainWindow(QMainWindow):
         self.init_ui()
         selection_model = self.table.selectionModel()
         selection_model.currentRowChanged.connect(self.update_selected_beat)
+        selection_model.selectionChanged.connect(self.update_selected_item)
+
         self.bottom_layout.addWidget(self.audio_player)
         self.table.trackDropped.connect(self.add_track)
         self.editWindow = None
@@ -79,7 +82,7 @@ class MainWindow(QMainWindow):
         self.beatbank_splitter = QSplitter() #Splitter for sidebar and main
         self.beatbank_layout = QHBoxLayout() 
         self.main_layout = QVBoxLayout()
-        self.table_layout = QVBoxLayout()
+        self.table_layout = QHBoxLayout()
         self.bottom_layout = QHBoxLayout()
 
     def init_side_bar(self):
@@ -109,10 +112,12 @@ class MainWindow(QMainWindow):
     
     def init_setupLayouts(self):
         print("Setting up layouts...")
+        
         self.table_layout.addWidget(self.table)
         
+        
         # Add table and bottom to main layout
-        self.main_layout.addLayout(self.table_layout, 80)
+        self.main_layout.addWidget(self.table, 80)
         self.main_layout.addLayout(self.bottom_layout, 20)
         
         self.beatbank_layout.addLayout(self.sidebar_layout, 10) # sidebar takes up 10% of space
@@ -142,10 +147,13 @@ class MainWindow(QMainWindow):
                                beat_jockey = self.beat_jockey
                                )
         self.delegate = InvalidFileDelegate(self.table)
-        self.table.setItemDelegate(self.delegate)
         self.table.setModel(self.model_manager.proxyModel)
         self.table.setSortingEnabled(True)
         self.table.verticalHeader().hide()
+        self.table.resizeColumnsToContents()
+        header = self.table.horizontalHeader()
+        header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)  # Set all columns to stretch
+        #header.setStretchLastSection(True)  # Make the last column fill the extra space
         
         self.table.setStyleSheet("""
         QTableView 
@@ -196,17 +204,20 @@ class MainWindow(QMainWindow):
     def get_selected_beat(self):
         return self.selected_beat    
     def add_track(self, path=None):
-        if not path:
-            path, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
+        try:
             if not path:
-                #open file dialog to select file
-                Utils.open_file_dialog()
-        added = self.model_manager.add_track_to_database(path)
-        if added:
+                path, _ = QFileDialog.getOpenFileName(self, "Select Audio File", "", "Audio Files (*.mp3 *.wav *.flac);;All Files (*)")
+                if not path:
+                    raise FileNotFoundError("No file selected.")
+            added = self.model_manager.add_track_to_database(path)
+            if not added:
+                raise Exception("Database insertion failed.")
             self.table_refresh()
             print(f"Added track {path} to database.")
-        else:
-            print("Failed to add track.")
+        except FileNotFoundError as e:
+            print(e)
+        except Exception as e:
+            print(f"Failed to add track: {e}")
         
     def edit_beat(self):
         print("Editing track...")
@@ -264,10 +275,16 @@ class MainWindow(QMainWindow):
         print("Selected track:", self.selected_beat)
         print("Playing track:", self.playing_beat)
     
-    def update_selected_beat(self, current, previous):
+    def update_selected_item(self):
+        print("new item selected")
+        current = self.table.currentIndex()
+        self.update_selected_beat(current)
+    
+    def update_selected_beat(self, current):
         """
         Update the selected beat information based on the current selection.
         """
+        print("Updating selected beat...")
         if not current.isValid():
             self.selected_beat = None
             print("No beat selected.")
@@ -284,10 +301,14 @@ class MainWindow(QMainWindow):
                 self.selected_beat = query.record()
                 print(f"Selected track updated: {self.selected_beat.value('file_path')}")
             path = self.selected_beat.value('file_path')
-            self.update_jockey_current(path=path)
+            beatLength = self.selected_beat.value('length')
+            if not beatLength:
+                beatLength = '0:00'
+            print(f"path: {path}")
+            print(f"length: {beatLength}")
+            self.beat_jockey.update_current_song(path, beatLength)
+
         
-    def update_jockey_current(self, path):
-        self.beat_jockey.update_current_song(path)
     
     
     # Utility

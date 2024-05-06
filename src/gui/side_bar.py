@@ -1,7 +1,7 @@
 # side_bar.py (root)/src/gui/side_bar.py pyqt6 gui class for a sidebar
 from PyQt6.QtWidgets import QWidget, QLabel, QListWidget, QVBoxLayout, QWidget, QVBoxLayout, QPushButton, QGridLayout
 from PyQt6.QtCore import Qt, QSettings
-from utilities.utils import Utils
+from src.utilities.utils import Utils
 
 class SideBar(QWidget):
     def __init__(self, main_window):

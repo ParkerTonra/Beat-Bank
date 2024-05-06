@@ -1,6 +1,8 @@
 documentation, because bethesda doesn't know best.
-
-
+to run:
+venv\scripts\activate
+cd C:\Users\parke\Documents\GitHub\Beat-Bank\src
+python app.py
 classes:
 
 MainWindow(QMainWindow) - main window that inherits from QMainwindow

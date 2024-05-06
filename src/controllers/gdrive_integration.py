@@ -1,7 +1,7 @@
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from google.auth.transport.requests import Request
-from utilities.utils import Utils
+from src.utilities.utils import Utils
 from PyQt6.QtWidgets import QInputDialog
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -54,7 +54,7 @@ class GoogleDriveIntegration:
         elif credentials and credentials.expired and credentials.refresh_token:
             print("Refreshing credentials...")
             try:
-                credentials.refresh(Request())
+                # credentials.refresh(Request())
                 Utils.save_credentials(credentials)  # Make sure to save the refreshed credentials
                 print("Credentials refreshed and saved.")
             except Exception as e:

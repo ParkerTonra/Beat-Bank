@@ -1,8 +1,10 @@
 # src/gui/model_manager.py
+import os, datetime
 from PyQt6.QtSql import QSqlTableModel, QSqlQuery
 from PyQt6.QtCore import QSortFilterProxyModel
 from PyQt6.QtCore import Qt
-from utilities.utils import Utils
+from src.utilities.utils import Utils
+import mutagen
 class ModelManager:
     def __init__(self, database, parent=None):
         self.database = database
@@ -84,15 +86,42 @@ class ModelManager:
         """
         Add a new track to the database.
         """
+        audio = self.get_audio_data(track_path)
         query = QSqlQuery(self.database)
-        query.prepare("INSERT INTO tracks (file_path) VALUES (:file_path)")
-        query.bindValue(":file_path", track_path)
+        query.prepare(
+            "INSERT INTO tracks (title, artist, length, bpm, date_added, date_created, key, notes, path_to_ableton_project, file_path) "
+            "VALUES (:title, :artist, :length, :bpm, :date_added, :date_created, :key, :notes, :path_to_ableton_project, :file_path)")
+        query.bindValue(":title", audio['title'])
+        query.bindValue(":artist", audio['artist'])
+        query.bindValue(":length", audio['length'])
+        query.bindValue(":bpm", audio['bpm'])
+        query.bindValue(":date_added", audio['date_added'].strftime("%Y-%m-%d %H:%M:%S"))
+        query.bindValue(":date_created", audio['date_created'].strftime("%Y-%m-%d %H:%M:%S"))
+        query.bindValue(":key", audio['key'])
+        query.bindValue(":notes", audio['notes'])
+        query.bindValue(":path_to_ableton_project", audio['path_to_ableton_project'])
+        query.bindValue(":file_path", audio['file_path'])
         if query.exec():
             self.refresh_model()
             print("Track added successfully")
         else:
             print("Failed to add track:", query.lastError().text())
 
+    def get_audio_data(self, path):
+        audio = mutagen.File(path, easy=True)
+        audioObj = {
+                    'title': audio.get('title', [os.path.basename(path)])[0],
+                    'artist': audio.get('artist', ['Unknown'])[0],
+                    'length': str(int(audio.info.length // 60)) + ':' + str(int(audio.info.length % 60)),
+                    'bpm': '',
+                    'date_added': datetime.datetime.now(),
+                    'date_created': datetime.datetime.fromtimestamp(os.path.getctime(path)),
+                    'key': 'Unknown',
+                    'notes': None,
+                    'path_to_ableton_project': None,
+                    'file_path': path
+                    }
+        return audioObj
     def delete_beat_from_database(self, beat_id):
         """
         Delete a beat from the database.

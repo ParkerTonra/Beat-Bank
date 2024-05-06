@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from models import Base
+from src.models import Base
 
 class Version(Base):
     __tablename__ = 'versions'

@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
-from models import Base  # Import the Base object from __init__.py
+from src.models import Base  # Import the Base object from __init__.py
 
 class Track(Base):
     __tablename__ = 'tracks'

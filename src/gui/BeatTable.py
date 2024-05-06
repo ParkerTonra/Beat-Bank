@@ -1,35 +1,40 @@
 # BeatTable.py (root)/src/gui/BeatTable.py
 
-from PyQt6.QtCore import Qt, QTime, pyqtSignal, QSettings
+from PyQt6.QtCore import Qt, QTime, pyqtSignal, QSettings, QTimer
 from PyQt6.QtWidgets import QTableView, QHeaderView
 from PyQt6 import QtWidgets
 from PyQt6.QtCore import pyqtSignal
-from gui import event_handlers, play_audio
-from gui.signals import PlayAudioSignal
-from gui.play_audio import AudioPlayer
+from src.gui import event_handlers, play_audio
+from src.gui.signals import PlayAudioSignal
+from src.gui.play_audio import AudioPlayer
 
 class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
     click_edit_toggled = pyqtSignal(bool)
     
     def __init__(self, parent=None, audio_signal=None, beat_jockey=None):
-        super(BeatTable, self).__init__(parent)
-        self.parent = parent
+        super().__init__()
         self.main_window = parent
+        
         self.beat_jockey = beat_jockey
         if audio_signal is not None:
             self.audio_signal = audio_signal
         else:
             self.audio_signal = PlayAudioSignal()
         
-        self.audio_player = AudioPlayer(parent, beat_jockey=beat_jockey)
+        self.playAudioTimer = QTimer(self)
+        self.playAudioTimer.setSingleShot(True)
+        self.playAudioTimer.timeout.connect(self.play_audio)
+        self.playAudioCooldown = 1000  # milliseconds
+        
         #self.audio_signal.playAudioSignal.connect(self.audio_player.playAudio)
         self.lastClickTime = QTime()
         self.doubleClickInterval = QtWidgets.QApplication.doubleClickInterval()
         self.setAcceptDrops(True)
         self.setDragEnabled(True)
         self.setMinimumHeight(500)
-        self.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
+        self.setMaximumWidth(1250)
+        
         self.horizontalHeader().setSectionsMovable(True)
         self.doubleClicked.connect(self.handleDoubleClick)
 
@@ -56,13 +61,15 @@ class BeatTable(QTableView):
         print("table mouse move event")
         event_handlers.tableMouseMoveEvent(self, event)
     def handleDoubleClick(self, event):
+        print("Double-click registered")
         settings = QSettings("Parker Tonra", "Beat Bank")
         clickToEdit = settings.value("editState", type=bool)
         if clickToEdit:
             print("Double click event, editing track.")
             event_handlers.handleDoubleClick(self, event)
         else:
-            self.beat_jockey.play_current_song()
+            print("Double click event, playing track.")
+            self.play_audio()
             
         
     def startDragOperation(self, item):
@@ -73,9 +80,16 @@ class BeatTable(QTableView):
         event_handlers.dragMoveEvent(self, event)
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
+    
     def play_audio(self):
-        pass
-        
+        try:
+            print(f"Telling Beat Jockey to play a song..")
+            self.beat_jockey.play_current_song()
+        except AttributeError as e:
+            print(f"AttributeError - Failed to play audio: {e}")
+            print(f"Current BeatJockey object: {self.beat_jockey}, methods: {dir(self.beat_jockey)}")
+        except Exception as e:
+            print(f"General Exception - Failed to play audio: {e}")
     
     def findColumnIndexByName(self, column_name):
         for column in range(self.model().columnCount()):
