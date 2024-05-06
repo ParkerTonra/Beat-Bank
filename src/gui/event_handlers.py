@@ -1,31 +1,32 @@
-from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl
+#event_handlers.py
+from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl, QItemSelectionModel
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QDrag
 
-def tableMousePressEvent(self, event):
-    if event.button() == Qt.MouseButton.LeftButton:
-        current_time = QTime.currentTime()
 
-        if not self.lastClickTime.isNull() and \
-           self.lastClickTime.msecsTo(current_time) < self.doubleClickInterval:
-            self.handleDoubleClick(event)
-        else:
-            self.handleSingleClick(event)
-        
-        self.lastClickTime = current_time
-        
+
 def handleSingleClick(self, event):
     index = self.indexAt(event.pos())
+    
     if index.isValid():
-        print(f"Item clicked at row {index.row()}, column {index.column()}")
-    self.dragStartPosition = event.pos()
+        if index.isValid():
+            print(f"Item clicked at row {index.row()}, column {index.column()}")
+            # Select the row
+            selection_model = self.selectionModel()
+            selection_model.clearSelection()
+            flags = QItemSelectionModel.SelectionFlag.Rows
+            selection_model.select(index, flags)
+
+            # Update the selected beat after changing selection
+            self.update_selected_beat(index, None)
+        
+        
+    self.dragStartPosition = event.pos() #start dragposition at point of click
 
 def handleDoubleClick(self, event):
-    print("Double click event")
-    index = self.indexAt(event.pos())
-    if index.isValid():
-        print(f"Double clicked in row {index.row()}, column {index.column()}")
-        self.edit(index)
+    print("Double click event 222") #edit here for double click event
+
+
 
 def tableMouseMoveEvent(self, event):
         if not (event.buttons() & Qt.MouseButton.LeftButton):
