@@ -2,6 +2,7 @@ QListView {
     background-color: #222; /* Dark background */
     color: #EEE; /* Light text color */
     font: 16px; /* Font size */
+    font-family: Arial, Helvetica, sans-serif;
     border: none; /* No border around the view */
 }
 
@@ -19,3 +20,17 @@ QListView::item:selected {
 QListView::item:hover {
     background-color: #555; /* Background color when hovering over an item */
 }
+BeatTable {
+    background-color: #222; /* Dark background */
+    color: #EEE; /* Light text color */
+    font: 24px; /* Font size */
+    font-family: Calibri;
+    border: none; /* No border around the view */
+}
+BeatTable::header {
+    background-color: #222; /* Dark background */
+    color: #EEE; /* Light text color */
+    font: 24px; /* Font size */
+    font-family: Calibri;
+    border: none; /* No border around the view */
+}   

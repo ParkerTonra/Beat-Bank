@@ -135,27 +135,7 @@ class MainWindow(QMainWindow):
         header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
         # header.setStretchLastSection(True)  # Make the last column fill the extra space
 
-        self.table.setStyleSheet("""
-        QTableView 
-        {
-            border: 1px solid #444;
-            border-radius: 5px;
-            background-color: #222;
-            color: #EEE;
-            font-size: 24px;
-        }
-        QHeaderView::section {
-            background-color: #333;
-            padding: 5px;
-            border: 1px solid #444;
-            font-size: 14px;
-            color: #FFF;
-        }
-        QTableView QTableCornerButton::section {
-            background: #333;
-            border: 1px solid #444;
-        }
-        """)
+        self.table.setStyleSheet(self.style_sheet)
 
         self.table.setShowGrid(False)
         
