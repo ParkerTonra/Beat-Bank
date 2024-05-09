@@ -1149,3 +1149,57 @@
 2024-05-08 19:10:59,639 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
 2024-05-08 19:11:30,312 - src.gui.play_audio - INFO - play/pause button pressed
 2024-05-08 19:11:30,786 - src.gui.play_audio - INFO - play/pause button pressed
+2024-05-08 19:11:51,245 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000018013724820>
+2024-05-08 19:11:51,253 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000018013D1CE10>
+2024-05-08 19:11:51,984 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:51,984 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:51,984 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 19:11:52,500 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:52,500 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:52,500 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:52,500 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 19:11:53,120 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:53,121 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:53,121 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:53,121 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 19:11:53,994 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:53,994 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:53,994 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:53,994 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 19:11:54,804 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:54,804 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:54,804 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:54,804 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 19:11:56,608 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:56,608 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:56,608 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:56,608 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 19:11:57,748 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:57,749 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:57,749 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:57,749 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 19:11:58,636 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:11:58,636 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:11:58,636 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:11:58,637 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 19:12:00,440 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:12:00,440 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:12:00,440 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:12:00,440 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 19:12:00,941 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:12:00,941 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:12:00,941 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:12:00,941 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 19:13:50,432 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000146A9988940>
+2024-05-08 19:13:50,440 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000146A9F80E90>
+2024-05-08 19:13:53,143 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:13:53,144 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:13:53,144 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 19:13:54,009 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:13:55,360 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:13:55,360 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:13:55,360 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 19:13:56,539 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 19:13:57,531 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 19:13:57,531 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 19:13:57,531 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39

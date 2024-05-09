@@ -11,12 +11,12 @@ from threading import Lock
 
 logger = logging.getLogger(__name__)
 
+
 class AudioPlayer(QWidget):
     def __init__(self, main_window):
         super().__init__()
         self.main_window = main_window
         self.init_audio_player()
-        
 
         self.init_icons()
         self.init_buttons()
@@ -24,19 +24,19 @@ class AudioPlayer(QWidget):
         self.init_volume_slider()
         self.init_position_slider()
         self.layouts_add_widgets()
-    
+
     def init_audio_player(self):
         self.player = QMediaPlayer(self)
         self.audio_out = QAudioOutput(self)
         self.player.setAudioOutput(self.audio_out)
-        
+
         self.player.positionChanged.connect(self.positionChanged)
         self.player.durationChanged.connect(self.durationChanged)
-        
+
         self.player.errorOccurred.connect(self.handleError)
-        
+
         self.player.mediaStatusChanged.connect(self.mediaStatusChanged)
-        
+
     def layouts_add_widgets(self):
         self.main_layout = QGridLayout(self)
         self.main_layout.addLayout(self.buttons_layout, 0, 0)
@@ -65,34 +65,35 @@ class AudioPlayer(QWidget):
 
     def init_buttons(self):
         self.init_play_pause_button()
-        # self.init_stop_button() # Not currently used
+        self.init_stop_button()  # Not currently used
         self.buttons_layout = QHBoxLayout()
         self.buttons_layout.addWidget(self.play_pause_button)
-        # self.buttons_layout.addWidget(self.stop_button)
+        self.buttons_layout.addWidget(self.stop_button)
 
     def init_labels(self):
         self.init_current_track_label()
         self.init_time_labels()
-    
+
     def init_time_labels(self):
         self.current_time_label = QLabel("00:00", self)
         self.total_duration_label = QLabel("00:00", self)
 
         self.time_layout = QHBoxLayout()
         self.time_layout.addWidget(self.current_time_label)
-        self.time_layout.addWidget(self.total_duration_label, alignment=Qt.AlignmentFlag.AlignRight)
-    
+        self.time_layout.addWidget(
+            self.total_duration_label, alignment=Qt.AlignmentFlag.AlignRight)
+
     def init_play_pause_button(self):
         self.play_pause_button = QToolButton(self)
         self.play_pause_button.setIcon(self.play_icon)
         self.play_pause_button.setIconSize(self.play_pause_button.sizeHint())
         self.play_pause_button.clicked.connect(self.play_or_pause)
 
-    # def init_stop_button(self):
-    #     self.stop_button = QToolButton(self)
-    #     self.stop_button.setIcon(self.stop_icon)
-    #     self.stop_button.setIconSize(self.stop_button.sizeHint())
-    #     self.stop_button.clicked.connect(self.stopMusic)
+    def init_stop_button(self):
+        self.stop_button = QToolButton(self)
+        self.stop_button.setIcon(self.stop_icon)
+        self.stop_button.setIconSize(self.stop_button.sizeHint())
+        self.stop_button.clicked.connect(self.stopMusic)
 
     def init_current_track_label(self):
         self.current_track_label = QLabel(self, text="No track selected")
@@ -112,20 +113,20 @@ class AudioPlayer(QWidget):
         self.position_slider = QSlider(Qt.Orientation.Horizontal)
         self.position_slider.setRange(0, 100)
         self.position_slider.sliderMoved.connect(self.setPosition)
-    
+
     def positionChanged(self, position):
         self.position_slider.setValue(position)
         self.update_time_label(position, self.current_time_label)
 
     def durationChanged(self, duration):
         self.position_slider.setRange(0, duration)
-        self.update_time_label(self.position_slider.value(), self.current_time_label)
-
+        self.update_time_label(
+            self.position_slider.value(), self.current_time_label)
 
     def setPosition(self, position):
         self.player.setPosition(position)
-        self.update_time_label(self.position_slider.value(), self.current_time_label)
-        
+        self.update_time_label(
+            self.position_slider.value(), self.current_time_label)
 
     def update_time_label(self, milliseconds, label):
         """Helper function to convert milliseconds to a mm:ss format and update the label."""
@@ -133,14 +134,15 @@ class AudioPlayer(QWidget):
         minutes = seconds // 60
         seconds = seconds % 60
         label.setText(f"{minutes:02}:{seconds:02}")
-    
+
     def playAudio(self, audio_path=None, audio_length=None):
         logger.info("playAudio function called.")
         try:
             if not audio_path:
                 logger.info("No file selected.")
                 return
-            logger.info(f"Attempting to play: {audio_path}, length: {audio_length}")
+            logger.info(
+                f"Attempting to play: {audio_path}, length: {audio_length}")
             url = QUrl.fromLocalFile(audio_path)
             self.player.setSource(url)
             self.player.play()
@@ -151,7 +153,7 @@ class AudioPlayer(QWidget):
 
         except Exception as e:
             logger.info(f"Failed to play audio: {e}")
-    
+
     def play_or_pause(self):
         logger.info("play/pause button pressed")
         if self.player.isPlaying():
@@ -159,7 +161,7 @@ class AudioPlayer(QWidget):
         else:
             if self.player.hasAudio():
                 self.resume_music()
-            else: 
+            else:
                 logger.info("No audio loaded")
 
     def resume_music(self):
@@ -192,7 +194,6 @@ class AudioPlayer(QWidget):
         except Exception as e:
             logger.info(f"Failed to set volume: {e}")
 
-
     def handleError(self, error, errorString):
         logger.info(f"Error occurred: {errorString}, Error Type: {error}")
 
@@ -208,12 +209,14 @@ class AudioPlayer(QWidget):
         elif status == QMediaPlayer.MediaStatus.BufferingMedia:
             logger.info("Buffering media")
         elif status == QMediaPlayer.MediaStatus.BufferingMedia:
-            logger.info("Buffering: " + str(self.player.bufferProgress()) + "%")
+            logger.info("Buffering: " +
+                        str(self.player.bufferProgress()) + "%")
         # Add more cases as needed based on your application's requirements
-        
+
     def errorOccurred(self, error, errorString):
         logger.info(f"Error occurred: {errorString}, Error Type: {error}")
         # Optionally, you can add logic to retry loading the media or to skip to next media
+
 
 class Node:
     def __init__(self, beat_path, beat_length, prev=None, next=None):
@@ -224,7 +227,7 @@ class Node:
 
 
 class BeatJockey:
-    def __init__(self, main_window, audio_player=None):
+    def __init__(self, main_window, audio_player):
         self.main_window = main_window
         self.audio_player = audio_player
         logger.info(f"audio player at beat jockey: {self.audio_player}")
@@ -256,32 +259,35 @@ class BeatJockey:
 
     def play_song_by_path(self, path, length):
         logger.info(f"play_song_by_path called")
-        
+
         self.audio_player.playAudio(path, length)
 
     def play_current_song(self):
         logger.info("play_current_song called")
-        self.play_song_by_path(self.current.beat_path, self.current.beat_length)
+        self.play_song_by_path(self.current.beat_path,
+                               self.current.beat_length)
 
     def on_playback_interrupted(self):
         logger.info("on_playback_interrupted called")
         logger.info("Playback interrupted.")
         # Here, you could also set up the next song or handle other cleanup
-    
+
     def on_playback_finished(self, success):
         logger.info("on_playback_finished called")
         if success:
             logger.info("Playback finished successfully.")
         else:
             logger.info("Playback ended with errors.")
-            #log the error
+            # log the error
         self.cleanup_after_playback()
+
     def cleanup_after_playback(self):
         logger.info("Cleaning up after playback")
         # Example cleanup logic
         self.audio_player.stopMusic()  # Stop the audio player
         self.audio_player.current_track_label.setText("No track Playing")
         self.audio_player.total_duration_label.setText("00:00")
+
     def play_next_song(self):
         logger.info("play_next_song called")
         if self.current:

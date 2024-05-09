@@ -33,6 +33,7 @@ from src.styles.stylesheet_loader import StylesheetLoader
 
 logger = logging.getLogger(__name__)
 
+
 class MainWindow(QMainWindow):
     def __init__(self, db):
         # Initialization and basic setup
@@ -49,7 +50,7 @@ class MainWindow(QMainWindow):
         self.restore_table_state()
         self.restore_reorder_state()
         self.restore_edit_state()
-        
+
         self.init_menu_bar()
         self.finalizeLayout()
 
@@ -62,7 +63,7 @@ class MainWindow(QMainWindow):
         self.model_manager = ModelManager(database=db, main_window=self)
         self.model_manager.setup_models()
         self.proxy = self.model_manager.proxyModel
-        
+
         self.selected_beat = None
         self.playing_beat = None
 
@@ -94,7 +95,7 @@ class MainWindow(QMainWindow):
         self.table_layout.addWidget(self.table)
 
         self.bottom_layout.addWidget(self.audio_player)
-        
+
         # Add table and bottom to main layout
         self.main_layout.addWidget(self.table, 80)
         self.main_layout.addLayout(self.bottom_layout, 20)
@@ -124,7 +125,7 @@ class MainWindow(QMainWindow):
                                model=self.proxy,
                                model_manager=self.model_manager)
         self.delegate = InvalidFileDelegate(self.table)
-        
+
         self.table.setSortingEnabled(True)
         self.table.verticalHeader().hide()
         self.table.resizeColumnsToContents()
@@ -355,7 +356,7 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, "Invalid File Paths", message)
 
     # Event Overrides
-    
+
     def closeEvent(self, event):
         print("Shutting down...")
         print("Saving table state..")
