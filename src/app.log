@@ -1,0 +1,387 @@
+2024-05-08 17:57:24,902 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000018AA04348B0>
+2024-05-08 17:57:24,911 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000018AA0A357D0>
+2024-05-08 17:57:25,837 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 17:57:25,838 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 17:57:25,838 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 17:57:25,838 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 17:57:25,838 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 17:57:25,839 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 17:57:31,509 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 17:57:31,509 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 17:57:31,509 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 17:57:31,510 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 17:57:31,510 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 17:57:31,510 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:05:13,037 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002089AA148B0>
+2024-05-08 18:05:13,049 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002089B019910>
+2024-05-08 18:05:14,065 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:05:14,065 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:05:14,065 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:05:14,065 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:05:14,066 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:05:14,066 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:05:14,066 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:05:15,641 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:05:15,641 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:05:15,641 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:05:15,641 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:05:15,642 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:05:15,642 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:05:15,643 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+
+
+2024-05-08 18:06:31,973 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000191F3BF8940>
+2024-05-08 18:06:31,981 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000191F41F9890>
+2024-05-08 18:06:33,118 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:06:33,119 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:06:33,119 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:06:33,119 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:06:33,120 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:06:33,120 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:06:33,120 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:06:33,120 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:06:33,742 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:06:33,742 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:06:33,742 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:06:33,743 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:06:33,743 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:06:33,743 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:06:33,744 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:06:33,744 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:06:33,744 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+                                                      Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:262024-05-08 18:08:18,905 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001F7E4558940>
+2024-05-08 18:08:18,914 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001F7E4B59810>
+2024-05-08 18:08:20,444 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:08:20,444 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:08:20,444 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:08:20,444 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:08:20,445 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:08:20,445 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:08:20,445 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:08:20,445 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:08:33,391 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:08:33,391 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:08:33,392 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:08:33,392 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:08:33,392 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:08:33,392 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:08:33,393 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:08:33,393 - src.gui.play_audio - INFO - Stopping current audio.
+2024-05-08 18:08:33,393 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:08:33,393 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:09:54,378 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000027771574940>
+2024-05-08 18:09:54,386 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000027771B75850>
+2024-05-08 18:09:55,427 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:09:55,427 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:09:55,427 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:09:55,427 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:09:55,428 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:09:55,428 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:09:55,428 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:09:55,428 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:09:56,170 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:09:56,171 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:09:56,171 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:09:56,171 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:09:56,171 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:09:56,171 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:09:56,172 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:09:56,172 - src.gui.play_audio - INFO - Stopping current audio.
+2024-05-08 18:10:41,736 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000267D5D64940>
+2024-05-08 18:10:41,747 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000267D6365750>
+2024-05-08 18:10:42,886 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:10:42,886 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:10:42,886 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:10:42,887 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:10:42,887 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:10:42,887 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:10:42,888 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:10:42,888 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:10:43,668 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:10:43,668 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:10:43,668 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:10:43,668 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:10:43,669 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:10:43,669 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:10:43,669 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:10:43,669 - src.gui.play_audio - INFO - Stopping current audio.
+2024-05-08 18:10:43,670 - src.gui.play_audio - INFO - stopPlayback called.
+2024-05-08 18:10:43,670 - src.gui.play_audio - INFO - Stopping playback thread.
+2024-05-08 18:10:43,670 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:10:43,670 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:11:40,380 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001EBEEE44940>
+2024-05-08 18:11:40,392 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001EBEF445850>
+2024-05-08 18:11:41,227 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:11:41,228 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:11:41,228 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:11:41,228 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:11:41,229 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:11:41,229 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:11:41,229 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:11:41,229 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:11:41,799 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:11:41,799 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:11:41,799 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:11:41,800 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:11:41,800 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:11:41,800 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:11:41,800 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:11:41,801 - src.gui.play_audio - INFO - Stopping current audio.
+2024-05-08 18:14:06,238 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001C6189C88B0>
+2024-05-08 18:14:06,247 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001C618FC5950>
+2024-05-08 18:14:07,531 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:14:07,531 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:14:07,531 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:14:07,531 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:14:07,532 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:14:07,532 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:14:07,532 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:14:07,532 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:14:08,188 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:14:08,189 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:14:08,189 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:14:08,189 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:14:08,189 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:14:08,190 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:14:08,190 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:14:08,190 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:14:08,190 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:15:40,142 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002739DD54940>
+2024-05-08 18:15:40,150 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002739E355810>
+2024-05-08 18:15:41,144 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:15:41,144 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:15:41,144 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:15:41,144 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:15:41,145 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:15:41,145 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:15:41,145 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:15:41,145 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:15:41,671 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:15:41,672 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:15:41,672 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:15:41,672 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:15:41,672 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:15:41,673 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:15:41,673 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:15:41,673 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:15:41,673 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:16:20,302 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000019D4B2A4940>
+2024-05-08 18:16:20,310 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000019D4B8A9790>
+2024-05-08 18:16:21,239 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:16:21,239 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:16:21,239 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:16:21,240 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:16:21,240 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:16:21,240 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:16:21,241 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:16:21,241 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:16:21,791 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:16:21,791 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:16:21,791 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:16:21,791 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:16:21,792 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:16:21,792 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:16:21,792 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:16:21,792 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:16:21,793 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:18:15,087 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001E347314940>
+2024-05-08 18:18:15,096 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001E347915890>
+2024-05-08 18:18:16,926 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:18:16,926 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:18:16,926 - src.gui.play_audio - INFO - Setting playback thread data: path = E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length = 2:41
+2024-05-08 18:18:16,927 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:18:16,927 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:18:16,927 - src.gui.play_audio - INFO - Emitting play signal for path: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 18:18:16,928 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:18:16,928 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 18:18:17,877 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:18:17,877 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:18:17,877 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length = 2:11
+2024-05-08 18:18:17,877 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:18:17,878 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:18:17,878 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 18:18:17,879 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:18:17,879 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 18:18:17,879 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:19:55,317 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001501BCE4940>
+2024-05-08 18:19:55,326 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001501C2E8650>
+2024-05-08 18:19:56,212 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:19:56,212 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:19:56,212 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:19:56,212 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:19:56,213 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:19:56,213 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:19:56,213 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:19:56,213 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:19:56,780 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:19:56,780 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:19:56,780 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:19:56,780 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:19:56,780 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:19:56,781 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:19:56,781 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:19:56,781 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:19:56,781 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:27:32,759 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000202AFF8C820>
+2024-05-08 18:27:32,767 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000202B0585790>
+2024-05-08 18:28:38,322 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000279ECC0C820>
+2024-05-08 18:28:38,331 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000279ED205810>
+2024-05-08 18:28:56,747 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002EE90E5C820>
+2024-05-08 18:28:56,756 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002EE91455750>
+2024-05-08 18:28:57,649 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:28:57,649 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:28:57,649 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:28:57,649 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:28:57,650 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:28:57,650 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:28:57,650 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:28:57,651 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:28:59,245 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:28:59,245 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:28:59,245 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:28:59,246 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:28:59,246 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:28:59,246 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:28:59,247 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:28:59,247 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:28:59,248 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:29:00,059 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:29:00,059 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:29:00,060 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:29:00,060 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:29:00,060 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:29:00,061 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:29:00,061 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:29:00,061 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:29:00,061 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:29:02,763 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001B4A8D14820>
+2024-05-08 18:29:02,772 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001B4A9311610>
+2024-05-08 18:29:03,495 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:29:03,495 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:29:03,495 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:29:03,496 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:29:03,496 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:29:03,496 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:29:03,496 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:29:03,497 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:29:04,116 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:29:04,116 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:29:04,116 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:29:04,116 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:29:04,117 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:29:04,117 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:29:04,117 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:29:04,118 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:29:04,118 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:29:05,497 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:29:05,498 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:29:05,498 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:29:05,498 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length = 1:39
+2024-05-08 18:29:05,498 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:29:05,499 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:29:05,499 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:29:05,500 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:29:05,500 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:29:26,712 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000193F4A648B0>
+2024-05-08 18:29:26,721 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000193F5069850>
+2024-05-08 18:30:22,463 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001E4D3DEC820>
+2024-05-08 18:30:22,472 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001E4D43E5890>
+2024-05-08 18:30:23,237 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:23,237 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:23,237 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:30:23,237 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:23,238 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:23,238 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:30:23,238 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:23,238 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:30:24,206 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:24,207 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:24,207 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:24,207 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length = 1:39
+2024-05-08 18:30:24,207 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:24,208 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:24,208 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:30:24,208 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:24,209 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:30:24,949 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:24,949 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:24,949 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:24,949 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length = 2:11
+2024-05-08 18:30:24,949 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:24,950 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:24,950 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 18:30:24,951 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:24,951 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 18:30:25,600 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:25,601 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:25,601 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:25,601 - src.gui.play_audio - INFO - Setting playback thread data: path = E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length = 2:41
+2024-05-08 18:30:25,601 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:25,602 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:25,602 - src.gui.play_audio - INFO - Emitting play signal for path: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 18:30:25,602 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:25,603 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 18:30:26,112 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:26,112 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:26,112 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:26,113 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length = 1:39
+2024-05-08 18:30:26,113 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:26,113 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:26,113 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:30:26,114 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:26,114 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:30:26,701 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:26,701 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:26,701 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:26,702 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:30:26,702 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:26,702 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:26,702 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:30:26,703 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:26,703 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:30:32,294 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000018DD75F5BD0>
+2024-05-08 18:30:32,305 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000018DD749B410>
+2024-05-08 18:30:36,030 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:36,030 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:36,030 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length = 2:26
+2024-05-08 18:30:36,031 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:36,031 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:36,031 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:30:36,032 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:36,032 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 18:30:38,278 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:38,278 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:38,279 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:38,279 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length = 2:45
+2024-05-08 18:30:38,279 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:38,280 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:38,280 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:30:38,281 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:38,281 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 18:30:40,914 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:40,915 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:40,915 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:40,915 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length = 1:39
+2024-05-08 18:30:40,915 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:40,916 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:40,916 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:30:40,917 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:40,917 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 18:30:42,643 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:42,643 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:42,643 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:42,643 - src.gui.play_audio - INFO - Setting playback thread data: path = C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length = 2:11
+2024-05-08 18:30:42,644 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:42,644 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:42,644 - src.gui.play_audio - INFO - Emitting play signal for path: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 18:30:42,645 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:42,645 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-08 18:30:44,060 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 18:30:44,061 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 18:30:44,061 - src.gui.play_audio - INFO - set_audio called.
+2024-05-08 18:30:44,061 - src.gui.play_audio - INFO - Setting playback thread data: path = E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length = 2:41
+2024-05-08 18:30:44,061 - src.gui.play_audio - INFO - Playback thread started.
+2024-05-08 18:30:44,062 - src.gui.play_audio - INFO - run called. new thread starting.
+2024-05-08 18:30:44,062 - src.gui.play_audio - INFO - Emitting play signal for path: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-08 18:30:44,063 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 18:30:44,063 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41

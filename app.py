@@ -1,11 +1,13 @@
 # app.py (root)/src/app.py
 
-import sys, qdarktheme
 from PyQt6.QtWidgets import QApplication
-from PyQt6.QtCore import qDebug
-from database import init_db
 from src.gui.BeatBank import MainWindow
+from src.logging_config import setup_logging
+import sys, qdarktheme, logging
+from database import init_db
 
+setup_logging()
+logger = logging.getLogger(__name__)
     
     
 def main():

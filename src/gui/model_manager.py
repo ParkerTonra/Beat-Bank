@@ -6,9 +6,9 @@ from PyQt6.QtCore import Qt
 from src.utilities.utils import Utils
 import mutagen
 class ModelManager:
-    def __init__(self, database, parent=None):
+    def __init__(self, database, main_window):
         self.database = database
-        self.parent = parent
+        self.main_window = main_window
         self.model = None
         self.proxyModel = None
         
@@ -21,7 +21,8 @@ class ModelManager:
         """
         Initialize the QSqlTableModel and configure it.
         """
-        self.model = QSqlTableModel(self.parent, self.database)
+        
+        self.model = QSqlTableModel(self.main_window, self.database)
         self.model.setTable('tracks')
         self.model.select()
         self.setup_headers()
@@ -72,7 +73,8 @@ class ModelManager:
         """
         Initialize the QSortFilterProxyModel and set the source model.
         """
-        self.proxyModel = QSortFilterProxyModel(self.parent)
+        proxy_model_obj = QSortFilterProxyModel(self.main_window)
+        self.proxyModel = proxy_model_obj
         self.proxyModel.setSourceModel(self.model)
 
     def refresh_model(self):
