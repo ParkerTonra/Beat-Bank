@@ -158,12 +158,12 @@ class InitializeMenuBar:
 
         settings = QSettings("Parker Tonra", "Beat Bank")
         table = self.table
-        column_count = table.model().columnCount()
+        column_count =self.model.columnCount()
         if table is None:
             sys.exit("Error: Table model is not set.")
         for i in range(column_count):
             # get the column name
-            column_name = table.model().headerData(i, Qt.Orientation.Horizontal)
+            column_name = self.model.headerData(i, Qt.Orientation.Horizontal)
             column_name = str(column_name)
             # Create a QAction for the column
             action = QAction(text=column_name, parent=self.menu_bar)

@@ -1203,3 +1203,316 @@
 2024-05-08 19:13:57,531 - src.gui.play_audio - INFO - play_song_by_path called
 2024-05-08 19:13:57,531 - src.gui.play_audio - INFO - playAudio function called.
 2024-05-08 19:13:57,531 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 23:07:13,599 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000021785778940>
+2024-05-08 23:07:13,613 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000021785D71050>
+2024-05-08 23:07:14,610 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 23:07:14,610 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 23:07:14,610 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-08 23:07:15,252 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 23:07:15,252 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 23:07:15,252 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 23:07:15,253 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-08 23:07:15,940 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 23:07:15,940 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 23:07:15,941 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 23:07:15,941 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-08 23:07:19,166 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-08 23:15:20,624 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001BA21C78940>
+2024-05-08 23:15:20,633 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001BA22271050>
+2024-05-08 23:17:04,756 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001F7C0EBCAF0>
+2024-05-08 23:17:04,765 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001F7C0F35CD0>
+2024-05-08 23:17:40,616 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002355779CAF0>
+2024-05-08 23:17:40,624 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000235577E9910>
+2024-05-08 23:18:13,753 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000211246ACA60>
+2024-05-08 23:18:13,761 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000211246FDAD0>
+2024-05-08 23:19:23,121 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000024468EBC9D0>
+2024-05-08 23:19:23,129 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000024468F03290>
+2024-05-08 23:25:00,417 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002388A078B80>
+2024-05-08 23:25:00,425 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002388A0F1710>
+2024-05-08 23:29:59,707 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000183D3318700>
+2024-05-08 23:29:59,716 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000183D33957D0>
+2024-05-08 23:30:34,477 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000026A75EAC9D0>
+2024-05-08 23:30:34,486 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000026A75F26CD0>
+2024-05-08 23:31:24,044 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001BA0FFECAF0>
+2024-05-08 23:31:24,053 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001BA10065E10>
+2024-05-08 23:31:39,741 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001EF1E698700>
+2024-05-08 23:31:39,750 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001EF1E643650>
+2024-05-08 23:36:22,084 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001898555C940>
+2024-05-08 23:36:22,092 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000189855D5750>
+2024-05-08 23:36:39,709 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002F19678CB80>
+2024-05-08 23:36:39,717 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002F1967E02D0>
+2024-05-08 23:37:33,457 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000024CDDD9CAF0>
+2024-05-08 23:37:33,466 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000024CDDE12F90>
+2024-05-08 23:38:00,746 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002B66E7CC940>
+2024-05-08 23:38:00,754 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002B66E843710>
+2024-05-08 23:38:09,413 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002F54558C940>
+2024-05-08 23:38:09,423 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002F545606E90>
+2024-05-08 23:38:23,465 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002039615CB80>
+2024-05-08 23:38:23,473 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000203961D6E10>
+2024-05-08 23:38:42,711 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002415E86C940>
+2024-05-08 23:38:42,719 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002415E8E5610>
+2024-05-08 23:39:46,517 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000025C8A96C790>
+2024-05-08 23:39:46,525 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000025C8A9B3350>
+2024-05-08 23:39:53,396 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000018EDFFACAF0>
+2024-05-08 23:39:53,405 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000018EE0025F10>
+2024-05-08 23:41:18,944 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000296D369CB80>
+2024-05-08 23:41:18,953 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000296D3715850>
+2024-05-08 23:41:43,984 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000160D8C4CAF0>
+2024-05-08 23:41:43,993 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000160D8CA1DD0>
+2024-05-08 23:41:44,800 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 23:41:44,800 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 23:41:44,800 - src.gui.play_audio - INFO - No file selected.
+2024-05-08 23:42:20,331 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000282EB8CCA60>
+2024-05-08 23:42:20,339 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000282EB921090>
+2024-05-08 23:42:28,931 - src.gui.BeatBank - INFO - Debugging...
+2024-05-08 23:43:22,326 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000022C027CC8B0>
+2024-05-08 23:43:22,335 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000022C028107D0>
+2024-05-08 23:46:32,268 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000249D1BFC790>
+2024-05-08 23:46:32,277 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000249D1C76D50>
+2024-05-08 23:47:55,105 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000160FCDEC700>
+2024-05-08 23:47:55,113 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000160FCE61B10>
+2024-05-08 23:49:11,712 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000018276CDC940>
+2024-05-08 23:49:11,720 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000018276D52BD0>
+2024-05-08 23:50:14,383 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001B9CC55CA60>
+2024-05-08 23:50:14,391 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001B9CC5F3510>
+2024-05-08 23:51:30,615 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000023E91C4C700>
+2024-05-08 23:51:30,623 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000023E91CC6F50>
+2024-05-08 23:51:41,223 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001B8032EC700>
+2024-05-08 23:51:41,232 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001B803362890>
+2024-05-08 23:51:58,307 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-08 23:51:58,307 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-08 23:51:58,307 - src.gui.play_audio - INFO - No file selected.
+2024-05-08 23:55:49,766 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001E0C41CCAF0>
+2024-05-08 23:55:49,775 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001E0C4243A10>
+2024-05-08 23:56:29,971 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000202ED37C700>
+2024-05-08 23:56:29,979 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000202ED3F1390>
+2024-05-08 23:56:42,325 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000016D9A41CA60>
+2024-05-08 23:56:42,333 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000016D9A493150>
+2024-05-08 23:58:09,758 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001AD096DCAF0>
+2024-05-08 23:58:09,767 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001AD09755B50>
+2024-05-09 00:01:08,365 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000023F9863C9D0>
+2024-05-09 00:01:08,373 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000023F986B6050>
+2024-05-09 00:01:11,228 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:01:11,228 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:01:11,228 - src.gui.play_audio - INFO - No file selected.
+2024-05-09 00:03:12,862 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001EC5758CAF0>
+2024-05-09 00:03:12,870 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001EC576063D0>
+2024-05-09 00:03:50,372 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002072DAFC940>
+2024-05-09 00:03:50,382 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002072DB95F90>
+2024-05-09 00:04:40,168 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002CBD1C1C670>
+2024-05-09 00:04:40,177 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002CBD1C93710>
+2024-05-09 00:05:54,346 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000213802FCAF0>
+2024-05-09 00:05:54,355 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002138033C210>
+2024-05-09 00:07:08,513 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001C7F83CCA60>
+2024-05-09 00:07:08,521 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001C7F843E250>
+2024-05-09 00:07:19,999 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000183DD33CAF0>
+2024-05-09 00:07:20,007 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000183DD3D3690>
+2024-05-09 00:09:43,345 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000026A19D8C700>
+2024-05-09 00:09:43,354 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000026A19C3F390>
+2024-05-09 00:12:06,677 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000029A339CCA60>
+2024-05-09 00:12:06,686 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000029A33867250>
+2024-05-09 00:17:57,035 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002744900C8B0>
+2024-05-09 00:17:57,044 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000274490A6050>
+2024-05-09 00:18:00,573 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:18:00,573 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:18:00,573 - src.gui.play_audio - INFO - No file selected.
+2024-05-09 00:18:04,934 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:18:04,934 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:18:04,934 - src.gui.play_audio - INFO - No file selected.
+2024-05-09 00:20:10,664 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000019265E2C9D0>
+2024-05-09 00:20:10,672 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000019265EC5990>
+2024-05-09 00:21:03,431 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001D3767DC9D0>
+2024-05-09 00:21:03,440 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001D376677350>
+2024-05-09 00:21:34,331 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002918846C700>
+2024-05-09 00:21:34,339 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000029188505710>
+2024-05-09 00:23:18,460 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002D0E984CA60>
+2024-05-09 00:23:18,469 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002D0E98CC890>
+2024-05-09 00:24:06,707 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002DA988D89D0>
+2024-05-09 00:24:06,716 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002DA98950E10>
+2024-05-09 00:25:52,207 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002837303CAF0>
+2024-05-09 00:25:52,215 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000283730D5390>
+2024-05-09 00:26:49,739 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000021FB487C700>
+2024-05-09 00:26:49,747 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000021FB4917250>
+2024-05-09 00:28:12,319 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000169D0FEC9D0>
+2024-05-09 00:28:12,327 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000169D1060C50>
+2024-05-09 00:28:38,286 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000294EF0BCAF0>
+2024-05-09 00:28:38,295 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000294EF153610>
+2024-05-09 00:29:59,285 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000202A6B2C9D0>
+2024-05-09 00:29:59,294 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000202A6BC3390>
+2024-05-09 00:31:00,402 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001CBD454C8B0>
+2024-05-09 00:31:00,411 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001CBD45C6E50>
+2024-05-09 00:31:33,508 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000025F4F60CA60>
+2024-05-09 00:31:33,516 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000025F4F687310>
+2024-05-09 00:32:13,318 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000020FB9E0CA60>
+2024-05-09 00:32:13,326 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000020FB9E85850>
+2024-05-09 00:37:12,842 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002B6DE46CA60>
+2024-05-09 00:37:12,852 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002B6DE4E5350>
+2024-05-09 00:39:27,111 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000151D916CA60>
+2024-05-09 00:39:27,120 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000151D91E5B90>
+2024-05-09 00:41:31,158 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002C25B2BC9D0>
+2024-05-09 00:41:31,168 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002C25B3354D0>
+2024-05-09 00:44:00,065 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000213CBC6C700>
+2024-05-09 00:44:00,073 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000213CBCE61D0>
+2024-05-09 00:46:01,711 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000026148F4CA60>
+2024-05-09 00:46:01,720 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000026148FC2E90>
+2024-05-09 00:46:54,965 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000013FAE4AC940>
+2024-05-09 00:46:54,973 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000013FAE527250>
+2024-05-09 00:49:19,022 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000021D9341C940>
+2024-05-09 00:49:19,030 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000021D934935D0>
+2024-05-09 00:49:37,291 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001875308CA60>
+2024-05-09 00:49:37,300 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000018753103450>
+2024-05-09 00:50:14,652 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001EFCFB1CA60>
+2024-05-09 00:50:14,661 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001EFCFB91FD0>
+2024-05-09 00:50:46,338 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001917122C8B0>
+2024-05-09 00:50:46,347 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001917127EFD0>
+2024-05-09 00:50:58,407 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002E4AD95C9D0>
+2024-05-09 00:50:58,416 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002E4AD9D1910>
+2024-05-09 00:53:09,222 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000021A5EF3CAF0>
+2024-05-09 00:53:09,231 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000021A5EDD7250>
+2024-05-09 00:53:32,365 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000248AFA0C790>
+2024-05-09 00:53:32,373 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000248AFA819D0>
+2024-05-09 00:54:08,456 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001CAEE4FC700>
+2024-05-09 00:54:08,464 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001CAEE571650>
+2024-05-09 00:54:28,305 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002474D77C790>
+2024-05-09 00:54:28,314 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002474D7F1290>
+2024-05-09 00:55:36,868 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000028D83F0CA60>
+2024-05-09 00:55:36,877 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000028D83F5CBD0>
+2024-05-09 00:55:56,712 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000012CFE74CAF0>
+2024-05-09 00:55:56,721 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000012CFE7A2210>
+2024-05-09 00:56:15,756 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001361B91C700>
+2024-05-09 00:56:15,765 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001361B992A10>
+2024-05-09 00:56:19,003 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:56:19,003 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:56:19,003 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-09 00:56:20,437 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 00:56:20,437 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:56:20,437 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:56:20,437 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 00:56:26,786 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 00:56:26,787 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:56:26,787 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:56:26,787 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-09 00:57:14,729 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000291705AC9D0>
+2024-05-09 00:57:14,737 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000029170621290>
+2024-05-09 00:58:37,495 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001F1055F49D0>
+2024-05-09 00:58:37,504 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001F105693150>
+2024-05-09 00:58:38,675 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:58:38,675 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:58:38,676 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 00:58:39,405 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 00:58:39,405 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 00:58:39,405 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 00:58:39,405 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-09 01:01:16,271 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001AF8A55C8B0>
+2024-05-09 01:01:16,279 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001AF8A5F3550>
+2024-05-09 01:01:31,526 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:01:31,526 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:01:31,527 - src.gui.play_audio - INFO - No file selected.
+2024-05-09 01:01:32,780 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:01:32,781 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:01:32,781 - src.gui.play_audio - INFO - No file selected.
+2024-05-09 01:01:33,662 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:01:33,662 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:01:33,663 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-09 01:01:35,426 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:01:35,426 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:01:35,426 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:01:35,426 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-09 01:01:36,297 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:01:36,297 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:01:36,297 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:01:36,297 - src.gui.play_audio - INFO - No file selected.
+2024-05-09 01:01:59,823 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000017B1378CA60>
+2024-05-09 01:01:59,831 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000017B138231D0>
+2024-05-09 01:02:00,726 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:02:00,727 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:02:00,727 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 01:02:06,008 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000010DB4094AF0>
+2024-05-09 01:02:06,017 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000010DB3F373D0>
+2024-05-09 01:02:06,794 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:02:06,794 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:02:06,794 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-09 01:02:30,993 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000019030D288B0>
+2024-05-09 01:02:31,001 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000019030DC0D10>
+2024-05-09 01:02:49,513 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000002978DE7C700>
+2024-05-09 01:02:49,522 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000002978DF11910>
+2024-05-09 01:03:47,339 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000248F78789D0>
+2024-05-09 01:03:47,348 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x00000248F78EF210>
+2024-05-09 01:03:59,928 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:03:59,928 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:03:59,928 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 01:04:13,076 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001CB2145CA60>
+2024-05-09 01:04:13,084 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x000001CB21307250>
+2024-05-09 01:04:15,440 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:15,440 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:15,440 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-09 01:04:17,298 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:17,299 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:17,299 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:17,299 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-09 01:04:19,336 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:19,336 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:19,337 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:19,337 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-09 01:04:20,666 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:20,666 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:20,666 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:20,666 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 01:04:21,560 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:21,560 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:21,560 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:21,561 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-09 01:04:22,338 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:22,338 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:22,338 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:22,338 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-09 01:04:22,976 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:22,977 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:22,977 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:22,977 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39
+2024-05-09 01:04:23,514 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:23,515 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:23,515 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:23,515 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-09 01:04:35,155 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000014C955CCA60>
+2024-05-09 01:04:35,164 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000014C95661A10>
+2024-05-09 01:04:35,830 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:35,830 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:35,831 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 01:04:36,734 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:36,734 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:36,734 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:36,734 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-09 01:04:38,158 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:38,158 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:38,158 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:38,158 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-09 01:04:38,932 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:38,932 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:38,932 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:38,932 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-09 01:04:47,419 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000022FC635C790>
+2024-05-09 01:04:47,428 - root - INFO - beat jockey object: <src.gui.play_audio.BeatJockey object at 0x0000022FC6207250>
+2024-05-09 01:04:48,190 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:48,190 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:48,190 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-09 01:04:49,810 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:49,811 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:49,811 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:49,811 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-09 01:04:51,454 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:51,454 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:51,455 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:51,455 - src.gui.play_audio - INFO - Attempting to play: E:/Audio/Ableton/_Exports 2024/trust 11.33 D.wav, length: 2:41
+2024-05-09 01:04:54,596 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:54,596 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:54,596 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:54,596 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/BHOLE_2.1 .wav, length: 2:11
+2024-05-09 01:04:55,438 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:55,439 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:55,439 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:55,439 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-09 01:04:56,112 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-09 01:04:56,112 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-09 01:04:56,113 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-09 01:04:56,113 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/Go Time 2024 0417 1148.wav, length: 1:39

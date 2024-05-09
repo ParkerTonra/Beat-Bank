@@ -14,13 +14,15 @@ class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
     click_edit_toggled = pyqtSignal(bool)
         
-    def __init__(self, main_window, model, beat_jockey, model_manager):
+    def __init__(self, main_window, model, beat_jockey, model_manager,proxy):
         super().__init__()
         self.main_window = main_window
         logging.info(f"beat jockey object: {beat_jockey}")
         self.beat_jockey = beat_jockey
-        self.setModel(model)
+        self.setModel(proxy)
         self.model_manager = model_manager
+        self.model = model
+        self.proxy = proxy
         self.playAudioTimer = QTimer(self)
         self.playAudioTimer.setSingleShot(True)
         self.playAudioTimer.timeout.connect(self.play_audio)
@@ -39,6 +41,13 @@ class BeatTable(QTableView):
         self.clicked.connect(self.handleSingleClick)
         self.selection_model = self.selectionModel()
         self.selection_model.selectionChanged.connect(self.on_selection_changed)
+        self.setDragDropMode(QtWidgets.QAbstractItemView.DragDropMode.InternalMove)
+        self.setDragDropOverwriteMode(False)
+        self.setDropIndicatorShown(True)
+        self.setDragEnabled(True)
+        self.setDefaultDropAction(Qt.DropAction.MoveAction)
+        # self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows) maybe
+        
 
     def on_selection_changed(self, selected, deselected):
         """
@@ -55,6 +64,8 @@ class BeatTable(QTableView):
         """
         current = self.selection_model.currentIndex()
         print(f"Current index: {current}")
+        #current index data
+        print(f"Current index data: {current.data()}")
         
         if not current.isValid():
             self.selected_beat = None
@@ -62,11 +73,14 @@ class BeatTable(QTableView):
             return
 
         # Assuming `current` is a QModelIndex, map it if using a proxy model
-        if hasattr(self, 'model_manager') and self.model_manager.proxyModel:
-            source_index = self.model_manager.proxyModel.mapToSource(current)
-            row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
+        if hasattr(self, 'model_manager') and self.proxy:
+            print("bleep")
+            source_index = self.proxy.mapToSource(current)
+            row = source_index.row()
+            print(f"Row: {row}")
+            row_data = self.model_manager.get_data_for_row(row)
             self.selected_beat = row_data
-            print(f"Selected beat updated. {self.selected_beat.get('Beat ID', 'N/A')}")
+            print(f"Selected beat updated. {self.selected_beat}")
         else:
             print("Model manager not defined or missing proxy model.")
         
