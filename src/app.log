@@ -1687,3 +1687,15 @@
 2024-05-16 12:48:42,247 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000201230249D0>
 2024-05-16 12:52:20,184 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001D96319C940>
 2024-05-16 12:53:42,491 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x000001F0B025C820>
+2024-05-16 13:00:07,783 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x0000018BBF060B80>
+2024-05-16 13:00:09,144 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-16 13:00:09,144 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-16 13:00:09,145 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/keep em separated 2023_2.2.wav, length: 2:26
+2024-05-16 13:00:10,356 - src.gui.play_audio - INFO - Media loaded successfully
+2024-05-16 13:00:10,356 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-16 13:00:10,356 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-16 13:00:10,356 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45
+2024-05-16 13:01:30,871 - src.gui.play_audio - INFO - audio player at beat jockey: <src.gui.play_audio.AudioPlayer object at 0x00000190E59E89D0>
+2024-05-16 13:01:32,538 - src.gui.play_audio - INFO - play_song_by_path called
+2024-05-16 13:01:32,538 - src.gui.play_audio - INFO - playAudio function called.
+2024-05-16 13:01:32,538 - src.gui.play_audio - INFO - Attempting to play: C:/Users/parke/Dropbox (Professional DJ team)/Exports 2023/dojo 2024 0401 1522.wav, length: 2:45

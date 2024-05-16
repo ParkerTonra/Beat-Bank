@@ -1,4 +1,4 @@
-documentation, because bethesda doesn't know best.
+documentation
 to run:
 venv\scripts\activate
 cd C:\Users\parke\Documents\GitHub\Beat-Bank\src
@@ -21,7 +21,7 @@ TODO:
 
 
 
-Figure out why a track is always selected when the program is ran.(meh oh well)
+Figure out why a track is always selected when the program is ran.
 
 
 
@@ -40,12 +40,3 @@ WORKING FEATURES:
 - can add a song from file, program gets length, date added, created, etc and adds it to database
 
 
-
-
-CONSIDERATIONS:
-- messy BeatBank.py
-
-2024/5/5
-- got the audio playback to run smoothly.
-- users can choose to edit items
-- users can choose to rearrange columns
