@@ -60,29 +60,31 @@ class ModelManager:
         """Initialize the QSortFilterProxyModel and set the source model."""
         self.proxyModel = QSortFilterProxyModel(self.main_window)
         self.proxyModel.setSourceModel(self.model)
-
-    # def set_file_path_role(self, proxy_index, file_path):
-    #     """Set the file_path role for a given proxy index."""
-    #     source_index = self.proxyModel.mapToSource(proxy_index)
-    #     row = source_index.row()
-    #     column = self.model.columnCount() - 1  # Assuming file_path is the last column
-    #     source_index = self.model.index(row, column)
-    #     self.model.setData(source_index, file_path, Qt.ItemDataRole.DisplayRole + 1)  # Setting custom user role for file_path
+        self.proxyModel.setDynamicSortFilter(True)
 
     def get_data_for_row(self, proxy_row):
         """Get all data for a given row in the model."""
-        print("Getting data for row", proxy_row)
+        print(f"Getting data for proxy row: {proxy_row}")
         proxy_index = self.proxyModel.index(proxy_row, 0)
-        source_data = proxy_index.data(Qt.ItemDataRole.UserRole + 1)
-        print("Source data:", source_data)
-        #print("Source data (title):", str(proxy_index.data('title')))
-        #print("Source index:", source_index, " proxy index:", proxy_index, " proxy row:", proxy_row)
+        print(f"Proxy index: {proxy_index.row()}, {proxy_index.column()}")
+
+        if not proxy_index.isValid():
+            print("Invalid proxy index")
+            return None
+
+        source_index = self.proxyModel.mapToSource(proxy_index)
+        print(f"Mapped source index: {source_index.row()}, {source_index.column()}")
+
+        if not source_index.isValid():
+            print("Invalid source index.")
+            return None
 
         row_data = {}
-        for column in range(1, self.model.columnCount()):  # Skip the "Row Number" column
+        for column in range(self.model.columnCount()):
             column_name = self.model.headerData(column, Qt.Orientation.Horizontal)
-            # Adjust by subtracting one to fetch the correct data
-            row_data[column_name] = proxy_index.siblingAtColumn(column).data()
+            source_data = self.model.data(self.model.index(source_index.row(), column))
+            row_data[column_name] = source_data
+
         return row_data
 
     def setup_headers(self):

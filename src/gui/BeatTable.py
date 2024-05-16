@@ -1,13 +1,10 @@
 # BeatTable.py (root)/src/gui/BeatTable.py
 
-from PyQt6.QtCore import Qt, QTime, pyqtSignal, QSettings, QTimer
-from PyQt6.QtWidgets import QTableView, QHeaderView
+from PyQt6.QtCore import Qt, QTime, pyqtSignal, QSettings
+from PyQt6.QtWidgets import QTableView
 from PyQt6 import QtWidgets
-from PyQt6.QtCore import pyqtSignal
-from src.gui import event_handlers, play_audio
-from src.gui.signals import PlayAudioSignal
-from src.gui.play_audio import AudioPlayer
-import logging, sys
+from src.gui import event_handlers
+import logging
 
 
 class BeatTable(QTableView):
@@ -17,16 +14,12 @@ class BeatTable(QTableView):
     def __init__(self, main_window, model, beat_jockey, model_manager,proxy):
         super().__init__()
         self.main_window = main_window
-        logging.info(f"beat jockey object: {beat_jockey}")
         self.beat_jockey = beat_jockey
-        self.setModel(proxy)
         self.model_manager = model_manager
-        self.model = model
         self.proxy = proxy
-        self.playAudioTimer = QTimer(self)
-        self.playAudioTimer.setSingleShot(True)
-        self.playAudioTimer.timeout.connect(self.play_audio)
-        self.playAudioCooldown = 1000  # milliseconds
+        
+        self.setModel(proxy)
+        self.model = model
         
         #self.audio_signal.playAudioSignal.connect(self.audio_player.playAudio)
         self.lastClickTime = QTime()
@@ -63,8 +56,7 @@ class BeatTable(QTableView):
         Update the selected beat information based on the current selection.
         """
         current = self.selection_model.currentIndex()
-        print(f"Current index: {current}")
-        #current index data
+        
         print(f"Current index data: {current.data()}")
         
         if not current.isValid():
@@ -72,16 +64,13 @@ class BeatTable(QTableView):
             print("No beat selected.")
             return
 
-        # Assuming `current` is a QModelIndex, map it if using a proxy model
-        if hasattr(self, 'model_manager') and self.proxy:
-            print("bleep")
-            source_index = self.proxy.mapToSource(current)
-            row = source_index.row()
-            print(f"Row: {row}")
+        if self.proxy:
+            row = current.row()
             row_data = self.model_manager.get_data_for_row(row)
             self.selected_beat = row_data
-            print(f"Selected beat updated. {self.selected_beat}")
+            print(f"Selected beat updated: {self.selected_beat}")
         else:
+            print("Proxy model not defined.")
             print("Model manager not defined or missing proxy model.")
         
     

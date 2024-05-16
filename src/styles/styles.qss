@@ -27,10 +27,11 @@ BeatTable {
     font-family: Calibri;
     border: none; /* No border around the view */
 }
-BeatTable::header {
+BeatTable::QHeaderView {
     background-color: #222; /* Dark background */
     color: #EEE; /* Light text color */
     font: 24px; /* Font size */
     font-family: Calibri;
     border: none; /* No border around the view */
-}   
+}
+QHeaderView:: { border: 12px; }

@@ -138,6 +138,10 @@ class MainWindow(QMainWindow):
         self.table.setStyleSheet(self.style_sheet)
 
         self.table.setShowGrid(False)
+        self.table.setAlternatingRowColors(True)
+        self.table.verticalHeader().setStyleSheet(self.style_sheet)
+        self.table.horizontalHeader().setStyleSheet(self.style_sheet)
+        
         
     def init_filteredTableView(self):
         self.filteredTableView = self.model_manager.proxyModel
@@ -212,9 +216,6 @@ class MainWindow(QMainWindow):
         Update the selected beat information based on the current selection.
         """
         current = self.selection_model.currentIndex()
-        print(f"Current index: {current}")
-        print(f"Current index data: {current.data()}")
-
         if not current.isValid():
             self.selected_beat = None
             print("No beat selected.")
@@ -227,62 +228,14 @@ class MainWindow(QMainWindow):
                 row = current.row()
                 if row == -1:
                     raise IndexError("Invalid row index from proxy mapping.")
-                print(f"Row: {row}")
                 row_data = self.model_manager.get_data_for_row(row)
                 self.selected_beat = row_data
-                print(f"Selected beat updated: {self.selected_beat}")
             except Exception as e:
                 print(f"Error mapping index: {e}")
-                self.selected_beat = {
-                    'Row Number': 0,
-                    'Beat ID': '',
-                    'Title': '',
-                    'Length': '',
-                    'Key': '',
-                    'Date Created': '',
-                    'Date Added': '',
-                    'Notes': '',
-                    'File Location': '',
-                    'Ableton File Location': '',
-                    'Artist': 0,
-                    'Current Version ID': 0.0,
-                    'Tempo': None
-                }
+                return
         else:
             print("Model manager not defined or missing proxy model.")
-            self.selected_beat = {
-                'Row Number': 0,
-                'Beat ID': '',
-                'Title': '',
-                'Length': '',
-                'Key': '',
-                'Date Created': '',
-                'Date Added': '',
-                'Notes': '',
-                'File Location': '',
-                'Ableton File Location': '',
-                'Artist': 0,
-                'Current Version ID': 0.0,
-                'Tempo': None
-            }
-        
-        # if hasattr(self, 'model_manager') and self.model_manager.model:
-        #     proxy_row = current.row()
-        #     beat_id = self.model_manager.get_id_for_row(proxy_row)
-        #     query = QSqlQuery()
-        #     # query for the item with id 'beat_id'
-        #     query.exec(f"SELECT * FROM tracks WHERE id = {beat_id}")
-        #     if query.next():
-        #         self.selected_beat = query.record()
-        #         print(
-        #             f"Selected track updated: {self.selected_beat.value('file_path')}")
-        #     path = self.selected_beat.value('file_path')
-        #     beatLength = self.selected_beat.value('length')
-        #     if not beatLength:
-        #         beatLength = '0:00'
-        #     print(f"path: {path}")
-        #     print(f"length: {beatLength}")
-        #     self.beat_jockey.update_current_song(path, beatLength)
+            return
 
     def check_song_file_integrity(self):
         invalid_files = []  # Store tuples of (song_id, file_path)
