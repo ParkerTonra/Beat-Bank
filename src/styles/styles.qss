@@ -1,0 +1,37 @@
+QListView {
+    background-color: #222; /* Dark background */
+    color: #EEE; /* Light text color */
+    font: 16px; /* Font size */
+    font-family: Arial, Helvetica, sans-serif;
+    border: none; /* No border around the view */
+}
+
+QListView::item {
+    border: 1px solid #FFFFFF; /* Subtle border for each item */
+    border-radius: 6px; /* Slightly rounded corners for the border */
+    margin: 2px; /* Margin around items */
+    padding: 5px; /* Padding inside items */
+}
+
+QListView::item:selected {
+    background-color: #666; /* Background color of a selected item */
+}
+
+QListView::item:hover {
+    background-color: #555; /* Background color when hovering over an item */
+}
+BeatTable {
+    background-color: #222; /* Dark background */
+    color: #EEE; /* Light text color */
+    font: 24px; /* Font size */
+    font-family: Calibri;
+    border: none; /* No border around the view */
+}
+BeatTable::QHeaderView {
+    background-color: #222; /* Dark background */
+    color: #EEE; /* Light text color */
+    font: 24px; /* Font size */
+    font-family: Calibri;
+    border: none; /* No border around the view */
+}
+QHeaderView:: { border: 12px; }

@@ -1,12 +1,16 @@
 from PyQt6.QtCore import QSettings, Qt
 from PyQt6.QtGui import QAction
 from src.utilities.utils import Utils
+import sys
 
 class InitializeMenuBar:
     # Init functions
-    def __init__(self, main_window):
+    def __init__(self, main_window, menu_bar, table, model):
         self.main_window = main_window
-        self.menu_bar = main_window.menuBar()
+        self.menu_bar = menu_bar
+        self.table = table
+        self.model = model
+        self.init_menu_bar()
 
     def init_menu_bar(self):
         self.init_file_menu()
@@ -28,11 +32,11 @@ class InitializeMenuBar:
         refresh_action = QAction("&Refresh", self.main_window)
         refresh_action.triggered.connect(self.main_window.table_refresh)
         
-        gdrive_action = QAction("&Google Drive Sign in", self.main_window)
-        gdrive_action.triggered.connect(self.main_window.google_drive.authenticate_user)
+        # gdrive_action = QAction("&Google Drive Sign in", self.main_window)
+        # gdrive_action.triggered.connect(self.main_window.google_drive.authenticate_user)
         
-        gdrive_folder_action = QAction("&Folder", self.main_window)
-        gdrive_folder_action.triggered.connect(self.main_window.google_drive.find_or_create_beatbank_folder)
+        # gdrive_folder_action = QAction("&Folder", self.main_window)
+        # gdrive_folder_action.triggered.connect(self.main_window.google_drive.find_or_create_beatbank_folder)
         
         debug_action = QAction("&Debug", self.main_window)
         debug_action.triggered.connect(self.main_window.debug_print)
@@ -46,8 +50,8 @@ class InitializeMenuBar:
         file_menu.addAction(add_track_action)
         file_menu.addAction(refresh_action)
         file_menu.addAction(exit_action)
-        file_menu.addAction(gdrive_action)
-        file_menu.addAction(gdrive_folder_action)
+        # file_menu.addAction(gdrive_action)
+        # file_menu.addAction(gdrive_folder_action)
         file_menu.addAction(debug_action)
         file_menu.addAction(save_as_default_action)
         file_menu.addAction(load_default_action)
@@ -89,13 +93,13 @@ class InitializeMenuBar:
         toggle_click_edit_action.setChecked(edit_state)
         toggle_click_edit_action.triggered.connect(lambda checked: self.main_window.toggle_click_edit(checked))
 
-        choose_folder_action = QAction("&Choose Folder", self.main_window)
-        choose_folder_action.triggered.connect(self.main_window.google_drive.show_folder_selection)
+        # choose_folder_action = QAction("&Choose Folder", self.main_window)
+        # choose_folder_action.triggered.connect(self.main_window.google_drive.show_folder_selection)
         
         settings_menu.addAction(toggle_gdrive_action)
         settings_menu.addAction(toggle_reorder_action)
         settings_menu.addAction(toggle_click_edit_action)
-        settings_menu.addAction(choose_folder_action)
+        # settings_menu.addAction(choose_folder_action) TODO:gdrive
 
     def load_click_edit_state(self):
         settings = QSettings("Parker Tonra", "Beat Bank")
@@ -141,18 +145,47 @@ class InitializeMenuBar:
         read_me_action = QAction("Read Me", self.main_window)
         # Assume connection to appropriate method
         help_menu.addAction(read_me_action)
-        
+
+    def get_column_count(self):
+        print(self.table.get_column_count())
+        return self.table.get_column_count()
+
     #TODO submenu for columns
     def init_columns_menu(self, columns_menu):
-        table = self.main_window.table
-        for i in range(table.model().columnCount()):
-            column_name = table.model().headerData(i, Qt.Orientation.Horizontal)
-            action = QAction(column_name, self.main_window, checkable=True)
-            settings = QSettings("Parker Tonra", "Beat Bank") #TODO
-            action.setChecked(not table.isColumnHidden(i))
-            # Here you should use a different approach because using lambda in a loop can cause unexpected behavior
-            def toggle_column(checked, index=i):
-                self.main_window.toggle_column(checked, index)
+        """
+        Create menu actions to toggle column visibility.
+        """
 
-            action.toggled.connect(toggle_column)
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        table = self.table
+        column_count =self.model.columnCount()
+        if table is None:
+            sys.exit("Error: Table model is not set.")
+        for i in range(column_count):
+            # get the column name
+            column_name = self.model.headerData(i, Qt.Orientation.Horizontal)
+            column_name = str(column_name)
+            # Create a QAction for the column
+            action = QAction(text=column_name, parent=self.menu_bar)
+            action.setCheckable(True)
+            # Retrieve the saved visibility state
+            visible = settings.value(f"columnVisibility_{i}", True, type=bool)
+            # Set the checkbox state
+            action.setChecked(visible)
+            # Define a toggle function for the column visibility
+
+            # Toggle function for the column visibility
+            action.toggled.connect(lambda checked, index=i: self.toggle_column(checked, index))
             columns_menu.addAction(action)
+            
+            table.setColumnHidden(i, not visible)
+            
+    def toggle_column(self, checked, index):
+        """
+        Toggle the visibility of a column in the table.
+        """
+        self.table.setColumnHidden(index, not checked)
+        settings = QSettings("Parker Tonra", "Beat Bank")
+        settings.setValue(f"columnVisibility_{index}", checked)
+        settings.sync()
+        print(f"Column {index} visibility set to {checked}.")

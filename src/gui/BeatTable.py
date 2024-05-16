@@ -1,31 +1,25 @@
 # BeatTable.py (root)/src/gui/BeatTable.py
 
-from PyQt6.QtCore import Qt, QTime, pyqtSignal, QSettings, QTimer
-from PyQt6.QtWidgets import QTableView, QHeaderView
+from PyQt6.QtCore import Qt, QTime, pyqtSignal, QSettings
+from PyQt6.QtWidgets import QTableView
 from PyQt6 import QtWidgets
-from PyQt6.QtCore import pyqtSignal
-from src.gui import event_handlers, play_audio
-from src.gui.signals import PlayAudioSignal
-from src.gui.play_audio import AudioPlayer
+from src.gui import event_handlers
+import logging
+
 
 class BeatTable(QTableView):
     trackDropped = pyqtSignal(str)
     click_edit_toggled = pyqtSignal(bool)
-    
-    def __init__(self, parent=None, audio_signal=None, beat_jockey=None):
+        
+    def __init__(self, main_window, model, beat_jockey, model_manager,proxy):
         super().__init__()
-        self.main_window = parent
-        
+        self.main_window = main_window
         self.beat_jockey = beat_jockey
-        if audio_signal is not None:
-            self.audio_signal = audio_signal
-        else:
-            self.audio_signal = PlayAudioSignal()
+        self.model_manager = model_manager
+        self.proxy = proxy
         
-        self.playAudioTimer = QTimer(self)
-        self.playAudioTimer.setSingleShot(True)
-        self.playAudioTimer.timeout.connect(self.play_audio)
-        self.playAudioCooldown = 1000  # milliseconds
+        self.setModel(proxy)
+        self.model = model
         
         #self.audio_signal.playAudioSignal.connect(self.audio_player.playAudio)
         self.lastClickTime = QTime()
@@ -37,23 +31,46 @@ class BeatTable(QTableView):
         
         self.horizontalHeader().setSectionsMovable(True)
         self.doubleClicked.connect(self.handleDoubleClick)
+        self.clicked.connect(self.handleSingleClick)
+        self.selection_model = self.selectionModel()
+        self.selection_model.selectionChanged.connect(self.on_selection_changed)
+        self.setDragDropMode(QtWidgets.QAbstractItemView.DragDropMode.InternalMove)
+        self.setDragDropOverwriteMode(False)
+        self.setDropIndicatorShown(True)
+        self.setDragEnabled(True)
+        self.setDefaultDropAction(Qt.DropAction.MoveAction)
+        # self.setSelectionBehavior(QTableView.SelectionBehavior.SelectRows) maybe
+        
 
-    def update_selected_beat(self, current, previous):
+    def on_selection_changed(self, selected, deselected):
+        """
+        Slot function called when the selection in the table changes. Updates
+        the selected row and beat information.
+        """
+        print("new row selected.")
+        self.update_selected_beat()
+        
+
+    def update_selected_beat(self):
         """
         Update the selected beat information based on the current selection.
         """
+        current = self.selection_model.currentIndex()
+        
+        print(f"Current index data: {current.data()}")
+        
         if not current.isValid():
             self.selected_beat = None
             print("No beat selected.")
             return
 
-        # Assuming `current` is a QModelIndex, map it if using a proxy model
-        if hasattr(self, 'model_manager') and self.model_manager.proxyModel:
-            source_index = self.model_manager.proxyModel.mapToSource(current)
-            row_data = {self.model_manager.model.headerData(i, Qt.Orientation.Horizontal): self.model_manager.model.record(source_index.row()).value(i) for i in range(self.model_manager.model.columnCount())}
+        if self.proxy:
+            row = current.row()
+            row_data = self.model_manager.get_data_for_row(row)
             self.selected_beat = row_data
-            print(f"Selected track updated(BT))")
+            print(f"Selected beat updated: {self.selected_beat}")
         else:
+            print("Proxy model not defined.")
             print("Model manager not defined or missing proxy model.")
         
     
@@ -69,9 +86,11 @@ class BeatTable(QTableView):
             event_handlers.handleDoubleClick(self, event)
         else:
             print("Double click event, playing track.")
+            selected_id = self.selected_beat.get('Beat ID', 'N/A')
             self.play_audio()
             
-        
+    def handleSingleClick(self, event):
+        print("single click registered")
     def startDragOperation(self, item):
         event_handlers.startDragOperation(self, item)
     def dragEnterEvent(self, event):
@@ -81,10 +100,14 @@ class BeatTable(QTableView):
     def dropEvent(self, event):
         event_handlers.dropEvent(self, event)
     
+    def get_column_count(self):
+        return self.model().columnCount()
+    
     def play_audio(self):
         try:
             print(f"Telling Beat Jockey to play a song..")
-            self.beat_jockey.play_current_song()
+            self.main_window.audio_player.stopMusic()
+            self.beat_jockey.play_song_by_path(path=self.selected_beat.get('File Location', ''), length=self.selected_beat.get('Length', 0))
         except AttributeError as e:
             print(f"AttributeError - Failed to play audio: {e}")
             print(f"Current BeatJockey object: {self.beat_jockey}, methods: {dir(self.beat_jockey)}")

@@ -13,7 +13,6 @@ ModelManager manages the data models that interact with the SQL database
 
 TODO:
 - 
-- Allow Users to change column width
 - allow users to add songs to playlist 
     - first with context menu, then drag and drop
 
@@ -37,14 +36,16 @@ SIDEBAR
 WORKING FEATURES:
 - Column reorder in beats table
 - sets reorder in sidebar
+- plays audio smoothly
+- can add a song from file, program gets length, date added, created, etc and adds it to database
 
-SEMI WORKING FEATURES:
- - plays audio
 
 
-BROKEN FEATURES:
-- if audio plays while already playing, program crashes.
-- selected track is not updated properly.
 
 CONSIDERATIONS:
 - messy BeatBank.py
+
+2024/5/5
+- got the audio playback to run smoothly.
+- users can choose to edit items
+- users can choose to rearrange columns
