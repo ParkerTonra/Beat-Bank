@@ -68,7 +68,6 @@ class BeatTable(QTableView):
             row = current.row()
             row_data = self.model_manager.get_data_for_row(row)
             self.selected_beat = row_data
-            print(f"Selected beat updated: {self.selected_beat}")
         else:
             print("Proxy model not defined.")
             print("Model manager not defined or missing proxy model.")

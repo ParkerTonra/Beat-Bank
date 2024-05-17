@@ -69,7 +69,7 @@ class MainWindow(QMainWindow):
 
     def setupWindow(self):
         self.setWindowTitle('Beat Bank')
-        self.setGeometry(100, 100, 1400, 200)
+        self.setGeometry(100, 100, 1600, 200)
 
         self.style_sheet = StylesheetLoader.load_stylesheet('styles')
         self.setStyleSheet(self.style_sheet)
@@ -92,18 +92,33 @@ class MainWindow(QMainWindow):
     def init_setupLayouts(self):
         print("Setting up layouts...")
 
+        # Add widgets to layouts
         self.table_layout.addWidget(self.table)
-
         self.bottom_layout.addWidget(self.audio_player)
 
-        # Add table and bottom to main layout
-        self.main_layout.addWidget(self.table, 80)
+        # Add layouts to the main layout
+        self.main_layout.addLayout(self.table_layout, 80)
         self.main_layout.addLayout(self.bottom_layout, 20)
 
-        # sidebar takes up 10% of space
-        self.beatbank_layout.addLayout(self.sidebar_layout, 10)
-        # main takes up 90% of space
-        self.beatbank_layout.addLayout(self.main_layout, 90)
+        # Add sidebar_layout and main_layout to the splitter
+        sidebar_widget = QWidget()
+        sidebar_widget.setLayout(self.sidebar_layout)
+        main_widget = QWidget()
+        main_widget.setLayout(self.main_layout)
+
+        self.beatbank_splitter.addWidget(sidebar_widget)
+        self.beatbank_splitter.addWidget(main_widget)
+
+        self.beatbank_splitter.setStretchFactor(0, 1)
+        self.beatbank_splitter.setStretchFactor(1, 4)
+
+        # Add the splitter to the main layout
+        self.beatbank_layout.addWidget(self.beatbank_splitter)
+
+        # Set the main widget and layout
+        main_container = QWidget()
+        main_container.setLayout(self.beatbank_layout)
+        self.setCentralWidget(main_container)
 
         print("Layouts initialized.")
 
@@ -113,9 +128,14 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.container)
 
     def get_selected_beat_path(self):
-        if self.selected_beat:
-            print("Selected new beat(BB)")
+        if self.table.selected_beat:
             return self.selected_beat.get("File Location")
+        print("No beat selected.")
+        return None
+
+    def get_selected_beat_id(self):
+        if self.table.selected_beat:
+            return self.table.selected_beat.get("Beat ID")
         print("No beat selected.")
         return None
 
@@ -133,7 +153,8 @@ class MainWindow(QMainWindow):
         header = self.table.horizontalHeader()
         # Set all columns to stretch
         header.setSectionResizeMode(QHeaderView.ResizeMode.Stretch)
-        # header.setStretchLastSection(True)  # Make the last column fill the extra space
+        # Make the last column fill the extra space
+        header.setStretchLastSection(True)
 
         self.table.setStyleSheet(self.style_sheet)
 
@@ -141,8 +162,7 @@ class MainWindow(QMainWindow):
         self.table.setAlternatingRowColors(True)
         self.table.verticalHeader().setStyleSheet(self.style_sheet)
         self.table.horizontalHeader().setStyleSheet(self.style_sheet)
-        
-        
+
     def init_filteredTableView(self):
         self.filteredTableView = self.model_manager.proxyModel
 
@@ -190,13 +210,9 @@ class MainWindow(QMainWindow):
             logging.error(f"General Exception: {e}")
 
     def edit_beat(self):
-        print("Editing track...")
-        selected_row = self.table.currentIndex().row()
-        if selected_row < 0:
-            # set the font color to gray and say "no track playing"
-            print("No track selected for editing.")
-            return
-        track_id = self.model_manager.get_id_for_row(selected_row)
+        track_id = self.table.selected_beat.get("Beat ID")
+        print(f"Editing track...{track_id}")
+        print(f"track id being edited: {track_id}")
         self.editWindow = EditTrackWindow(track_id)
         self.editWindow.trackEdited.connect(self.table_refresh)
         self.editWindow.show()
@@ -237,6 +253,10 @@ class MainWindow(QMainWindow):
             print("Model manager not defined or missing proxy model.")
             return
 
+    def open_file_location(self):
+        path = self.table.selected_beat.get("File Location")
+        Utils.open_file_location(path)
+
     def check_song_file_integrity(self):
         invalid_files = []  # Store tuples of (song_id, file_path)
         # Adjust SQL query as needed
@@ -265,6 +285,38 @@ class MainWindow(QMainWindow):
             print("All song file paths are valid.")
 
     # Utility
+    def load_set(self, set_name):
+        set_id = self.model_manager.get_set_id(set_name)
+        print(f"Loading set: {set_name} with ID: {set_id}")
+
+        if set_id:
+            track_ids = self.model_manager.get_track_ids_for_set(set_id)
+            
+            if track_ids:
+                # Build the query to fetch tracks
+                query_string = "SELECT * FROM tracks WHERE id IN (" + ",".join([str(track_id) for track_id in track_ids]) + ")"
+                query = QSqlQuery()
+                query.prepare(query_string)
+                
+                if query.exec():
+                    # Set the executed query to the model
+                    self.model_manager.model.setQuery(query)
+                    
+                    # Optional: print out the results
+                    while query.next():
+                        print(f"Track ID: {query.value(0)}")
+                else:
+                    print("Failed to execute the query.")
+            else:
+                print("No track IDs found for the given set.")
+        else:
+            print("Invalid set name or set ID not found.")
+                        
+
+    def load_all_tracks(self):
+        print("Loading all tracks...")
+        self.model_manager.model.setQuery("SELECT * FROM tracks")
+    
     def table_refresh(self):
         self.model_manager.refresh_model()
 
@@ -305,17 +357,6 @@ class MainWindow(QMainWindow):
             QAbstractItemView.EditTrigger.DoubleClicked if edit_allowed else QAbstractItemView.EditTrigger.NoEditTriggers)
         print(
             f"Edit state restored: {'Enabled' if edit_allowed else 'Disabled'}")
-
-    def open_file_location(self):
-        current_row = self.table.currentIndex().row()
-        if current_row < 0:
-            Utils.show_warning_message(
-                "No Selection", "Please select a track to open its file location.")
-            return
-
-        file_path = self.model_manager.get_file_path_for_row(current_row)
-        print(f"Opening file location: {file_path}")
-        Utils.open_file_location(file_path)
 
     def save_as_default(self):
         settings = QSettings("Parker Tonra", "Beat Bank")
@@ -370,7 +411,26 @@ class MainWindow(QMainWindow):
         settings.sync()  # Ensure changes are immediately written to the persistent storage
 
     def contextMenuEvent(self, event):
+        if self.sidebar_layout.geometry().contains(event.pos()):
+            self.sidebar_context_menu(event)
+        elif self.table.geometry().contains(event.pos()):
+            self.table_context_menu(event)
+        else:
+            self.default_context_menu(event)
+
+    def table_context_menu(self, event):
         context_menu = QMenu(self)
+        user_sets = self.get_user_sets()
+        add_to_set_menu = context_menu.addMenu("Add to Set")
+        current_track_id = self.get_selected_beat_id()
+        print(f"Current track ID: {current_track_id}")
+        for set_name in user_sets:
+            set_action = add_to_set_menu.addAction(set_name)
+            set_action.setCheckable(True)
+            if self.is_track_in_set(current_track_id, set_name):
+                set_action.setChecked(True)
+            set_action.triggered.connect(lambda checked, set_name=set_name: self.toggle_track_in_set(
+                current_track_id, set_name, checked))
         open_file_action = context_menu.addAction("Open File Location")
         edit_beat_action = context_menu.addAction("Edit Beat")
         delete_beat_action = context_menu.addAction("Delete Beat")
@@ -391,6 +451,34 @@ class MainWindow(QMainWindow):
         elif action == play_audio_action:
             pass
 
+    def is_track_in_set(self, track_id, set_name):
+        self.model_manager.is_track_in_set(track_id, set_name)
+
+    def toggle_track_in_set(self, track_id, set_name, checked):
+        self.model_manager.toggle_track_in_set(track_id, set_name, checked)
+
+    def sidebar_context_menu(self, event):
+        context_menu = QMenu(self)
+        foo_bar = context_menu.addAction("foo")
+        action = context_menu.exec(event.globalPos())
+        if action == foo_bar:
+            print("foo")
+
+    def default_context_menu(self, event):
+        pass
+
+    def add_to_set(self, set_name):
+        # Logic for adding to the set
+        print(f"Adding to set: {set_name}")
+        # Implement the actual functionality here
+
+    def get_user_sets(self):
+        sets = []
+        query = QSqlQuery("SELECT name FROM user_sets")
+        while query.next():
+            sets.append(query.value(0))
+        return sets
+
     # TODO
     def open_read_me(self):
         # Open the readme file TODO
@@ -399,4 +487,3 @@ class MainWindow(QMainWindow):
     def debug_print(self):
         logger.info("Debugging...")
         logger.info("Selected track:", self.selected_beat)
-        logger.info("Playing track:", self.playing_beat)

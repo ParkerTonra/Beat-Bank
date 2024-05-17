@@ -2,7 +2,6 @@ import sys
 from PyQt6 import QtWidgets, QtGui
 from PyQt6.QtCore import pyqtSignal
 from PyQt6.QtWidgets import QLabel, QLineEdit, QPushButton, QVBoxLayout, QWidget, QApplication, QTextEdit
-from src.models.track import Track
 from PyQt6.QtSql import QSqlQuery
 
 class EditTrackWindow(QWidget):

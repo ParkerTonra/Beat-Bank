@@ -3,8 +3,10 @@ import os, datetime
 from PyQt6.QtSql import QSqlTableModel, QSqlQuery
 from PyQt6.QtCore import QSortFilterProxyModel, QModelIndex
 from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QMessageBox
 from src.utilities.utils import Utils
-import mutagen
+from src.gui.BeatSorter import BeatFilterProxyModel
+import mutagen, logging
 
 class BeatTableModel(QSqlTableModel):
     def __init__(self, parent=None, database=None):
@@ -58,10 +60,82 @@ class ModelManager:
 
     def init_proxy_model(self):
         """Initialize the QSortFilterProxyModel and set the source model."""
-        self.proxyModel = QSortFilterProxyModel(self.main_window)
+        self.proxyModel = BeatFilterProxyModel(self.main_window)
         self.proxyModel.setSourceModel(self.model)
         self.proxyModel.setDynamicSortFilter(True)
+        self.proxyModel.setFilterKeyColumn(-1)
+        #filter by set
+        
+    def get_track_ids_for_set(self, set_id):
+            track_ids = []
+            query = QSqlQuery()
+            query.prepare("SELECT track_id FROM set_track WHERE set_id = :set_id")
+            query.bindValue(":set_id", set_id)
+            if query.exec():
+                while query.next():
+                    logging.debug(f"Track ID: {query.value(0)}")
+                    track_ids.append(query.value(0))
+            else:
+                print(f"Error retrieving track IDs: {query.lastError().text()}")
+            return track_ids
+    
+    def get_set_id(self, set_name):
+        query = QSqlQuery()
+        query.prepare("SELECT id FROM user_sets WHERE name = :name")
+        query.bindValue(":name", set_name)
+        if query.exec() and query.next():
+            return query.value(0)
+        else:
+            print(f"Error retrieving set ID: {query.lastError().text()}")
+            return None
 
+    def toggle_track_in_set(self, track_id, set_name, checked):
+        set_id = self.get_set_id(set_name)
+        if set_id is None:
+            return
+        
+        query = QSqlQuery()
+
+        if checked:
+            # Retrieve the maximum position in the set
+            query.prepare("SELECT MAX(position) FROM set_track WHERE set_id = :set_id")
+            query.bindValue(":set_id", set_id)
+            if not query.exec():
+                print(f"Error retrieving max position: {query.lastError().text()}")
+                return
+
+            max_position = 0
+            if query.next():
+                max_position = query.value(0) or 0
+
+            new_position = max_position + 1
+
+            # Insert the track into the set with the new position
+            query.prepare("INSERT INTO set_track (track_id, set_id, position) VALUES (:track_id, :set_id, :position)")
+            query.bindValue(":track_id", track_id)
+            query.bindValue(":set_id", set_id)
+            query.bindValue(":position", new_position)
+            if not query.exec():
+                print(f"Error adding track to set: {query.lastError().text()}")
+        else:
+            # Remove the track from the set
+            query.prepare("DELETE FROM set_track WHERE track_id = :track_id AND set_id = :set_id")
+            query.bindValue(":track_id", track_id)
+            query.bindValue(":set_id", set_id)
+            if not query.exec():
+                print(f"Error removing track from set: {query.lastError().text()}")
+        
+
+    def is_track_in_set(self, track_id, set_name):
+        query = QSqlQuery()
+        query.prepare("SELECT COUNT(*) FROM set_track WHERE track_id = :track_id AND set_id = (SELECT id FROM user_sets WHERE name = :set_name)")
+        query.bindValue(":track_id", track_id)
+        query.bindValue(":set_name", set_name)
+        query.exec()
+        if query.next() and query.value(0) > 0:
+            return True
+        return False
+    
     def get_data_for_row(self, proxy_row):
         """Get all data for a given row in the model."""
         print(f"Getting data for proxy row: {proxy_row}")
