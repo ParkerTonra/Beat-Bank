@@ -2,7 +2,7 @@
 from PyQt6.QtCore import Qt, QTime, QMimeData, QUrl, QItemSelectionModel
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtGui import QDrag
-
+import logging
 
 
 
@@ -12,9 +12,11 @@ def handleDoubleClick(self, event):
 
 def tableMouseMoveEvent(self, event):
         if not (event.buttons() & Qt.MouseButton.LeftButton):
+            logging.debug("Mouse move event")
             return
         if ((event.pos() - self.dragStartPosition).manhattanLength() < QApplication.startDragDistance()):
             print("Mouse move event")
+            logging.debug("Mouse move event")
             return
 
         item = self.table.itemAt(self.dragStartPosition)
@@ -23,6 +25,7 @@ def tableMouseMoveEvent(self, event):
             self.startDragOperation(item)
 
 def startDragOperation(self, item):
+    logging.debug("Starting drag operation")    
     mime_data = QMimeData()
     mime_data.setUrls([QUrl.fromLocalFile(item.text())])
 

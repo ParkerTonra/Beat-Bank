@@ -14,7 +14,7 @@ class BeatTableModel(QSqlTableModel):
         self._headers = [
             "", "Beat ID", "Title", "Length", "Key", "Date Created",
             "Date Added", "Notes", "File Location", "Ableton File Location",
-            "Artist", "Current Version ID", "Tempo"
+            "Artist", "Current Version ID", "Tempo", "#"
         ]
 
     def rowCount(self, parent=QModelIndex()):
@@ -64,7 +64,8 @@ class ModelManager:
         self.proxyModel.setSourceModel(self.model)
         self.proxyModel.setDynamicSortFilter(True)
         self.proxyModel.setFilterKeyColumn(-1)
-        #filter by set
+        # allow editing of the model
+        
         
     def get_track_ids_for_set(self, set_id):
             track_ids = []
@@ -89,6 +90,36 @@ class ModelManager:
             print(f"Error retrieving set ID: {query.lastError().text()}")
             return None
 
+    def reorder_tracks(self, sourceRow, destRow):
+        # Calculate direction of movement
+        if sourceRow < destRow:
+            direction = 1
+        else:
+            direction = -1
+
+        # Fetch track_order of source and destination rows
+        sourceOrder = sourceRow
+        destOrder = destRow
+
+        try:
+            query = QSqlQuery()
+            query.prepare("UPDATE tracks SET track_order = :sourceOrder WHERE track_order = :destOrder")
+            query.bindValue(":sourceOrder", sourceOrder)
+            query.bindValue(":destOrder", destOrder)
+            if query.exec():
+                print(f"Updated track 1")
+                
+            query.prepare("UPDATE tracks SET track_order = :destOrder WHERE track_order = :sourceOrder")
+            query.bindValue(":sourceOrder", sourceOrder)
+            query.bindValue(":destOrder", destOrder)
+            if query.exec():
+                print(f"Updated track 2")
+        except Exception as e:
+            print(f"Failed to reorder tracks: {str(e)}")
+        
+        # Refresh model
+        self.model.select()
+    
     def toggle_track_in_set(self, track_id, set_name, checked):
         set_id = self.get_set_id(set_name)
         if set_id is None:
@@ -138,16 +169,13 @@ class ModelManager:
     
     def get_data_for_row(self, proxy_row):
         """Get all data for a given row in the model."""
-        print(f"Getting data for proxy row: {proxy_row}")
         proxy_index = self.proxyModel.index(proxy_row, 0)
-        print(f"Proxy index: {proxy_index.row()}, {proxy_index.column()}")
 
         if not proxy_index.isValid():
             print("Invalid proxy index")
             return None
 
         source_index = self.proxyModel.mapToSource(proxy_index)
-        print(f"Mapped source index: {source_index.row()}, {source_index.column()}")
 
         if not source_index.isValid():
             print("Invalid source index.")
@@ -175,7 +203,8 @@ class ModelManager:
             8: "Ableton File Location",
             9: "Artist",
             10: "Current Version ID",
-            11: "Tempo"
+            11: "Tempo",
+            12: "#"
         }
         for column, header in column_headers.items():
             self.model.setHeaderData(column, Qt.Orientation.Horizontal, header)
@@ -191,7 +220,7 @@ class ModelManager:
         query = QSqlQuery(self.database)
         query.prepare(
             "INSERT INTO tracks (title, artist, length, bpm, date_added, date_created, key, notes, path_to_ableton_project, file_path) "
-            "VALUES (:title, :artist, :length, :bpm, :date_added, :date_created, :key, :notes, :path_to_ableton_project, :file_path)"
+            "VALUES (:title, :artist, :length, :bpm, :date_added, :date_created, :key, :notes, :path_to_ableton_project, :file_path, :track_order)"
         )
         query.bindValue(":title", audio["title"])
         query.bindValue(":artist", audio["artist"])
@@ -203,6 +232,7 @@ class ModelManager:
         query.bindValue(":notes", audio["notes"])
         query.bindValue(":path_to_ableton_project", audio["path_to_ableton_project"])
         query.bindValue(":file_path", audio["file_path"])
+        query.bindValue(":track_order", audio["track_order"])
         if query.exec():
             self.refresh_model()
             print("Track added successfully")
@@ -211,6 +241,7 @@ class ModelManager:
 
     def get_audio_data(self, path):
         audio = mutagen.File(path, easy=True)
+        track_order = self.new_row_number()
         audioObj = {
             "title": audio.get("title", [os.path.basename(path)])[0],
             "artist": audio.get("artist", ["Unknown"])[0],
@@ -221,10 +252,19 @@ class ModelManager:
             "key": "Unknown",
             "notes": None,
             "path_to_ableton_project": None,
-            "file_path": path
+            "file_path": path,
+            "track_order": track_order
         }
         return audioObj
 
+    def new_row_number(self):
+        """Get the next available row number for a new track."""
+        query = QSqlQuery(self.database)
+        query.prepare("SELECT MAX(row_number) FROM tracks")
+        if query.exec() and query.next():
+            return query.value(0) + 1
+        return 1
+    
     def delete_beat_from_database(self, beat_id):
         """Delete a beat from the database."""
         answer = Utils.ask_user_bool("Delete Beat", "Are you sure you want to delete this beat?")
@@ -244,6 +284,16 @@ class ModelManager:
         """Get the ID for a given row in the model."""
         source_index = self.proxyModel.mapToSource(self.proxyModel.index(proxy_row, 0))
         return self.model.record(source_index.row()).value("id")
+    
+    def get_row_for_beat_id(self, beat_id):
+        """Get the row number for a given beat ID."""
+        query = QSqlQuery()
+        query.prepare("SELECT track_order FROM tracks WHERE id = :id")
+        query.bindValue(":id", beat_id)
+        if query.exec() and query.next():
+            row = query.value(0)-1
+            return row
+        return None
 
     def get_file_path_for_row(self, proxy_row):
         """Get the file path for a given row in the model."""

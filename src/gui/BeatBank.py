@@ -162,6 +162,7 @@ class MainWindow(QMainWindow):
         self.table.setAlternatingRowColors(True)
         self.table.verticalHeader().setStyleSheet(self.style_sheet)
         self.table.horizontalHeader().setStyleSheet(self.style_sheet)
+        self.table.setDragDropMode(QAbstractItemView.DragDropMode.InternalMove)
 
     def init_filteredTableView(self):
         self.filteredTableView = self.model_manager.proxyModel
@@ -485,5 +486,7 @@ class MainWindow(QMainWindow):
         pass
 
     def debug_print(self):
-        logger.info("Debugging...")
-        logger.info("Selected track:", self.selected_beat)
+        print(f"drag mode on table: {self.table.dragDropMode()}")
+        print(f"drop action on table: {self.table.acceptDrops()}")
+        # print if the table is editable
+        

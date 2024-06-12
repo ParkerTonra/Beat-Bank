@@ -32,6 +32,10 @@ class EditTrackWindow(QWidget):
         self.track_key_label = QLabel("Key: ", self)
         self.track_key_line_edit = QLineEdit(self)
         
+        # Track track_order
+        self.track_order_label = QLabel("Order: ", self)
+        self.track_order_line_edit = QLineEdit(self)
+        
         # Track Notes
         self.track_notes_label = QLabel("Notes: ", self)
         self.track_notes_text_edit = QTextEdit(self)
@@ -54,6 +58,8 @@ class EditTrackWindow(QWidget):
         layout.addWidget(self.track_key_line_edit)
         layout.addWidget(self.track_notes_label)
         layout.addWidget(self.track_notes_text_edit)
+        layout.addWidget(self.track_order_label)
+        layout.addWidget(self.track_order_line_edit)
         layout.addWidget(self.submitButton)
 
         # Set the layout on the application's window
@@ -79,13 +85,14 @@ class EditTrackWindow(QWidget):
         print("Submitting data...")
         query = QSqlQuery()
         query.prepare("UPDATE tracks SET title = :title, artist = :artist, bpm = :bpm, "
-                      "key = :key, notes = :notes WHERE id = :id")
+                      "key = :key, notes = :notes, track_order = :track_order WHERE id = :id")
         query.bindValue(":title", self.track_title_line_edit.text())
         query.bindValue(":artist", self.track_artist_line_edit.text())
-        query.bindValue(":bpm", float(self.track_bpm_line_edit.text()))
+        query.bindValue(":bpm", (self.track_bpm_line_edit.text()))
         query.bindValue(":key", self.track_key_line_edit.text())
         query.bindValue(":notes", self.track_notes_text_edit.toPlainText())
         query.bindValue(":id", self.track_id)
+        query.bindValue(":track_order", int(self.track_order_line_edit.text()))
 
         if query.exec():
             print("Track updated successfully.")
@@ -102,3 +109,4 @@ class EditTrackWindow(QWidget):
         self.track_bpm_line_edit.setText(str(track.value("bpm")))
         self.track_key_line_edit.setText(track.value("key"))
         self.track_notes_text_edit.setText(track.value("notes"))
+        self.track_order_line_edit.setText(str(track.value("track_order")))
